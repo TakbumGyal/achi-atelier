@@ -1,7 +1,7 @@
 /* ===== JAVASCRIPT ===== */
 
 /* ─── TRANSLATIONS ─── */
-const TRANS = {
+var TRANS = {
   fr: {
     loader_sub:'Nail Studio · Paris 11',
     nav_about:'À propos', nav_services:'Soins', nav_gallery:'Galerie', nav_contact:'Contact', nav_book:'Réserver',
@@ -270,7 +270,7 @@ const TRANS = {
     month_abbr:['янв.','фев.','мар.','апр.','май','июн.','июл.','авг.','сен.','окт.','ноя.','дек.'],
   }
 };
-let LANG = 'fr';
+var LANG = 'fr';
 
 function setLang(l) {
   LANG = l;
@@ -286,7 +286,7 @@ function setLang(l) {
 }
 
 /* ─── SERVICES DATA ─── */
-const ALL_SVCS = [
+var ALL_SVCS = [
   {cat:'Manucures', name:'Manucure classique', dur:20, price:'25€'},
   {cat:'Manucures', name:'Manucure spa', dur:30, price:'35€'},
   {cat:'Manucures', name:'Manucure japonaise', dur:30, price:'35€'},
@@ -350,10 +350,20 @@ function fmtDate(ds) {
   const ms = T.month_abbr || ['jan.','fév.','mars','avr.','mai','juin','juil.','août','sep.','oct.','nov.','déc.'];
   return `${parseInt(d)} ${ms[parseInt(m)-1]} ${y}`;
 }
-function isTaken(ds, time, dur, excId = null) {
-  const s = toMins(time), e = s + dur;
-  return bookings.filter(b => b.date === ds && b.status !== 'cancelled' && b.id !== excId)
-    .some(b => { const bs = toMins(b.time), be = bs + b.dur; return s < be && e > bs; });
+/* Capacité : 2 staff. Un créneau est bloqué seulement si 2 réservations s'y chevauchent déjà */
+var MAX_CAPACITY = 2;
+function slotCount(ds, time, dur, excId) {
+  excId = excId || null;
+  var s = toMins(time), e = s + dur;
+  return bookings.filter(function(b) {
+    return b.date === ds && b.status !== 'cancelled' && b.id !== excId;
+  }).filter(function(b) {
+    var bs = toMins(b.time), be = bs + b.dur;
+    return s < be && e > bs;
+  }).length;
+}
+function isTaken(ds, time, dur, excId) {
+  return slotCount(ds, time, dur, excId) >= MAX_CAPACITY;
 }
 function isPastSlot(ds, time) {
   const today = tds();
@@ -422,9 +432,9 @@ function svcTab(t) {
 
 /* ─── BOOKINGS DATA ─── */
 function saveBookings() {} // overridden by Firebase module
-let bookings = [];
-let nextId = 1;
-let fbReady = false; // true once Firebase has loaded at least once
+var bookings = [];
+var nextId = 1;
+var fbReady = false; // true once Firebase has loaded at least once
 
 /* Fallback : si Firebase ne répond pas dans 6s, on affiche quand même le tunnel */
 setTimeout(() => {
@@ -438,8 +448,8 @@ setTimeout(() => {
 }, 6000);
 
 /* ─── BOOKING CLIENT ─── */
-let sel = { svc: null, date: null, time: null };
-let weekOff = 0;
+var sel = { svc: null, date: null, time: null };
+var weekOff = 0;
 
 /* Build service cards — grouped by category */
 (function () {
@@ -598,13 +608,15 @@ function renderSlots(ds) {
     g.appendChild(msg);
     return;
   }
-  available.forEach(t => {
-    const btn = document.createElement('button');
-    btn.className = 'slot' + (sel.time === t ? ' sel' : '');
-    btn.textContent = t;
-    btn.onclick = () => {
+  available.forEach(function(t) {
+    var btn = document.createElement('button');
+    var cnt = slotCount(ds, t, dur);
+    var almostFull = cnt === MAX_CAPACITY - 1 && MAX_CAPACITY > 1;
+    btn.className = 'slot' + (sel.time === t ? ' sel' : '') + (almostFull ? ' slot-last' : '');
+    btn.innerHTML = t + (almostFull ? '<span class="slot-badge">1 place</span>' : '');
+    btn.onclick = function() {
       sel.time = t;
-      document.querySelectorAll('.slot').forEach(s => s.classList.remove('sel'));
+      document.querySelectorAll('.slot').forEach(function(s) { s.classList.remove('sel'); });
       btn.classList.add('sel');
       document.getElementById('bs2').disabled = false;
     };
@@ -688,7 +700,7 @@ function bkTab(t) {
 }
 
 /* ─── ADMIN AUTH ─── */
-let adminLoggedIn = false;
+var adminLoggedIn = false;
 const ADMIN_PW_HASH = '2b7cccaf9ae588b9b85399d000fc5b47b766dd723b028ac26c68d020da21889b';
 async function adminLogin() {
   const pw = document.getElementById('admin-pw-input').value;
@@ -713,8 +725,8 @@ function adminLogout() {
 }
 
 /* ─── ADMIN ─── */
-let aMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-let selDay = null;
+var aMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+var selDay = null;
 function aPrev() { aMonth.setMonth(aMonth.getMonth() - 1); renderAdminCal(); }
 function aNext() { aMonth.setMonth(aMonth.getMonth() + 1); renderAdminCal(); }
 
@@ -773,7 +785,7 @@ function renderDayPanel(ds) {
     <div>${db.length
       ? db.map(b => `<div class="appt-item">
           <div>
-            <div class="appt-time">${b.time}</div>
+            <div class="appt-time">${b.time}<span class="appt-cap">${slotCount(b.date, b.time, b.dur)}/${MAX_CAPACITY}</span></div>
             <span class="abadge ${b.status === 'cancelled' ? 'abadge-x' : 'abadge-c'}">${b.status === 'cancelled' ? 'annulé' : 'confirmé'}</span>
           </div>
           <div>

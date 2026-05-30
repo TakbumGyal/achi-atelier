@@ -367,7 +367,21 @@ footer .f-sub{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.42);max-
 .fade-up:nth-child(4){transition-delay:.3s}
 .fade-up:nth-child(5){transition-delay:.4s}
 
-/* RESPONSIVE */
+
+/* Disable custom cursor on touch/mobile — prevents tap issues */
+@media(hover:none),(pointer:coarse){
+  body{cursor:auto}
+  #cur,#cur-ring{display:none}
+  .btn-fill,.btn-ol,.btn-p,.btn-b,.slot,.wday-btn,.csvc,.cnav,.bk-tab,
+  .nav-cta,.lb,.hamburger,.mm-close,.btn-xcl,.btn-logout,.modal-close,.up-item,.mc{cursor:pointer}
+}
+
+/* ── SLOT CAPACITY BADGE ── */
+.slot-last{position:relative;border-color:var(--brown-l)!important}
+.slot-badge{display:block;font-size:.55rem;color:var(--brown);font-weight:700;line-height:1;margin-top:.1rem;letter-spacing:.04em}
+.appt-cap{display:inline-block;margin-left:.3rem;font-size:.62rem;background:rgba(139,111,94,.14);color:var(--brown);padding:.06rem .35rem;border-radius:100px;font-weight:700;vertical-align:middle}
+
+/* ── RESPONSIVE ── */
 @media(max-width:1100px){
   #hero,#about,#contact .contact-layout{grid-template-columns:1fr}
   .hero-r{display:none}
@@ -377,27 +391,107 @@ footer .f-sub{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.42);max-
   .admin-layout{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr 1fr;gap:2rem}
 }
+
+/* ── TABLET ── */
 @media(max-width:768px){
-  nav{padding:.9rem 1.5rem}
+  /* Navbar */
+  nav{padding:.75rem 1.2rem}
   .nav-center,.nav-cta,.lang-sw{display:none}
   .hamburger{display:flex}
-  #services,#about,#gallery,#testimonials,#booking,#contact{padding:5rem 1.5rem}
-  .hours-banner{grid-template-columns:1fr 1fr;padding:3rem 1.5rem}
+
+  /* Logo compact — desktop garde height:140px via la règle globale */
+  .nav-logo img{height:64px}
+
+  /* Hero compact */
+  #hero{min-height:auto;padding:5rem 1.4rem 3rem;display:flex;flex-direction:column}
+  .hero-l{padding:0;order:1}
+  .hero-l h1{font-size:clamp(2rem,8vw,2.8rem)}
+  .hero-l .hero-sub{font-size:.88rem;max-width:100%}
+  .hero-btns{flex-direction:column;gap:.7rem}
+  .btn-fill,.btn-ol{width:100%;text-align:center;padding:.85rem 1.5rem;min-height:48px;display:flex;align-items:center;justify-content:center}
+  .hero-r{display:none}
+  .hero-stats{gap:1.5rem;margin-top:1.8rem}
+
+  /* Sections */
+  #services,#about,#gallery,#testimonials,#booking,#contact{padding:4rem 1.2rem}
+
+  /* About */
+  #about{grid-template-columns:1fr;gap:2rem}
+  .about-grid{grid-template-columns:1fr;gap:.7rem}
+  .about-img:nth-child(3){grid-column:span 1}
+
+  /* Hours */
+  .hours-banner{grid-template-columns:1fr 1fr;padding:2.5rem 1.2rem}
+
+  /* Testimonials */
   .testi-grid{grid-template-columns:1fr}
+
+  /* Gallery */
   .gal-grid{grid-template-columns:1fr 1fr}
   .g-item:first-child{grid-row:span 1;aspect-ratio:3/2}
   .g-item:first-child .g-inner{min-height:130px}
-  .am-metrics{grid-template-columns:1fr 1fr}
-  .slots-row{grid-template-columns:repeat(4,1fr)}
+
+  /* Booking tunnel */
+  .bk-tabs{flex-wrap:wrap;gap:.4rem}
+  .bk-tab{flex:1;min-width:120px;padding:.65rem .8rem;font-size:.72rem}
+
+  /* Service cards — 1 colonne sur mobile */
+  #csvc-grid{padding:0}
+  #csvc-grid .csvc-cards{grid-template-columns:1fr;gap:.55rem}
+  .csvc{padding:.9rem 1rem;cursor:pointer}
+  .csvc-name{font-size:.88rem}
+  .csvc-group-title{font-size:.72rem;margin-top:1rem}
+
+  /* Week calendar */
+  .week-row{gap:.2rem}
+  .wday-btn{padding:.4rem .08rem}
+  .wday-btn .dn{font-size:.78rem}
+  .wday-btn .df{font-size:.56rem}
+  .wday-lbl{font-size:.56rem}
+
+  /* Slots */
+  .slots-row{grid-template-columns:repeat(4,1fr);gap:.3rem}
+  .slot{padding:.55rem .1rem;font-size:.72rem;min-height:44px}
+
+  /* Form */
   .fgr{grid-template-columns:1fr}
-  footer{padding:3rem 1.5rem 1.5rem}
+  .fg input,.fg select{padding:.8rem .85rem;min-height:48px}
+  .btn-p,.btn-b{min-height:48px;padding:.8rem 1.4rem;font-size:.82rem}
+
+  /* Summary bar */
+  .sum-bar{flex-direction:column;gap:.5rem}
+
+  /* Admin */
+  .am-metrics{grid-template-columns:1fr 1fr}
+  .admin-layout{grid-template-columns:1fr}
+  .mg{grid-template-columns:repeat(7,1fr)}
+  .mc{min-height:44px;padding:.22rem}
+  .mc-num{font-size:.62rem}
+  .apdot{font-size:.58rem;padding:.05rem .2rem}
+  .appt-item{grid-template-columns:1fr;gap:.3rem}
+  .up-box{margin-top:1rem}
+
+  /* Modal */
+  .modal-box{padding:1.3rem;max-height:90vh}
+  .modal-overlay{padding:.6rem}
+
+  /* Footer */
+  footer{padding:3rem 1.2rem 1.5rem}
   .footer-grid{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;gap:.4rem;text-align:center}
-  #csvc-grid .csvc-cards{grid-template-columns:1fr 1fr}
 }
+
+/* ── SMALL PHONES ── */
 @media(max-width:480px){
+  .nav-logo img{height:52px}
+  #hero{padding:4.5rem 1rem 2.5rem}
+  .hero-l h1{font-size:clamp(1.8rem,7vw,2.4rem)}
   .hero-stats{flex-direction:column;gap:1rem}
   .gal-grid{grid-template-columns:1fr}
   .slots-row{grid-template-columns:repeat(3,1fr)}
   .am-metrics{grid-template-columns:1fr 1fr}
+  #csvc-grid .csvc-cards{grid-template-columns:1fr}
+  .week-row{gap:.15rem}
+  .wday-btn .df{display:none}
+  .hours-banner{grid-template-columns:1fr}
 }

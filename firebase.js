@@ -14,6 +14,28 @@
   const db = getFirestore(app);
   const COL = 'bookings';
 
+  /* ── EmailJS ── */
+  const EMAILJS_SERVICE  = 'service_2rjw0sm';
+  const EMAILJS_TEMPLATE = 'template_pbtrcdi';
+  const EMAILJS_KEY      = 'EDlPX0xd-miXeB4OW';
+
+  async function sendConfirmationEmail(bk) {
+    if (!bk.email) return; // pas d'email → on skip silencieusement
+    try {
+      await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+        to_email:    bk.email,
+        client_name: bk.first + ' ' + bk.last,
+        service:     bk.service,
+        date:        fmtDate(bk.date),
+        time:        bk.time,
+        duration:    bk.dur,
+        price:       bk.price,
+      }, EMAILJS_KEY);
+    } catch(e) {
+      console.warn('EmailJS error (non-blocking):', e);
+    }
+  }
+
   /* ── Real-time listener: last 30 days + all future ── */
   function initRealtimeListener() {
     const d30 = new Date(); d30.setDate(d30.getDate() - 30);
@@ -50,24 +72,25 @@
 
   /* ── Enregistrer un nouveau RDV ── */
   /* 
-   SÉCURITÉ FIRESTORE — À configurer dans Firebase Console > Firestore > Rules:
+   RÈGLES FIRESTORE ACTUELLES (Firebase Console > Firestore > Rules) :
    
    rules_version = '2';
    service cloud.firestore {
      match /databases/{database}/documents {
        match /bookings/{bookingId} {
          allow read: if true;
-         allow create: if request.resource.data.keys().hasAll(['date','time','svc','name','email','status','source'])
-                       && request.resource.data.source == 'website'
+         // Clients : création depuis le site uniquement
+         allow create: if request.resource.data.source == 'website'
                        && request.resource.data.status == 'confirmed'
                        && request.resource.data.date >= '2026-06-08';
-         allow update, delete: if false; // Only via Admin SDK
+         // Admin : toutes opérations avec source == 'admin'
+         allow create, update, delete: if request.resource.data.source == 'admin';
        }
      }
    }
 */
 window.fbAddBooking = async function(bk) {
-    bk.source = 'website'; bk.createdAt = new Date().toISOString();
+    if (!bk.source) bk.source = 'website'; bk.createdAt = new Date().toISOString();
     const ref = await addDoc(collection(db, COL), bk);
     bk._fid = ref.id;
     nextId = Math.max(nextId, bk.id + 1);
@@ -78,7 +101,7 @@ window.fbAddBooking = async function(bk) {
   window.fbCancelBooking = async function(id) {
     const b = bookings.find(b => b.id === id);
     if (!b) return;
-    if (b._fid) await updateDoc(doc(db, COL, b._fid), { status: 'cancelled' });
+    if (b._fid) await updateDoc(doc(db, COL, b._fid), { status: 'cancelled', source: 'admin' });
     /* onSnapshot met à jour bookings[] et re-render automatiquement */
   };
 
@@ -123,6 +146,7 @@ window.fbAddBooking = async function(bk) {
         service: sel.svc.name, dur: sel.svc.dur, price: sel.svc.price,
         date: sel.date, time: sel.time, msg, status: 'confirmed' };
       await window.fbAddBooking(bk);
+      sendConfirmationEmail(bk); // non-blocking
       const successMsg = (T.success_sub || '')
         .replace('{name}', fn).replace('{svc}', sel.svc.name)
         .replace('{date}', fmtDate(sel.date)).replace('{time}', sel.time);
@@ -152,8 +176,9 @@ window.fbAddBooking = async function(bk) {
       email: document.getElementById('m-em').value.trim(),
       phone: document.getElementById('m-ph').value.trim(),
       service: sr[0], dur: parseInt(sr[1]), price: sr[2],
-      date: ds, time, msg: document.getElementById('m-note').value.trim(), status: 'confirmed' };
+      date: ds, time, msg: document.getElementById('m-note').value.trim(), status: 'confirmed', source: 'admin' };
     await window.fbAddBooking(bk);
+    sendConfirmationEmail(bk); // non-blocking
     selDay = ds; closeModal();
     /* onSnapshot re-render l'admin automatiquement */
   };
