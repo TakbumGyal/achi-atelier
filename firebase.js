@@ -1,6 +1,5 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
   import { getFirestore, collection, addDoc, doc, updateDoc, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-  import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-storage.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDIn0LF69B7bodIUw2yItzUOU-PUmeYpzU",
@@ -13,7 +12,6 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const storage = getStorage(app);
   const COL = 'bookings';
 
   /* ── EmailJS ── */
@@ -91,38 +89,6 @@
      }
    }
 */
-  /* ── Upload photos de référence (max 2, redimensionnées côté client) ── */
-  window.fbUploadPhotos = async function(files, fid) {
-    const urls = [];
-    for (let i = 0; i < Math.min(files.length, 2); i++) {
-      const file = files[i];
-      const resized = await resizeImage(file, 1200);
-      const r = sRef(storage, `bookings/${fid}/${Date.now()}_${i}.jpg`);
-      await uploadBytes(r, resized, { contentType: 'image/jpeg' });
-      urls.push(await getDownloadURL(r));
-    }
-    return urls;
-  };
-
-  /* Redimensionner une image côté client avant upload */
-  function resizeImage(file, maxPx) {
-    return new Promise((resolve) => {
-      const img = new Image();
-      const url = URL.createObjectURL(file);
-      img.onload = () => {
-        URL.revokeObjectURL(url);
-        const ratio = Math.min(maxPx / img.width, maxPx / img.height, 1);
-        const w = Math.round(img.width * ratio);
-        const h = Math.round(img.height * ratio);
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        canvas.toBlob(resolve, 'image/jpeg', 0.82);
-      };
-      img.src = url;
-    });
-  }
-
 window.fbAddBooking = async function(bk) {
     if (!bk.source) bk.source = 'website'; bk.createdAt = new Date().toISOString();
     const ref = await addDoc(collection(db, COL), bk);
@@ -142,7 +108,7 @@ window.fbAddBooking = async function(bk) {
   window.saveBookings = function() {}; // no-op
 
   /* ── Confirmation client avec protection double-booking + double-clic ── */
-  window._fbSubmit = async function(fn, ln, em, ph, msg, photoFiles) {
+  window._fbSubmit = async function(fn, ln, em, ph, msg) {
     const T = TRANS[LANG];
 
     /* Désactiver le bouton immédiatement */
@@ -180,17 +146,6 @@ window.fbAddBooking = async function(bk) {
         service: sel.svc.name, dur: sel.svc.dur, price: sel.svc.price,
         date: sel.date, time: sel.time, msg, status: 'confirmed' };
       await window.fbAddBooking(bk);
-      /* Upload photos si présentes */
-      if (photoFiles && photoFiles.length > 0) {
-        try {
-          const photoUrls = await window.fbUploadPhotos(photoFiles, bk._fid);
-          if (photoUrls.length > 0) {
-            await updateDoc(doc(db, COL, bk._fid), { photos: photoUrls });
-          }
-        } catch(pe) {
-          console.warn('Photo upload failed (non-blocking):', pe);
-        }
-      }
       sendConfirmationEmail(bk); // non-blocking
       const successMsg = (T.success_sub || '')
         .replace('{name}', fn).replace('{svc}', sel.svc.name)
