@@ -350,8 +350,8 @@ function fmtDate(ds) {
   const ms = T.month_abbr || ['jan.','fév.','mars','avr.','mai','juin','juil.','août','sep.','oct.','nov.','déc.'];
   return `${parseInt(d)} ${ms[parseInt(m)-1]} ${y}`;
 }
-/* Capacité : 2 staff. Un créneau est bloqué seulement si 2 réservations s'y chevauchent déjà */
-var MAX_CAPACITY = 2;
+/* Capacité : 2 staff, 1 réservation par créneau. Un créneau est bloqué dès qu'une réservation confirmée le chevauche. */
+var MAX_CAPACITY = 1;
 function slotCount(ds, time, dur, excId) {
   excId = excId || null;
   var s = toMins(time), e = s + dur;
@@ -542,12 +542,7 @@ function renderWeek() {
     const mon = isMonday(ds);
     const isToday = ds === tds();
     const slots = getDynamicSlots(ds, sel.svc ? sel.svc.dur : 30);
-    let free = 0;
-    if (!past && !mon && sel.svc) {
-      free = slots.length;
-    } else if (!past && !mon) {
-      free = slots.length;
-    }
+    const free = (!past && !mon) ? slots.length : 0;
     const col = document.createElement('div'); col.className = 'wday-col';
     const lbl = document.createElement('div'); lbl.className = 'wday-lbl'; lbl.textContent = labels[i];
     const btn = document.createElement('button');
@@ -610,10 +605,8 @@ function renderSlots(ds) {
   }
   available.forEach(function(t) {
     var btn = document.createElement('button');
-    var cnt = slotCount(ds, t, dur);
-    var almostFull = cnt === MAX_CAPACITY - 1 && MAX_CAPACITY > 1;
-    btn.className = 'slot' + (sel.time === t ? ' sel' : '') + (almostFull ? ' slot-last' : '');
-    btn.innerHTML = t + (almostFull ? '<span class="slot-badge">1 place</span>' : '');
+    btn.className = 'slot' + (sel.time === t ? ' sel' : '');
+    btn.textContent = t;
     btn.onclick = function() {
       sel.time = t;
       document.querySelectorAll('.slot').forEach(function(s) { s.classList.remove('sel'); });
@@ -785,7 +778,7 @@ function renderDayPanel(ds) {
     <div>${db.length
       ? db.map(b => `<div class="appt-item">
           <div>
-            <div class="appt-time">${b.time}<span class="appt-cap">${slotCount(b.date, b.time, b.dur)}/${MAX_CAPACITY}</span></div>
+            <div class="appt-time">${b.time}</div>
             <span class="abadge ${b.status === 'cancelled' ? 'abadge-x' : 'abadge-c'}">${b.status === 'cancelled' ? 'annulé' : 'confirmé'}</span>
           </div>
           <div>
