@@ -408,7 +408,7 @@ window.addEventListener('load', () => { setTimeout(() => document.getElementById
 
 /* ─── NAVBAR ─── */
 window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', scrollY > 60));
-document.getElementById('ham').onclick = () => document.getElementById('mobile-menu').classList.add('open');
+document.getElementById('ham').onclick = () => document.getElementById('mobile-menu').classList.toggle('open');
 document.getElementById('mm-close').onclick = () => document.getElementById('mobile-menu').classList.remove('open');
 function closeMM() { document.getElementById('mobile-menu').classList.remove('open'); }
 

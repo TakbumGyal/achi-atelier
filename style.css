@@ -491,4 +491,4 @@ footer .f-sub{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.42);max-
   .week-row{gap:.15rem}
   .wday-btn .df{display:none}
   .hours-banner{grid-template-columns:1fr}
-}
+}.msg-photo-hint{font-size:.75rem;color:var(--muted);line-height:1.5;margin-top:.4rem;padding:.5rem .7rem;background:var(--beige);border-radius:var(--r);border-left:2px solid var(--brown-l)}
