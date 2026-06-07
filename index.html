@@ -372,7 +372,9 @@
           <div class="fg"><label data-i18n="lbl_em">Email *</label><input id="f-em" type="email" placeholder="sophie@email.com" autocomplete="email" oninput="vE(this)"/><span class="eh" id="h-em" data-i18n="err_email">Email invalide</span></div>
           <div class="fg"><label data-i18n="lbl_ph">Téléphone (optionnel)</label><input id="f-ph" type="tel" placeholder="0668202050" maxlength="15" autocomplete="tel" oninput="vP(this)"/><span class="eh" id="h-ph" data-i18n="err_phone">Chiffres uniquement · 10–15 chiffres</span></div>
         </div>
-        <div class="fg"><label data-i18n="lbl_msg">Demande particulière (optionnel)</label><input id="f-msg" type="text" placeholder="Allergies, inspiration nail art…" maxlength="200"/></div>
+        <div class="fg"><label data-i18n="lbl_msg">Demande particulière (optionnel)</label><input id="f-msg" type="text" placeholder="Allergies, inspiration nail art…" maxlength="200"/>
+          <p class="msg-photo-hint" data-i18n="msg_photo_hint">💡 Vous avez une photo de référence ? Mentionnez-le ici et répondez à votre email de confirmation en joignant votre image.</p>
+        </div>
         <div class="btn-row"><button class="btn-b" onclick="goStep(2)" data-i18n="btn_back">← Retour</button><button class="btn-p" onclick="tryStep4()" data-i18n="btn_review">Récapitulatif →</button></div>
       </div>
       <div id="st4" style="display:none"><div id="s4i"></div></div>

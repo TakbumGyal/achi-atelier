@@ -46,6 +46,7 @@ var TRANS = {
     st1_intro:'Choisissez votre prestation pour commencer :',
     btn_next:'Suivant →', btn_back:'← Retour', btn_review:'Récapitulatif →', btn_cancel:'Annuler',
     lbl_fn:'Prénom *', lbl_ln:'Nom *', lbl_em:'Email *', lbl_ph:'Téléphone (optionnel)', lbl_msg:'Demande particulière (optionnel)',
+    msg_photo_hint:'💡 Vous avez une photo de référence ? Mentionnez-le ici et répondez à votre email de confirmation en joignant votre image.',
     err_name:'Lettres uniquement', err_email:'Email invalide', err_phone:'Chiffres uniquement · 10–15 chiffres',
     admin_login_title:'Espace Administrateur', admin_login_sub:'Entrez votre mot de passe pour accéder au tableau de bord.',
     admin_login_btn:'Connexion', admin_err:'Mot de passe incorrect', admin_logout:'Déconnexion',
@@ -99,7 +100,7 @@ var TRANS = {
     testi1:'"Achi Atelier completely changed my relationship with nail care. The attention to detail is remarkable — I always leave delighted. A luxury experience in Paris 11."',
     testi2:'"Booking online is so easy, the salon is beautiful, and my nails lasted 4 weeks perfectly. I recommend Achi Atelier to all my friends!"',
     testi3:'"The best nail studio in Paris, without hesitation. The nail art creations are stunning — they turned my idea into something even more beautiful."',
-    cliente_depuis:'Client since 2022', cliente_desde2:'Client since 2023', cliente_depuis3:'Client since 2021',
+    cliente_depuis:'Client since 2022', cliente_depuis2:'Client since 2023', cliente_depuis3:'Client since 2021',
     hours1_title:'Tuesday – Friday', hours1_time:'10 AM – 8 PM',
     hours2_title:'Saturday – Sunday', hours2_time:'10 AM – 8 PM',
     hours3_title:'Monday', hours3_time:'Closed',
@@ -113,6 +114,7 @@ var TRANS = {
     st1_intro:'Choose your service to get started:',
     btn_next:'Next →', btn_back:'← Back', btn_review:'Review →', btn_cancel:'Cancel',
     lbl_fn:'First name *', lbl_ln:'Last name *', lbl_em:'Email *', lbl_ph:'Phone (optional)', lbl_msg:'Special request (optional)',
+    msg_photo_hint:'💡 Have a reference photo? Mention it here and reply to your confirmation email with your image attached.',
     err_name:'Letters only', err_email:'Invalid email', err_phone:'Numbers only · 10–15 digits',
     admin_login_title:'Admin Panel', admin_login_sub:'Enter your password to access the dashboard.',
     admin_login_btn:'Log in', admin_err:'Incorrect password', admin_logout:'Log out',
@@ -180,6 +182,7 @@ var TRANS = {
     st1_intro:'Elige tu servicio para empezar:',
     btn_next:'Siguiente →', btn_back:'← Volver', btn_review:'Resumen →', btn_cancel:'Cancelar',
     lbl_fn:'Nombre *', lbl_ln:'Apellido *', lbl_em:'Email *', lbl_ph:'Teléfono (opcional)', lbl_msg:'Petición especial (opcional)',
+    msg_photo_hint:'💡 ¿Tienes una foto de referencia? Menciónalo aquí y responde al email de confirmación adjuntando tu imagen.',
     err_name:'Solo letras', err_email:'Email inválido', err_phone:'Solo números · 10–15 dígitos',
     admin_login_title:'Panel Administrador', admin_login_sub:'Introduce tu contraseña para acceder al panel.',
     admin_login_btn:'Entrar', admin_err:'Contraseña incorrecta', admin_logout:'Salir',
@@ -246,6 +249,7 @@ var TRANS = {
     st1_intro:'Выберите услугу для начала:',
     btn_next:'Далее →', btn_back:'← Назад', btn_review:'Итог →', btn_cancel:'Отмена',
     lbl_fn:'Имя *', lbl_ln:'Фамилия *', lbl_em:'Email *', lbl_ph:'Телефон (необязательно)', lbl_msg:'Особые пожелания (необязательно)',
+    msg_photo_hint:'💡 Есть фото для вдохновения? Упомяните это здесь и ответьте на письмо с подтверждением, прикрепив изображение.',
     err_name:'Только буквы', err_email:'Неверный email', err_phone:'Только цифры · 10–15 цифр',
     admin_login_title:'Панель Администратора', admin_login_sub:'Введите пароль для доступа к панели управления.',
     admin_login_btn:'Войти', admin_err:'Неверный пароль', admin_logout:'Выйти',
@@ -408,7 +412,7 @@ window.addEventListener('load', () => { setTimeout(() => document.getElementById
 
 /* ─── NAVBAR ─── */
 window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', scrollY > 60));
-document.getElementById('ham').onclick = () => document.getElementById('mobile-menu').classList.add('open');
+document.getElementById('ham').onclick = () => document.getElementById('mobile-menu').classList.toggle('open');
 document.getElementById('mm-close').onclick = () => document.getElementById('mobile-menu').classList.remove('open');
 function closeMM() { document.getElementById('mobile-menu').classList.remove('open'); }
 
