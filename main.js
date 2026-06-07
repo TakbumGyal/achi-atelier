@@ -510,7 +510,7 @@ function goStep(n) {
 
 function getWeekDates() {
   // Jump to open week if current date is before opening
-  const openDate = new Date('2026-06-08T00:00:00'); openDate.setHours(0,0,0,0);
+  const openDate = new Date('2026-06-10T00:00:00'); openDate.setHours(0,0,0,0);
   const today = new Date(); today.setHours(0,0,0,0);
   if (today < openDate && weekOff === 0) {
     const diffDays = Math.ceil((openDate - today) / (1000*60*60*24));
@@ -537,7 +537,7 @@ function renderWeek() {
   const slotWord = T.slots_word || 'créneaux';
   days.forEach((d, i) => {
     const ds = localDs(d);
-    const openDate = new Date('2026-06-08T00:00:00'); openDate.setHours(0,0,0,0);
+    const openDate = new Date('2026-06-10T00:00:00'); openDate.setHours(0,0,0,0);
     const past = d < today || d < openDate;
     const mon = isMonday(ds);
     const isToday = ds === tds();
@@ -565,7 +565,7 @@ function renderWeek() {
   // Show pre-opening notice if first day of displayed week is before openDate
   const preNotice = document.getElementById('pre-opening-notice');
   if (preNotice) {
-    const openD = new Date('2026-06-08T00:00:00'); openD.setHours(0,0,0,0);
+    const openD = new Date('2026-06-10T00:00:00'); openD.setHours(0,0,0,0);
     const firstDay = days[0];
     preNotice.style.display = (firstDay < openD) ? 'block' : 'none';
   }

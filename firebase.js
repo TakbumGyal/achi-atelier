@@ -82,7 +82,7 @@
          // Clients : création depuis le site uniquement
          allow create: if request.resource.data.source == 'website'
                        && request.resource.data.status == 'confirmed'
-                       && request.resource.data.date >= '2026-06-08';
+                       && request.resource.data.date >= '2026-06-10';
          // Admin : toutes opérations avec source == 'admin'
          allow create, update, delete: if request.resource.data.source == 'admin';
        }
