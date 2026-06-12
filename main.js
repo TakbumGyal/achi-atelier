@@ -291,6 +291,7 @@ function setLang(l) {
 
 /* ─── SERVICES DATA ─── */
 var ALL_SVCS = [
+  {cat:'Manucures', name:'Semi-permanent', dur:30, price:'30€'},
   {cat:'Manucures', name:'Manucure classique', dur:20, price:'25€'},
   {cat:'Manucures', name:'Manucure spa', dur:30, price:'35€'},
   {cat:'Manucures', name:'Manucure japonaise', dur:30, price:'35€'},
