@@ -370,10 +370,41 @@ function slotCount(ds, time, dur, excId) {
 function isTaken(ds, time, dur, excId) {
   return slotCount(ds, time, dur, excId) >= MAX_CAPACITY;
 }
+/* ── Blocage des réservations du jour : piloté depuis le bouton admin (stocké dans Firestore settings/config) ── */
+var BLOCK_TODAY = false; /* mis à jour en temps réel par firebase.js */
+
+function updateBlockTodayBtn() {
+  const b = document.getElementById('btn-block-today');
+  if (!b) return;
+  if (BLOCK_TODAY) {
+    b.textContent = '🔒 Résas du jour : BLOQUÉES';
+    b.style.background = '#8a3a2e'; b.style.color = '#fff'; b.style.borderColor = '#8a3a2e';
+  } else {
+    b.textContent = '🔓 Résas du jour : ouvertes';
+    b.style.background = ''; b.style.color = ''; b.style.borderColor = '';
+  }
+}
+
+async function toggleBlockToday() {
+  const nv = !BLOCK_TODAY;
+  const q = nv
+    ? 'Bloquer toutes les réservations pour aujourd\'hui ? Les clientes ne pourront plus réserver de créneau à la date du jour.'
+    : 'Rouvrir les réservations pour aujourd\'hui ?';
+  if (!confirm(q)) return;
+  try {
+    await window.fbSetBlockToday(nv);
+    /* Le listener temps réel mettra à jour BLOCK_TODAY et le bouton automatiquement */
+  } catch(e) {
+    console.error(e);
+    alert('Erreur : impossible d\'enregistrer le réglage. Vérifiez les règles Firestore (collection settings).');
+  }
+}
+
 function isPastSlot(ds, time) {
   const today = tds();
   if (ds > today) return false;
   if (ds < today) return true;
+  if (BLOCK_TODAY) return true; // aujourd'hui entièrement bloqué
   return toMins(time) < nowMins();
 }
 function isMonday(ds) { return new Date(ds + 'T12:00:00').getDay() === 1; }
@@ -543,7 +574,7 @@ function renderWeek() {
   days.forEach((d, i) => {
     const ds = localDs(d);
     const openDate = new Date('2026-06-10T00:00:00'); openDate.setHours(0,0,0,0);
-    const past = d < today || d < openDate;
+    const past = d < today || d < openDate || (BLOCK_TODAY && ds === tds());
     const mon = isMonday(ds);
     const isToday = ds === tds();
     const slots = getDynamicSlots(ds, sel.svc ? sel.svc.dur : 30);
@@ -602,6 +633,8 @@ function renderSlots(ds) {
   const dur = sel.svc ? sel.svc.dur : 30;
   const available = getDynamicSlots(ds, dur);
   if (available.length === 0) {
+    /* Sécurité : si l'heure sélectionnée n'est plus valable, on désactive "Continuer" */
+    if (sel.date === ds) { sel.time = null; const b2 = document.getElementById('bs2'); if (b2) b2.disabled = true; }
     const msg = document.createElement('p');
     msg.style.cssText = 'font-size:.82rem;color:var(--muted);grid-column:1/-1;padding:.5rem 0';
     msg.textContent = (T.no_slots || 'Aucun créneau disponible ce jour.');
@@ -728,7 +761,7 @@ var selDay = null;
 function aPrev() { aMonth.setMonth(aMonth.getMonth() - 1); renderAdminCal(); }
 function aNext() { aMonth.setMonth(aMonth.getMonth() + 1); renderAdminCal(); }
 
-function renderAdmin() { renderMetrics(); renderAdminCal(); renderUpcoming(); }
+function renderAdmin() { renderMetrics(); renderAdminCal(); renderUpcoming(); updateBlockTodayBtn(); }
 
 function renderMetrics() {
   const today = tds();

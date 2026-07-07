@@ -1,5 +1,5 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, doc, updateDoc, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, doc, updateDoc, setDoc, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDIn0LF69B7bodIUw2yItzUOU-PUmeYpzU",
@@ -72,7 +72,7 @@
 
   /* ── Enregistrer un nouveau RDV ── */
   /* 
-   RÈGLES FIRESTORE ACTUELLES (Firebase Console > Firestore > Rules) :
+   RÈGLES FIRESTORE À METTRE À JOUR (Firebase Console > Firestore > Rules) :
    
    rules_version = '2';
    service cloud.firestore {
@@ -85,6 +85,11 @@
                        && request.resource.data.date >= '2026-06-10';
          // Admin : toutes opérations avec source == 'admin'
          allow create, update, delete: if request.resource.data.source == 'admin';
+       }
+       // Réglages du site (blocage des réservations du jour, etc.)
+       match /settings/{docId} {
+         allow read: if true;
+         allow write: if request.resource.data.source == 'admin';
        }
      }
    }
@@ -115,8 +120,8 @@ window.fbAddBooking = async function(bk) {
     const btn = document.getElementById('btn-confirm-bk');
     if (btn) { btn.disabled = true; btn.textContent = '⏳ Enregistrement…'; }
 
-    /* Vérifier que le créneau est toujours libre */
-    if (isTaken(sel.date, sel.time, sel.svc.dur)) {
+    /* Vérifier que le créneau est toujours libre ET que le jour n'a pas été bloqué entre-temps */
+    if (isTaken(sel.date, sel.time, sel.svc.dur) || isPastSlot(sel.date, sel.time)) {
       const slotUnavailMsg = {
         fr: 'Ce créneau vient d\'être réservé. Veuillez en choisir un autre.',
         en: 'This slot was just booked. Please choose another one.',
@@ -190,5 +195,27 @@ window.fbAddBooking = async function(bk) {
     /* onSnapshot re-render l'admin automatiquement */
   };
 
+  /* ── Réglage "bloquer les réservations du jour" (temps réel) ── */
+  function initSettingsListener() {
+    onSnapshot(doc(db, 'settings', 'config'), (snap) => {
+      window.BLOCK_TODAY = snap.exists() ? !!snap.data().blockToday : false;
+      /* Mettre à jour le bouton admin */
+      if (typeof updateBlockTodayBtn === 'function') updateBlockTodayBtn();
+      /* Rafraîchir les créneaux si la cliente est sur l'étape 2 */
+      const st2 = document.getElementById('st2');
+      if (st2 && st2.style.display !== 'none') renderWeek();
+    }, (err) => {
+      console.warn('Settings listener error:', err);
+    });
+  }
+
+  /* ── Activer/désactiver le blocage du jour (admin) ── */
+  window.fbSetBlockToday = async function(val) {
+    await setDoc(doc(db, 'settings', 'config'),
+      { blockToday: !!val, source: 'admin', updatedAt: new Date().toISOString() },
+      { merge: true });
+  };
+
   /* ── Démarrage ── */
   initRealtimeListener();
+  initSettingsListener();
