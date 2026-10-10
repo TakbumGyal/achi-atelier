@@ -4,15 +4,15 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Atelier Achi — Nail Studio · Paris 11</title>
-<meta name="description" content="Atelier Achi Nail Studio — Salon de manucure, beauté des ongles et épilation à Paris 11ème. Réservez votre soin en ligne."/>
-<meta name="keywords" content="nail studio paris, manucure paris 11, onglerie paris, épilation paris, semi-permanent paris, atelier achi, ongles paris 11"/>
+<meta name="description" content="Atelier Achi Nail Studio — Salon de manucure et beauté des ongles à Paris 11ème. Réservez votre soin en ligne."/>
+<meta name="keywords" content="nail studio paris, manucure paris 11, onglerie paris, semi-permanent paris, atelier achi, ongles paris 11"/>
 <meta property="og:title" content="Atelier Achi — Nail Studio Paris 11"/>
-<meta property="og:description" content="Salon de manucure et épilation haut de gamme à Paris 11ème. Réservez votre soin en ligne."/>
+<meta property="og:description" content="Salon de manucure haut de gamme à Paris 11ème. Réservez votre soin en ligne."/>
 <meta property="og:image" content="logo.jpg"/>
 <meta property="og:url" content="https://atelierachi.com"/>
 <meta property="og:type" content="website"/>
 <link rel="canonical" href="https://atelierachi.com"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BeautySalon","name":"Atelier Achi Nail Studio","description":"Salon de manucure et épilation haut de gamme à Paris 11ème","address":{"@type":"PostalAddress","streetAddress":"9 rue Trousseau","addressLocality":"Paris","postalCode":"75011","addressCountry":"FR"},"telephone":"+33187076059","email":"atelierachi@gmail.com","url":"https://atelierachi.com","openingHours":["Tu-Su 10:00-20:00"],"sameAs":["https://www.instagram.com/atelier_achi/"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BeautySalon","name":"Atelier Achi Nail Studio","description":"Salon de manucure haut de gamme à Paris 11ème","address":{"@type":"PostalAddress","streetAddress":"9 rue Trousseau","addressLocality":"Paris","postalCode":"75011","addressCountry":"FR"},"telephone":"+33187076059","email":"atelierachi@gmail.com","url":"https://atelierachi.com","openingHours":["Tu-Su 10:00-20:00"],"sameAs":["https://www.instagram.com/atelier_achi/"]}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="icon" href="favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
@@ -116,20 +116,18 @@
     <!-- Remplace about-1.jpg, about-2.jpg, about-3.jpg dans pictures/ -->
     <div class="about-img">
       <img src="about1.jpg" alt="Artisanat" style="width:100%;height:100%;object-fit:cover;object-position:center top"
-           onerror="this.remove()"/>
+           onerror="var e=['jpeg','png','webp','JPG','JPEG','PNG'],i=+(this.dataset.t||0);if(i<e.length){this.dataset.t=i+1;this.src=this.src.replace(/\.[^.\/]+$/,'.'+e[i]);}else{this.remove();}"/>
 
     </div>
     <div class="about-img">
       <img src="about2.jpg" alt="Notre Atelier" style="width:100%;height:100%;object-fit:cover;object-position:center top"
-           onerror="this.remove()"/>
+           onerror="var e=['jpeg','png','webp','JPG','JPEG','PNG'],i=+(this.dataset.t||0);if(i<e.length){this.dataset.t=i+1;this.src=this.src.replace(/\.[^.\/]+$/,'.'+e[i]);}else{this.remove();}"/>
 
     </div>
     <div class="about-img">
-      <img src="about3.jpg" alt="L'Expérience" style="width:100%;height:100%;object-fit:cover;object-position:center top"
-           onerror="this.remove()"/>
-
+      <img src="about3.jpeg" alt="L'Expérience" style="width:100%;height:100%;object-fit:cover;object-position:center 32%"
+           onerror="var e=['jpeg','png','webp','JPG','JPEG','PNG'],i=+(this.dataset.t||0);if(i<e.length){this.dataset.t=i+1;this.src=this.src.replace(/\.[^.\/]+$/,'.'+e[i]);}else{this.remove();}"/>
     </div>
-
   </div>
   <div class="about-text fade-up">
     <p class="sec-eyebrow" data-i18n="about_eyebrow">Notre histoire</p>
@@ -151,10 +149,6 @@
     <span class="tag" data-i18n="svc_tag">Nos prestations</span>
     <h2 data-i18n="svc_h2">Des soins pensés <em>pour vous</em></h2>
     <p data-i18n="svc_sub">Chaque prestation est conçue pour révéler votre beauté naturelle, avec des produits qui nourrissent autant qu'ils transforment.</p>
-  </div>
-  <div class="svc-tabs fade-up">
-    <button class="svc-tab active" onclick="svcTab('ongles')" data-i18n="tab_ongles">💅 Ongles</button>
-    <button class="svc-tab" onclick="svcTab('epil')" data-i18n="tab_epil">🌸 Épilation</button>
   </div>
 
   <!-- ONGLES TAB -->
@@ -211,43 +205,6 @@
     </div>
   </div>
 
-  <!-- ÉPILATION TAB -->
-  <div class="svc-panel" id="sp-epil">
-    <div class="svc-menu">
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_visage">Visage</div>
-        <div class="svc-row"><span class="svc-name">Sourcils<span class="svc-meta">15 min</span></span><span class="svc-price">15€</span></div>
-        <div class="svc-row"><span class="svc-name">Lèvre supérieure<span class="svc-meta">10 min</span></span><span class="svc-price">10€</span></div>
-        <div class="svc-row"><span class="svc-name">Menton<span class="svc-meta">10 min</span></span><span class="svc-price">10€</span></div>
-        <div class="svc-row"><span class="svc-name">Joues<span class="svc-meta">10 min</span></span><span class="svc-price">10€</span></div>
-        <div class="svc-row"><span class="svc-name">Visage complet (hors sourcils)<span class="svc-meta">20 min</span></span><span class="svc-price">25€</span></div>
-      </div>
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_haut">Haut du corps</div>
-        <div class="svc-row"><span class="svc-name">Aisselles<span class="svc-meta">15 min</span></span><span class="svc-price">15€</span></div>
-        <div class="svc-row"><span class="svc-name">Demi-bras<span class="svc-meta">15 min</span></span><span class="svc-price">15€</span></div>
-        <div class="svc-row"><span class="svc-name">Bras complets<span class="svc-meta">20 min</span></span><span class="svc-price">23€</span></div>
-        <div class="svc-row"><span class="svc-name">Dos<span class="svc-meta">30 min</span></span><span class="svc-price">30€</span></div>
-        <div class="svc-row"><span class="svc-name">Torse<span class="svc-meta">30 min</span></span><span class="svc-price">30€</span></div>
-      </div>
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_bas">Bas du corps</div>
-        <div class="svc-row"><span class="svc-name">Demi-jambes<span class="svc-meta">25 min</span></span><span class="svc-price">20€</span></div>
-        <div class="svc-row"><span class="svc-name">Jambes complètes<span class="svc-meta">40 min</span></span><span class="svc-price">35€</span></div>
-      </div>
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_forfait">Forfaits épilation</div>
-        <div class="svc-row"><span class="svc-name">Aisselles + demi-jambes<span class="svc-meta">35 min</span></span><span class="svc-price">32€</span></div>
-        <div class="svc-row"><span class="svc-name">Aisselles + jambes complètes<span class="svc-meta">50 min</span></span><span class="svc-price">45€</span></div>
-        <div class="svc-row"><span class="svc-name">Visage complet + sourcils<span class="svc-meta">25 min</span></span><span class="svc-price">30€</span></div>
-        <div class="svc-row"><span class="svc-name">Demi-jambes + aisselles + demi-bras<span class="svc-meta">45 min</span></span><span class="svc-price">45€</span></div>
-        <div class="svc-row"><span class="svc-name">Jambes complètes + aisselles + bras complets<span class="svc-meta">1h</span></span><span class="svc-price">60€</span></div>
-        <div class="svc-row"><span class="svc-name">Aisselles + demi-bras<span class="svc-meta">30 min</span></span><span class="svc-price">27€</span></div>
-        <div class="svc-row"><span class="svc-name">Jambes complètes + aisselles<span class="svc-meta">55 min</span></span><span class="svc-price">48€</span></div>
-        <div class="svc-row"><span class="svc-name">Visage complet + aisselles<span class="svc-meta">35 min</span></span><span class="svc-price">38€</span></div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- GALLERY -->
@@ -262,31 +219,26 @@
     <div class="g-item fade-up">
       <div class="g-inner">
         <img src="nail.png" alt="Nail Art Signature" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%"/>
-        <span class="g-lbl" data-i18n="gal_lbl1">Nail Art Signature</span>
       </div>
     </div>
     <div class="g-item fade-up">
       <div class="g-inner">
         <img src="pic1.jpeg" alt="Manucure Classique" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%"/>
-        <span class="g-lbl" data-i18n="gal_lbl2">Manucure Classique</span>
-      </div>
-    </div>
-    <div class="g-item fade-up">
-      <div class="g-inner">
-        <img src="pic2.jpeg" alt="Soin des Pieds" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center"/>
-        <span class="g-lbl" data-i18n="gal_lbl5">Soin des Pieds</span>
-      </div>
-    </div>
-    <div class="g-item fade-up">
-      <div class="g-inner">
-        <img src="pic3.jpeg" alt="Épilation" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%"/>
-        <span class="g-lbl">Épilation</span>
       </div>
     </div>
     <div class="g-item fade-up">
       <div class="g-inner">
         <img src="pic4.jpeg" alt="Semi-permanent" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%"/>
-        <span class="g-lbl" data-i18n="gal_lbl3">Semi-permanent</span>
+      </div>
+    </div>
+    <div class="g-item fade-up">
+      <div class="g-inner">
+        <img src="pic3.jpeg" alt="Réalisation Atelier Achi" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%"/>
+      </div>
+    </div>
+    <div class="g-item fade-up">
+      <div class="g-inner">
+        <img src="pic5.jpeg" alt="Réalisation Atelier Achi" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%"/>
       </div>
     </div>
   </div>
@@ -451,7 +403,6 @@
       <li><a href="#services">Manucure spa</a></li>
       <li><a href="#services">Pose de gel</a></li>
       <li><a href="#services">Soin des pieds</a></li>
-      <li><a href="#services">Épilation</a></li>
     </ul></div>
     <div class="fc fcc"><h4 data-i18n="f_contact">Contact</h4>
       <p>📍 9 rue Trousseau, Paris 75011</p>

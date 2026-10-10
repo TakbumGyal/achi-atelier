@@ -316,26 +316,6 @@ var ALL_SVCS = [
   {cat:'Pose & Renforcement', name:'Pose de gel avec semi-permanent', dur:60, price:'70€'},
   {cat:'Pose & Renforcement', name:'Remplissage résine avec semi-permanent', dur:50, price:'55€'},
   {cat:'Pose & Renforcement', name:'Remplissage gel avec semi-permanent', dur:50, price:'65€'},
-  {cat:'Épilation — Visage', name:'Sourcils', dur:15, price:'15€'},
-  {cat:'Épilation — Visage', name:'Lèvre supérieure', dur:10, price:'10€'},
-  {cat:'Épilation — Visage', name:'Menton', dur:10, price:'10€'},
-  {cat:'Épilation — Visage', name:'Joues', dur:10, price:'10€'},
-  {cat:'Épilation — Visage', name:'Visage complet (hors sourcils)', dur:20, price:'25€'},
-  {cat:'Épilation — Corps', name:'Aisselles', dur:15, price:'15€'},
-  {cat:'Épilation — Corps', name:'Demi-bras', dur:15, price:'15€'},
-  {cat:'Épilation — Corps', name:'Bras complets', dur:20, price:'23€'},
-  {cat:'Épilation — Corps', name:'Dos', dur:30, price:'30€'},
-  {cat:'Épilation — Corps', name:'Torse', dur:30, price:'30€'},
-  {cat:'Épilation — Corps', name:'Demi-jambes', dur:25, price:'20€'},
-  {cat:'Épilation — Corps', name:'Jambes complètes', dur:40, price:'35€'},
-  {cat:'Forfaits épilation', name:'Aisselles + demi-jambes', dur:35, price:'32€'},
-  {cat:'Forfaits épilation', name:'Aisselles + jambes complètes', dur:50, price:'45€'},
-  {cat:'Forfaits épilation', name:'Visage complet + sourcils', dur:25, price:'30€'},
-  {cat:'Forfaits épilation', name:'Demi-jambes + aisselles + demi-bras', dur:45, price:'45€'},
-  {cat:'Forfaits épilation', name:'Jambes complètes + aisselles + bras complets', dur:60, price:'60€'},
-  {cat:'Forfaits épilation', name:'Aisselles + demi-bras', dur:30, price:'27€'},
-  {cat:'Forfaits épilation', name:'Jambes complètes + aisselles', dur:55, price:'48€'},
-  {cat:'Forfaits épilation', name:'Visage complet + aisselles', dur:35, price:'38€'},
 ];
 
 /* ─── HELPERS ─── */
@@ -449,7 +429,7 @@ document.getElementById('mm-close').onclick = () => document.getElementById('mob
 function closeMM() { document.getElementById('mobile-menu').classList.remove('open'); }
 
 /* ─── MARQUEE ─── */
-const mqItems = ['Manucure Classique','Manucure Spa','Pose de Gel','Gel X','Semi-permanent','Soin des Pieds','Nail Art','Remplissage','Épilation Visage','Épilation Corps','Forfaits','Renforcement'];
+const mqItems = ['Manucure Classique','Manucure Spa','Pose de Gel','Gel X','Semi-permanent','Soin des Pieds','Nail Art','Remplissage','Renforcement'];
 const mt = document.getElementById('mqt');
 let mqH = '';
 for (let i = 0; i < 4; i++) mqItems.forEach(it => { mqH += `<span class="mq-item">${it}<span class="mq-dot"></span></span>`; });
@@ -458,13 +438,6 @@ mt.innerHTML = mqH;
 /* ─── SCROLL ANIMATIONS ─── */
 const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }), { threshold: .1 });
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-/* ─── SERVICES TABS ─── */
-function svcTab(t) {
-  document.querySelectorAll('.svc-tab').forEach((b, i) => b.classList.toggle('active', (t === 'ongles' && i === 0) || (t === 'epil' && i === 1)));
-  document.getElementById('sp-ongles').classList.toggle('active', t === 'ongles');
-  document.getElementById('sp-epil').classList.toggle('active', t === 'epil');
-}
 
 /* ─── BOOKINGS DATA ─── */
 function saveBookings() {} // overridden by Firebase module

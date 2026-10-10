@@ -95,7 +95,7 @@ nav.scrolled{background:rgba(250,247,240,.95);backdrop-filter:blur(14px);-webkit
 .about-img{border-radius:var(--r-xl);overflow:hidden;position:relative;background:var(--beige)}
 .about-img:nth-child(1){aspect-ratio:3/4;margin-top:2rem}
 .about-img:nth-child(2){aspect-ratio:3/4}
-.about-img:nth-child(3){grid-column:span 2;aspect-ratio:16/6}
+.about-img:nth-child(3){grid-column:span 2;aspect-ratio:16/11}
 /* REMPLACER CETTE IMAGE — Photo 1 : gros plan sur les ongles */
 .about-img:nth-child(1){background:linear-gradient(145deg,#F0E8DC,#D4C0B0)}
 /* REMPLACER CETTE IMAGE — Photo 2 : intérieur du salon */
@@ -414,8 +414,8 @@ footer .f-sub{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.42);max-
 
   /* About */
   #about{grid-template-columns:1fr;gap:2rem}
-  .about-grid{grid-template-columns:1fr;gap:.7rem}
-  .about-img:nth-child(3){grid-column:span 1}
+  .about-grid{grid-template-columns:1fr 1fr;gap:.7rem}
+  .about-img:nth-child(3){grid-column:span 2}
 
   /* Hours */
   .hours-banner{grid-template-columns:1fr 1fr;padding:2.5rem 1.2rem}
@@ -427,6 +427,8 @@ footer .f-sub{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.42);max-
   .gal-grid{grid-template-columns:1fr 1fr}
   .g-item:first-child{grid-row:span 1;aspect-ratio:3/2}
   .g-item:first-child .g-inner{min-height:130px}
+  /* 5 photos sur 2 colonnes : la dernière prend toute la largeur */
+  .g-item:last-child{grid-column:span 2;aspect-ratio:3/1}
 
   /* Booking tunnel */
   .bk-tabs{flex-wrap:wrap;gap:.4rem}
@@ -485,6 +487,7 @@ footer .f-sub{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.42);max-
   .hero-l h1{font-size:clamp(1.8rem,7vw,2.4rem)}
   .hero-stats{flex-direction:column;gap:1rem}
   .gal-grid{grid-template-columns:1fr}
+  .g-item:last-child{grid-column:auto;aspect-ratio:3/2}
   .slots-row{grid-template-columns:repeat(3,1fr)}
   .am-metrics{grid-template-columns:1fr 1fr}
   #csvc-grid .csvc-cards{grid-template-columns:1fr}
