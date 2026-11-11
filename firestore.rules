@@ -1,0 +1,29 @@
+// Firestore security rules for the Atelier Achi booking system.
+// These must be pasted into: Firebase console → Firestore Database → Rules.
+// (Moved here from a comment in the old firebase.js; this file is the reference copy.)
+//
+// ⚠️ KNOWN WEAKNESS: these rules trust the `source` field sent by the browser,
+// and allow anyone to read every booking (names, emails, phone numbers).
+// See the security notes in the README / pull request before relying on them.
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /bookings/{bookingId} {
+      allow read: if true;
+      // Clients: create from the website only
+      allow create: if request.resource.data.source == 'website'
+                    && request.resource.data.status == 'confirmed'
+                    && request.resource.data.date >= '2026-06-10';
+      // Admin: all operations with source == 'admin'
+      allow create, update, delete: if request.resource.data.source == 'admin';
+    }
+
+    // Site settings (e.g. block today's bookings)
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if request.resource.data.source == 'admin';
+    }
+  }
+}

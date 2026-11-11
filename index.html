@@ -1,44 +1,79 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Atelier Achi — Nail Studio · Paris 11</title>
-<meta name="description" content="Atelier Achi Nail Studio — Salon de manucure et beauté des ongles à Paris 11ème. Réservez votre soin en ligne."/>
-<meta name="keywords" content="nail studio paris, manucure paris 11, onglerie paris, semi-permanent paris, atelier achi, ongles paris 11"/>
-<meta property="og:title" content="Atelier Achi — Nail Studio Paris 11"/>
-<meta property="og:description" content="Salon de manucure haut de gamme à Paris 11ème. Réservez votre soin en ligne."/>
-<meta property="og:image" content="logo.jpg"/>
-<meta property="og:url" content="https://atelierachi.com"/>
-<meta property="og:type" content="website"/>
-<link rel="canonical" href="https://atelierachi.com"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BeautySalon","name":"Atelier Achi Nail Studio","description":"Salon de manucure haut de gamme à Paris 11ème","address":{"@type":"PostalAddress","streetAddress":"9 rue Trousseau","addressLocality":"Paris","postalCode":"75011","addressCountry":"FR"},"telephone":"+33187076059","email":"atelierachi@gmail.com","url":"https://atelierachi.com","openingHours":["Tu-Su 10:00-20:00"],"sameAs":["https://www.instagram.com/atelier_achi/"]}</script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="icon" href="favicon.ico" sizes="any"/>
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
-<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png"/>
-<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
-<link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier Achi — Nail Studio · Paris 11</title>
+  <meta name="description" content="Atelier Achi Nail Studio — Salon de manucure et beauté des ongles à Paris 11ème. Réservez votre soin en ligne.">
+  <meta name="keywords" content="nail studio paris, manucure paris 11, onglerie paris, semi-permanent paris, atelier achi, ongles paris 11">
+  <link rel="canonical" href="https://www.atelierachi.com/">
+
+  <!-- Social sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.atelierachi.com/">
+  <meta property="og:title" content="Atelier Achi — Nail Studio Paris 11">
+  <meta property="og:description" content="Salon de manucure haut de gamme à Paris 11ème. Réservez votre soin en ligne.">
+  <meta property="og:image" content="https://www.atelierachi.com/assets/img/logo.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BeautySalon",
+    "name": "Atelier Achi Nail Studio",
+    "description": "Salon de manucure haut de gamme à Paris 11ème",
+    "url": "https://www.atelierachi.com/",
+    "image": "https://www.atelierachi.com/assets/img/logo.png",
+    "telephone": "+33187076059",
+    "email": "atelierachi@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9 rue Trousseau",
+      "addressLocality": "Paris",
+      "postalCode": "75011",
+      "addressCountry": "FR"
+    },
+    "openingHours": ["Tu-Su 10:00-20:00"],
+    "sameAs": ["https://www.instagram.com/atelier_achi/"]
+  }
+  </script>
+
+  <!-- Icons -->
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/icons/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <!-- Fonts & styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/booking.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Scripts (deferred / module — run after the page is parsed) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+  <script type="module" src="assets/js/main.js"></script>
 </head>
 <body>
 
-<!-- LOADER -->
+<!-- ═══════════ LOADER ═══════════ -->
 <div id="loader">
   <p class="ld-sub" data-i18n="loader_sub">Nail Studio · Paris 11</p>
   <div class="ld-name">Atelier Achi</div>
   <div class="ld-bar-wrap"><div class="ld-bar"></div></div>
 </div>
 
-<!-- CURSOR -->
+<!-- Custom cursor (desktop) -->
 <div id="cur"></div>
 <div id="cur-ring"></div>
 
-<!-- NAVBAR -->
+<!-- ═══════════ NAVBAR ═══════════ -->
 <nav id="navbar">
   <a href="#" class="nav-logo">
-    <!-- Remplace logo.png par ton fichier logo dans le même dossier -->
-    <img src="logo.png" alt="Atelier Achi Nail Studio" onerror="this.style.display='none';document.querySelector('.nav-logo-text').style.display='block'"/>
-    <div class="nav-logo-text" style="display:none">Atelier Achi<span>Nail Studio</span></div>
+    <img src="assets/img/logo.png" alt="Atelier Achi Nail Studio">
   </a>
   <ul class="nav-center">
     <li><a href="#about" data-i18n="nav_about">À propos</a></li>
@@ -48,36 +83,36 @@
   </ul>
   <div class="nav-right">
     <div class="lang-sw">
-      <button class="lb active" id="lb-fr" onclick="setLang('fr')">FR</button>
+      <button class="lb active" data-action="lang" data-lang="fr">FR</button>
       <span class="lb-sep">·</span>
-      <button class="lb" id="lb-en" onclick="setLang('en')">EN</button>
+      <button class="lb" data-action="lang" data-lang="en">EN</button>
       <span class="lb-sep">·</span>
-      <button class="lb" id="lb-es" onclick="setLang('es')">ES</button>
+      <button class="lb" data-action="lang" data-lang="es">ES</button>
       <span class="lb-sep">·</span>
-      <button class="lb" id="lb-ru" onclick="setLang('ru')">RU</button>
+      <button class="lb" data-action="lang" data-lang="ru">RU</button>
     </div>
     <a href="#booking" class="nav-cta" data-i18n="nav_book">Réserver</a>
   </div>
-  <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" data-action="toggle-menu" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- MOBILE MENU -->
+<!-- Mobile menu -->
 <div class="mobile-menu" id="mobile-menu">
-  <button class="mm-close" id="mm-close">✕</button>
-  <a href="#about" onclick="closeMM()" data-i18n="nav_about">À propos</a>
-  <a href="#services" onclick="closeMM()" data-i18n="nav_services">Soins</a>
-  <a href="#gallery" onclick="closeMM()" data-i18n="nav_gallery">Galerie</a>
-  <a href="#contact" onclick="closeMM()" data-i18n="nav_contact">Contact</a>
-  <a href="#booking" onclick="closeMM()" style="color:var(--brown)" data-i18n="nav_book">Réserver</a>
+  <button class="mm-close" data-action="close-menu" aria-label="Fermer">✕</button>
+  <a href="#about" data-i18n="nav_about">À propos</a>
+  <a href="#services" data-i18n="nav_services">Soins</a>
+  <a href="#gallery" data-i18n="nav_gallery">Galerie</a>
+  <a href="#contact" data-i18n="nav_contact">Contact</a>
+  <a href="#booking" class="mm-book" data-i18n="nav_book">Réserver</a>
   <div class="mm-lang">
-    <button class="lb" onclick="setLang('fr');closeMM()">FR</button>
-    <button class="lb" onclick="setLang('en');closeMM()">EN</button>
-    <button class="lb" onclick="setLang('es');closeMM()">ES</button>
-    <button class="lb" onclick="setLang('ru');closeMM()">RU</button>
+    <button class="lb active" data-action="lang" data-lang="fr">FR</button>
+    <button class="lb" data-action="lang" data-lang="en">EN</button>
+    <button class="lb" data-action="lang" data-lang="es">ES</button>
+    <button class="lb" data-action="lang" data-lang="ru">RU</button>
   </div>
 </div>
 
-<!-- HERO -->
+<!-- ═══════════ HERO ═══════════ -->
 <section id="hero">
   <div class="hero-deco-1"></div>
   <div class="hero-deco-2"></div>
@@ -97,37 +132,22 @@
   </div>
   <div class="hero-r">
     <div class="hero-img-wrap">
-      <div class="hero-img-deco"></div>
       <div class="hero-img-container">
-        <!-- Remplace par ta photo hero dans pictures/hero.jpg quand tu l'as -->
-        <img class="hero-main-img" src="heroImage.jfif" alt="Atelier Achi — Nail Art Paris"
-             onerror="this.style.background='linear-gradient(145deg,#F0E8DC,#D4C0B0)';this.style.display='block';this.removeAttribute('src')"/>
+        <img class="hero-main-img" src="assets/img/hero.jpg" alt="Atelier Achi — Nail Art Paris">
       </div>
     </div>
   </div>
 </section>
 
-<!-- MARQUEE -->
+<!-- Scrolling banner (filled by ui.js) -->
 <div class="mq-wrap"><div class="mq-track" id="mqt"></div></div>
 
-<!-- ABOUT -->
+<!-- ═══════════ ABOUT ═══════════ -->
 <section id="about">
   <div class="about-grid fade-up">
-    <!-- Remplace about-1.jpg, about-2.jpg, about-3.jpg dans pictures/ -->
-    <div class="about-img">
-      <img src="about1.jpg" alt="Artisanat" style="width:100%;height:100%;object-fit:cover;object-position:center top"
-           onerror="var e=['jpeg','png','webp','JPG','JPEG','PNG'],i=+(this.dataset.t||0);if(i<e.length){this.dataset.t=i+1;this.src=this.src.replace(/\.[^.\/]+$/,'.'+e[i]);}else{this.remove();}"/>
-
-    </div>
-    <div class="about-img">
-      <img src="about2.jpg" alt="Notre Atelier" style="width:100%;height:100%;object-fit:cover;object-position:center top"
-           onerror="var e=['jpeg','png','webp','JPG','JPEG','PNG'],i=+(this.dataset.t||0);if(i<e.length){this.dataset.t=i+1;this.src=this.src.replace(/\.[^.\/]+$/,'.'+e[i]);}else{this.remove();}"/>
-
-    </div>
-    <div class="about-img">
-      <img src="about3.jpeg" alt="L'Expérience" style="width:100%;height:100%;object-fit:cover;object-position:center 32%"
-           onerror="var e=['jpeg','png','webp','JPG','JPEG','PNG'],i=+(this.dataset.t||0);if(i<e.length){this.dataset.t=i+1;this.src=this.src.replace(/\.[^.\/]+$/,'.'+e[i]);}else{this.remove();}"/>
-    </div>
+    <div class="about-img"><img src="assets/img/about/about-1.jpg" alt="Artisanat" loading="lazy"></div>
+    <div class="about-img"><img src="assets/img/about/about-2.jpg" alt="Notre Atelier" loading="lazy"></div>
+    <div class="about-img"><img src="assets/img/about/about-3.jpg" alt="L'Expérience" loading="lazy" style="--pos: center 32%"></div>
   </div>
   <div class="about-text fade-up">
     <p class="sec-eyebrow" data-i18n="about_eyebrow">Notre histoire</p>
@@ -143,72 +163,18 @@
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- ═══════════ SERVICES / PRICES ═══════════ -->
 <section id="services">
   <div class="sec-hdr fade-up">
     <span class="tag" data-i18n="svc_tag">Nos prestations</span>
     <h2 data-i18n="svc_h2">Des soins pensés <em>pour vous</em></h2>
     <p data-i18n="svc_sub">Chaque prestation est conçue pour révéler votre beauté naturelle, avec des produits qui nourrissent autant qu'ils transforment.</p>
   </div>
-
-  <!-- ONGLES TAB -->
-  <div class="svc-panel active" id="sp-ongles">
-    <div class="svc-menu">
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_mani">Les Manucures</div>
-        <div class="svc-row"><span class="svc-name">Semi-permanent<span class="svc-meta">30 min</span></span><span class="svc-price">30€</span></div>
-        <div class="svc-row"><span class="svc-name">Manucure classique<span class="svc-meta">20 min</span></span><span class="svc-price">25€</span></div>
-        <div class="svc-row"><span class="svc-name">Manucure spa<span class="svc-meta">30 min</span></span><span class="svc-price">35€</span></div>
-        <div class="svc-row"><span class="svc-name">Manucure japonaise<span class="svc-meta">30 min</span></span><span class="svc-price">35€</span></div>
-        <div class="svc-row"><span class="svc-name">Manucure avec vernis classique<span class="svc-meta">30 min</span></span><span class="svc-price">30€</span></div>
-        <div class="svc-row"><span class="svc-name">Manucure avec vernis semi-permanent<span class="svc-meta">40 min</span></span><span class="svc-price">43€</span></div>
-        <div class="svc-row"><span class="svc-name">Manucure spa avec vernis classique<span class="svc-meta">45 min</span></span><span class="svc-price">40€</span></div>
-        <div class="svc-row"><span class="svc-name">Manucure spa avec vernis semi-permanent<span class="svc-meta">50 min</span></span><span class="svc-price">53€</span></div>
-      </div>
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_pieds">Beauté des pieds</div>
-        <div class="svc-row"><span class="svc-name">Soin des pieds classique<span class="svc-meta">30 min</span></span><span class="svc-price">38€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin des pieds spa<span class="svc-meta">45 min</span></span><span class="svc-price">45€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin des pieds avec vernis classique<span class="svc-meta">40 min</span></span><span class="svc-price">45€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin des pieds avec vernis semi-permanent<span class="svc-meta">50 min</span></span><span class="svc-price">55€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin des pieds spa avec vernis classique<span class="svc-meta">50 min</span></span><span class="svc-price">50€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin des pieds spa avec vernis semi-permanent<span class="svc-meta">55 min</span></span><span class="svc-price">65€</span></div>
-      </div>
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_complet">Soins mains &amp; pieds</div>
-        <div class="svc-row"><span class="svc-name">Soin complet mains et pieds sans vernis<span class="svc-meta">1h</span></span><span class="svc-price">55€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin complet spa mains et pieds sans vernis<span class="svc-meta">1h</span></span><span class="svc-price">65€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin complet mains et pieds avec vernis classique<span class="svc-meta">1h10</span></span><span class="svc-price">60€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin complet mains et pieds avec vernis semi-permanent<span class="svc-meta">1h20</span></span><span class="svc-price">85€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin complet spa mains et pieds avec vernis classique<span class="svc-meta">1h20</span></span><span class="svc-price">75€</span></div>
-        <div class="svc-row"><span class="svc-name">Soin complet spa mains et pieds avec vernis semi-permanent<span class="svc-meta">1h30</span></span><span class="svc-price">105€</span></div>
-      </div>
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_pose">Pose &amp; Renforcement</div>
-        <div class="svc-row"><span class="svc-name">Gel X avec semi-permanent<span class="svc-meta">1h</span></span><span class="svc-price">60€</span></div>
-        <div class="svc-row"><span class="svc-name">Pose de résine avec semi-permanent<span class="svc-meta">1h</span></span><span class="svc-price">60€</span></div>
-        <div class="svc-row"><span class="svc-name">Pose de gel avec semi-permanent<span class="svc-meta">1h</span></span><span class="svc-price">70€</span></div>
-        <div class="svc-row"><span class="svc-name">Remplissage résine avec semi-permanent<span class="svc-meta">50 min</span></span><span class="svc-price">55€</span></div>
-        <div class="svc-row"><span class="svc-name">Remplissage gel avec semi-permanent<span class="svc-meta">50 min</span></span><span class="svc-price">65€</span></div>
-      </div>
-      <div class="svc-cat">
-        <div class="svc-cat-title" data-i18n="cat_suppl">À la carte — Suppléments</div>
-        <div class="svc-row"><span class="svc-name">Renforcement<span class="svc-meta">+10 min</span></span><span class="svc-price">+10€</span></div>
-        <div class="svc-row"><span class="svc-name">Réparation d'un ongle<span class="svc-meta">+5 min</span></span><span class="svc-price">+7€</span></div>
-        <div class="svc-row"><span class="svc-name">French</span><span class="svc-price">+10€</span></div>
-        <div class="svc-row"><span class="svc-name">Chrome</span><span class="svc-price">+10€</span></div>
-        <div class="svc-row"><span class="svc-name">Cat Eyes</span><span class="svc-price">+10€</span></div>
-        <div class="svc-row"><span class="svc-name">Nail art &amp; designs</span><span class="svc-price" data-i18n="price_devis">Sur devis</span></div>
-        <div class="svc-row"><span class="svc-name">Manucure préparatoire avant pose<span class="svc-meta">+15 min</span></span><span class="svc-price">+15€</span></div>
-        <p class="supplement-note" data-i18n="suppl_note">Les suppléments s'ajoutent au tarif de la prestation principale · Designs et nail art : tarif établi lors du rendez-vous</p>
-      </div>
-    </div>
-  </div>
-
+  <!-- Price list is generated from assets/js/data/services.js -->
+  <div class="svc-menu" id="svc-menu"></div>
 </section>
 
-<!-- GALLERY -->
-<!-- Pour ajouter tes photos, place-les dans le dossier pictures/ et renomme-les gal-1.jpg à gal-5.jpg -->
+<!-- ═══════════ GALLERY ═══════════ -->
 <section id="gallery">
   <div class="sec-hdr fade-up">
     <span class="tag" data-i18n="gal_tag">Inspiration</span>
@@ -216,35 +182,15 @@
     <p data-i18n="gal_sub">Chaque soin est unique. Découvrez quelques-unes de nos créations favorites.</p>
   </div>
   <div class="gal-grid">
-    <div class="g-item fade-up">
-      <div class="g-inner">
-        <img src="nail.png" alt="Nail Art Signature" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%"/>
-      </div>
-    </div>
-    <div class="g-item fade-up">
-      <div class="g-inner">
-        <img src="pic1.jpeg" alt="Manucure Classique" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%"/>
-      </div>
-    </div>
-    <div class="g-item fade-up">
-      <div class="g-inner">
-        <img src="pic4.jpeg" alt="Semi-permanent" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%"/>
-      </div>
-    </div>
-    <div class="g-item fade-up">
-      <div class="g-inner">
-        <img src="pic3.jpeg" alt="Réalisation Atelier Achi" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%"/>
-      </div>
-    </div>
-    <div class="g-item fade-up">
-      <div class="g-inner">
-        <img src="pic5.jpeg" alt="Réalisation Atelier Achi" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%"/>
-      </div>
-    </div>
+    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-1.png" alt="Nail Art Signature" loading="lazy" style="--pos: center 35%"></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-2.jpg" alt="Manucure Classique" loading="lazy"></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-3.jpg" alt="Semi-permanent" loading="lazy"></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-4.jpg" alt="Réalisation Atelier Achi" loading="lazy"></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-5.jpg" alt="Réalisation Atelier Achi" loading="lazy"></div></div>
   </div>
 </section>
 
-<!-- HOURS BANNER -->
+<!-- ═══════════ OPENING HOURS ═══════════ -->
 <div class="hours-banner">
   <div class="hi"><div class="dot"></div><strong data-i18n="hours1_title">Mardi – Vendredi</strong><span data-i18n="hours1_time">10h00 – 20h00</span></div>
   <div class="hi"><div class="dot"></div><strong data-i18n="hours2_title">Samedi – Dimanche</strong><span data-i18n="hours2_time">10h00 – 20h00</span></div>
@@ -252,7 +198,7 @@
   <div class="hi"><div class="dot"></div><strong data-i18n="hours4_title">Sans rendez-vous</strong><span data-i18n="hours4_time">Sur disponibilité</span></div>
 </div>
 
-<!-- CONTACT & MAP -->
+<!-- ═══════════ CONTACT & MAP ═══════════ -->
 <section id="contact">
   <div class="contact-layout">
     <div class="contact-info fade-up">
@@ -260,21 +206,21 @@
       <h2 data-i18n="contact_h2">Venez nous <em>rendre visite</em></h2>
       <div class="contact-items">
         <div class="c-item"><div class="c-icon">📍</div><div class="c-item-text"><strong data-i18n="c_address_lbl">Adresse</strong><span>9 rue Trousseau, Paris 75011</span></div></div>
-        <div class="c-item"><div class="c-icon">📞</div><div class="c-item-text"><strong data-i18n="c_phone_lbl">Téléphone</strong><a href="tel:0187076059">01 87 07 60 59</a></div></div>
+        <div class="c-item"><div class="c-icon">📞</div><div class="c-item-text"><strong data-i18n="c_phone_lbl">Téléphone</strong><a href="tel:+33187076059">01 87 07 60 59</a></div></div>
         <div class="c-item"><div class="c-icon">✉️</div><div class="c-item-text"><strong data-i18n="c_email_lbl">Email</strong><a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a></div></div>
-        <div class="c-item"><div class="c-icon">📸</div><div class="c-item-text"><strong>Instagram</strong><a href="https://www.instagram.com/atelier_achi/" target="_blank">@atelier_achi</a></div></div>
+        <div class="c-item"><div class="c-icon">📸</div><div class="c-item-text"><strong>Instagram</strong><a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener">@atelier_achi</a></div></div>
       </div>
       <a href="#booking" class="btn-fill" data-i18n="contact_book_btn">Réserver un soin</a>
     </div>
     <div class="fade-up">
       <div class="map-wrap">
-        <iframe src="https://maps.google.com/maps?q=9+rue+Trousseau+Paris+75011&output=embed" allowfullscreen loading="lazy" title="Atelier Achi — 9 rue Trousseau Paris 11"></iframe>
+        <iframe src="https://maps.google.com/maps?q=9+rue+Trousseau+Paris+75011&amp;output=embed" allowfullscreen loading="lazy" title="Atelier Achi — 9 rue Trousseau Paris 11"></iframe>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BOOKING -->
+<!-- ═══════════ BOOKING ═══════════ -->
 <section id="booking">
   <div class="sec-hdr fade-up">
     <span class="tag" data-i18n="bk_tag">Réservation</span>
@@ -282,92 +228,133 @@
   </div>
   <div class="bk-wrap fade-up">
     <div class="bk-tabs">
-      <button class="bk-tab active" id="bkt-client" onclick="bkTab('client')">📅 <span data-i18n="bkt_client">Prendre rendez-vous</span></button>
-      <button class="bk-tab" id="bkt-admin" onclick="bkTab('admin')">🔐 <span data-i18n="bkt_admin">Espace Admin</span></button>
+      <button class="bk-tab active" id="bkt-client" data-action="booking-tab" data-tab="client">📅 <span data-i18n="bkt_client">Prendre rendez-vous</span></button>
+      <button class="bk-tab" id="bkt-admin" data-action="booking-tab" data-tab="admin">🔐 <span data-i18n="bkt_admin">Espace Admin</span></button>
     </div>
-    <!-- CLIENT PANEL -->
+
+    <!-- ── Client booking (logic: assets/js/booking.js) ── -->
     <div class="bk-panel active" id="bp-client">
       <div class="steps">
-        <div class="stp active" id="si1"><div class="stp-n">1</div><span data-i18n="step1">Prestation</span></div>
-        <div class="stp-line" id="sl1"></div>
-        <div class="stp" id="si2"><div class="stp-n">2</div><span data-i18n="step2">Date &amp; heure</span></div>
-        <div class="stp-line" id="sl2"></div>
-        <div class="stp" id="si3"><div class="stp-n">3</div><span data-i18n="step3">Vos infos</span></div>
-        <div class="stp-line" id="sl3"></div>
-        <div class="stp" id="si4"><div class="stp-n">4</div><span data-i18n="step4">Confirmer</span></div>
+        <div class="stp active" data-step="1"><div class="stp-n">1</div><span data-i18n="step1">Prestation</span></div>
+        <div class="stp-line" data-step="1"></div>
+        <div class="stp" data-step="2"><div class="stp-n">2</div><span data-i18n="step2">Date &amp; heure</span></div>
+        <div class="stp-line" data-step="2"></div>
+        <div class="stp" data-step="3"><div class="stp-n">3</div><span data-i18n="step3">Vos infos</span></div>
+        <div class="stp-line" data-step="3"></div>
+        <div class="stp" data-step="4"><div class="stp-n">4</div><span data-i18n="step4">Confirmer</span></div>
       </div>
-      <div id="fb-loading" style="text-align:center;padding:2rem 0;font-size:.85rem;color:var(--muted)">
-        <div style="font-size:1.4rem;margin-bottom:.5rem">⏳</div>
-        Chargement des disponibilités…
+
+      <div id="bk-loading" class="bk-loading">
+        <div class="bk-loading-icon">⏳</div>
+        <span data-i18n="loading_slots">Chargement des disponibilités…</span>
       </div>
-      <div id="st1" style="display:none">
-        <p style="font-size:.84rem;color:var(--muted);margin-bottom:1rem" data-i18n="st1_intro">Choisissez votre prestation pour commencer :</p>
-        <div id="csvc-grid"></div>
-        <div class="btn-row" style="justify-content:flex-end"><button class="btn-p" id="bs1" onclick="goStep(2)" disabled data-i18n="btn_next">Suivant →</button></div>
-      </div>
-      <div id="st2" style="display:none">
-        <div class="sum-bar"><div class="sc">✂️ <strong id="ss1">—</strong></div></div>
-        <div class="cal-nav-row">
-          <button class="cnav" id="btn-pw" onclick="prevWeek()">‹</button>
-          <span style="font-size:.88rem;font-weight:700;letter-spacing:.02em" id="wk-lbl"></span>
-          <button class="cnav" onclick="nextWeek()">›</button>
+
+      <!-- Step 1: service -->
+      <div data-step-panel="1" style="display:none">
+        <p class="bk-intro" data-i18n="st1_intro">Choisissez votre prestation pour commencer :</p>
+        <div id="svc-cards"></div>
+        <div class="btn-row btn-row--end">
+          <button class="btn-p" id="btn-step1-next" data-action="goto-step" data-step="2" disabled data-i18n="btn_next">Suivant →</button>
         </div>
-        <div id="closed-today-msg" style="display:none;background:rgba(139,111,94,.08);border:1px solid var(--brown-l);border-radius:var(--r);padding:.7rem 1rem;font-size:.82rem;color:var(--brown-d);margin-bottom:.8rem;font-weight:500"></div>
-        <div class="week-row" id="week-row"></div>
-        <div id="slots-sec" style="display:none"><p class="slots-lbl" id="slots-lbl"></p><div class="slots-row" id="slots-row"></div></div>
-        <div class="btn-row"><button class="btn-b" onclick="goStep(1)" data-i18n="btn_back">← Retour</button><button class="btn-p" id="bs2" onclick="goStep(3)" disabled data-i18n="btn_next">Suivant →</button></div>
       </div>
-      <div id="st3" style="display:none">
+
+      <!-- Step 2: date & time -->
+      <div data-step-panel="2" style="display:none">
+        <div class="sum-bar"><div class="sc">✂️ <strong id="sum-svc-2">—</strong></div></div>
+        <div class="cal-nav-row">
+          <button class="cnav" id="btn-prev-week" data-action="prev-week" aria-label="Semaine précédente">‹</button>
+          <span class="week-label" id="week-label"></span>
+          <button class="cnav" data-action="next-week" aria-label="Semaine suivante">›</button>
+        </div>
+        <div class="closed-msg" id="closed-today-msg" style="display:none"></div>
+        <div class="week-row" id="week-row"></div>
+        <div id="slots-sec" style="display:none">
+          <p class="slots-lbl" id="slots-lbl"></p>
+          <div class="slots-row" id="slots-row"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-b" data-action="goto-step" data-step="1" data-i18n="btn_back">← Retour</button>
+          <button class="btn-p" id="btn-step2-next" data-action="goto-step" data-step="3" disabled data-i18n="btn_next">Suivant →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: contact details -->
+      <div data-step-panel="3" style="display:none">
         <div class="sum-bar">
-          <div class="sc">✂️ <strong id="s3s">—</strong></div>
-          <div class="sc">📅 <strong id="s3d">—</strong></div>
-          <div class="sc">🕐 <strong id="s3t">—</strong></div>
+          <div class="sc">✂️ <strong id="sum-svc-3">—</strong></div>
+          <div class="sc">📅 <strong id="sum-date-3">—</strong></div>
+          <div class="sc">🕐 <strong id="sum-time-3">—</strong></div>
         </div>
         <div class="fgr">
-          <div class="fg"><label data-i18n="lbl_fn">Prénom *</label><input id="f-fn" type="text" placeholder="Sophie" autocomplete="given-name" oninput="vN(this,'h-fn')"/><span class="eh" id="h-fn" data-i18n="err_name">Lettres uniquement</span></div>
-          <div class="fg"><label data-i18n="lbl_ln">Nom *</label><input id="f-ln" type="text" placeholder="Martin" autocomplete="family-name" oninput="vN(this,'h-ln')"/><span class="eh" id="h-ln" data-i18n="err_name">Lettres uniquement</span></div>
-          <div class="fg"><label data-i18n="lbl_em">Email *</label><input id="f-em" type="email" placeholder="sophie@email.com" autocomplete="email" oninput="vE(this)"/><span class="eh" id="h-em" data-i18n="err_email">Email invalide</span></div>
-          <div class="fg"><label data-i18n="lbl_ph">Téléphone (optionnel)</label><input id="f-ph" type="tel" placeholder="0187076059" maxlength="15" autocomplete="tel" oninput="vP(this)"/><span class="eh" id="h-ph" data-i18n="err_phone">Chiffres uniquement · 10–15 chiffres</span></div>
+          <div class="fg">
+            <label for="f-fn" data-i18n="lbl_fn">Prénom *</label>
+            <input id="f-fn" type="text" placeholder="Sophie" autocomplete="given-name" data-validate="name" data-hint="h-fn">
+            <span class="eh" id="h-fn" data-i18n="err_name">Lettres uniquement</span>
+          </div>
+          <div class="fg">
+            <label for="f-ln" data-i18n="lbl_ln">Nom *</label>
+            <input id="f-ln" type="text" placeholder="Martin" autocomplete="family-name" data-validate="name" data-hint="h-ln">
+            <span class="eh" id="h-ln" data-i18n="err_name">Lettres uniquement</span>
+          </div>
+          <div class="fg">
+            <label for="f-em" data-i18n="lbl_em">Email *</label>
+            <input id="f-em" type="email" placeholder="sophie@email.com" autocomplete="email" data-validate="email" data-hint="h-em">
+            <span class="eh" id="h-em" data-i18n="err_email">Email invalide</span>
+          </div>
+          <div class="fg">
+            <label for="f-ph" data-i18n="lbl_ph">Téléphone (optionnel)</label>
+            <input id="f-ph" type="tel" placeholder="0187076059" maxlength="15" autocomplete="tel" data-validate="phone" data-hint="h-ph">
+            <span class="eh" id="h-ph" data-i18n="err_phone">Chiffres uniquement · 10–15 chiffres</span>
+          </div>
         </div>
-        <div class="fg"><label data-i18n="lbl_msg">Demande particulière (optionnel)</label><input id="f-msg" type="text" placeholder="Allergies, inspiration nail art…" maxlength="200"/>
+        <div class="fg">
+          <label for="f-msg" data-i18n="lbl_msg">Demande particulière (optionnel)</label>
+          <input id="f-msg" type="text" placeholder="Allergies, inspiration nail art…" maxlength="200">
           <p class="msg-photo-hint" data-i18n="msg_photo_hint">💡 Vous avez une photo de référence ? Mentionnez-le ici et répondez à votre email de confirmation en joignant votre image.</p>
         </div>
-        <div class="btn-row"><button class="btn-b" onclick="goStep(2)" data-i18n="btn_back">← Retour</button><button class="btn-p" onclick="tryStep4()" data-i18n="btn_review">Récapitulatif →</button></div>
+        <div class="btn-row">
+          <button class="btn-b" data-action="goto-step" data-step="2" data-i18n="btn_back">← Retour</button>
+          <button class="btn-p" data-action="review-booking" data-i18n="btn_review">Récapitulatif →</button>
+        </div>
       </div>
-      <div id="st4" style="display:none"><div id="s4i"></div></div>
+
+      <!-- Step 4: summary / result (filled by booking.js) -->
+      <div data-step-panel="4" style="display:none"><div id="confirm-box"></div></div>
     </div>
-    <!-- ADMIN PANEL -->
+
+    <!-- ── Admin (logic: assets/js/admin.js) ── -->
     <div class="bk-panel" id="bp-admin">
       <div class="admin-login" id="admin-login">
         <h3 data-i18n="admin_login_title">Espace Administrateur</h3>
         <p data-i18n="admin_login_sub">Entrez votre mot de passe pour accéder au tableau de bord.</p>
-        <div class="fg" style="margin-bottom:.6rem">
-          <input type="password" id="admin-pw-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()"/>
+        <div class="fg">
+          <input type="password" id="admin-pw-input" placeholder="••••••••" autocomplete="current-password" aria-label="Mot de passe">
         </div>
-        <button class="btn-p" style="width:100%;margin-top:.4rem" onclick="adminLogin()" data-i18n="admin_login_btn">Connexion</button>
+        <button class="btn-p btn-block" data-action="admin-login" data-i18n="admin_login_btn">Connexion</button>
         <p class="err-msg" id="admin-err" data-i18n="admin_err">Mot de passe incorrect</p>
       </div>
+
       <div class="admin-dash" id="admin-dash">
         <div class="admin-bar">
-          <button class="btn-logout" id="btn-block-today" onclick="toggleBlockToday()" style="margin-right:auto">🔓 Résas du jour : ouvertes</button>
-          <button class="btn-logout" onclick="adminLogout()" data-i18n="admin_logout">Déconnexion</button>
+          <button class="btn-logout btn-block-today" id="btn-block-today" data-action="admin-block-today">🔓 Résas du jour : ouvertes</button>
+          <button class="btn-logout" data-action="admin-logout" data-i18n="admin_logout">Déconnexion</button>
         </div>
         <div class="am-metrics" id="am-metrics"></div>
         <div class="admin-layout">
           <div>
             <div class="a-cal-hdr">
-              <button class="cnav" onclick="aPrev()">‹</button>
+              <button class="cnav" data-action="admin-prev-month" aria-label="Mois précédent">‹</button>
               <span class="a-month-title" id="a-month-lbl"></span>
-              <button class="cnav" onclick="aNext()">›</button>
-              <button class="btn-p" onclick="openModal(null)" style="font-size:.72rem;padding:.5rem 1.1rem;margin-left:auto" data-i18n="admin_add">+ Ajouter</button>
+              <button class="cnav" data-action="admin-next-month" aria-label="Mois suivant">›</button>
+              <button class="btn-p btn-sm btn-push-right" data-action="open-modal" data-i18n="admin_add">+ Ajouter</button>
             </div>
             <div class="mgh" id="mgh"></div>
             <div class="mg" id="mg"></div>
-            <div id="dp" style="margin-top:.6rem"></div>
+            <div id="dp"></div>
           </div>
           <div>
             <div class="up-box">
-              <div class="up-hdr"><span data-i18n="admin_upcoming">À venir</span><span id="up-count" style="background:var(--brown);padding:.12rem .45rem;border-radius:100px;font-size:.65rem"></span></div>
+              <div class="up-hdr"><span data-i18n="admin_upcoming">À venir</span><span class="up-count" id="up-count"></span></div>
               <div id="up-list"></div>
             </div>
           </div>
@@ -377,77 +364,82 @@
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══════════ FOOTER ═══════════ -->
 <footer>
   <div class="footer-grid">
     <div>
       <div class="footer-brand">
-        <img src="logo.png" alt="Atelier Achi" onerror="this.style.display='none';document.querySelector('.fb-text').style.display='block'" style="height:52px;width:auto;filter:brightness(0) invert(1) opacity(.8)"/>
-        <div class="fb-text" style="display:none">Atelier Achi<span>Nail Studio</span></div>
+        <div class="fb-text">Atelier Achi<span>Nail Studio</span></div>
       </div>
       <p class="f-sub" data-i18n="footer_sub">Votre sanctuaire de beauté au cœur de Paris 11ème. Nous créons plus que des ongles — nous créons de la confiance.</p>
       <div class="f-social">
-        <a href="https://www.instagram.com/atelier_achi/" target="_blank" class="f-soc-btn" aria-label="Instagram">📸</a>
-        <a href="https://wa.me/33668202050" target="_blank" class="f-soc-btn" aria-label="WhatsApp">💬</a>
+        <a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener" class="f-soc-btn" aria-label="Instagram">📸</a>
+        <a href="https://wa.me/33668202050" target="_blank" rel="noopener" class="f-soc-btn" aria-label="WhatsApp">💬</a>
       </div>
     </div>
-    <div class="fc"><h4 data-i18n="f_nav">Navigation</h4><ul>
-      <li><a href="#about" data-i18n="nav_about">À propos</a></li>
-      <li><a href="#services" data-i18n="nav_services">Soins</a></li>
-      <li><a href="#gallery" data-i18n="nav_gallery">Galerie</a></li>
-      <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
-      <li><a href="#booking" data-i18n="nav_book">Réserver</a></li>
-    </ul></div>
-    <div class="fc"><h4 data-i18n="f_services">Prestations</h4><ul>
-      <li><a href="#services">Manucure classique</a></li>
-      <li><a href="#services">Manucure spa</a></li>
-      <li><a href="#services">Pose de gel</a></li>
-      <li><a href="#services">Soin des pieds</a></li>
-    </ul></div>
-    <div class="fc fcc"><h4 data-i18n="f_contact">Contact</h4>
+    <div class="fc">
+      <h4 data-i18n="f_nav">Navigation</h4>
+      <ul>
+        <li><a href="#about" data-i18n="nav_about">À propos</a></li>
+        <li><a href="#services" data-i18n="nav_services">Soins</a></li>
+        <li><a href="#gallery" data-i18n="nav_gallery">Galerie</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+        <li><a href="#booking" data-i18n="nav_book">Réserver</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h4 data-i18n="f_services">Prestations</h4>
+      <ul>
+        <li><a href="#services">Manucure classique</a></li>
+        <li><a href="#services">Manucure spa</a></li>
+        <li><a href="#services">Pose de gel</a></li>
+        <li><a href="#services">Soin des pieds</a></li>
+      </ul>
+    </div>
+    <div class="fc fcc">
+      <h4 data-i18n="f_contact">Contact</h4>
       <p>📍 9 rue Trousseau, Paris 75011</p>
-      <p>📞 <a href="tel:0187076059">01 87 07 60 59</a></p>
+      <p>📞 <a href="tel:+33187076059">01 87 07 60 59</a></p>
       <p>✉️ <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a></p>
-      <p>📸 <a href="https://www.instagram.com/atelier_achi/" target="_blank">@atelier_achi</a></p>
+      <p>📸 <a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener">@atelier_achi</a></p>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 Atelier Achi. <span data-i18n="footer_rights">Tous droits réservés.</span></span>
+    <span>© <span id="footer-year">2026</span> Atelier Achi. <span data-i18n="footer_rights">Tous droits réservés.</span></span>
     <span data-i18n="footer_made">Fait avec 💗 à Paris</span>
   </div>
 </footer>
 
-<!-- WHATSAPP -->
-<a href="https://wa.me/33668202050" class="wa-btn" target="_blank" aria-label="WhatsApp">💬</a>
+<!-- Floating WhatsApp button -->
+<a href="https://wa.me/33668202050" class="wa-btn" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
 
-<!-- ADMIN MODAL -->
+<!-- ═══════════ ADMIN: ADD BOOKING MODAL ═══════════ -->
 <div class="modal-overlay" id="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-title"><span data-i18n="modal_title">Ajouter un rendez-vous</span><button class="modal-close" onclick="closeModal()">✕</button></div>
-    <div class="fg"><label data-i18n="modal_svc">Prestation *</label><select id="m-svc" style="padding:.72rem .92rem;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Raleway',sans-serif;font-size:.88rem;width:100%;background:var(--cream);outline:none"></select></div>
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <div class="modal-title">
+      <span data-i18n="modal_title">Ajouter un rendez-vous</span>
+      <button class="modal-close" data-action="close-modal" aria-label="Fermer">✕</button>
+    </div>
+    <div class="fg"><label for="m-svc" data-i18n="modal_svc">Prestation *</label><select id="m-svc"></select></div>
     <div class="fgr">
-      <div class="fg"><label data-i18n="modal_date">Date *</label><input type="date" id="m-dt"/></div>
-      <div class="fg"><label data-i18n="modal_time">Heure *</label><input type="time" id="m-tm" step="1800"/></div>
+      <div class="fg"><label for="m-dt" data-i18n="modal_date">Date *</label><input type="date" id="m-dt"></div>
+      <div class="fg"><label for="m-tm" data-i18n="modal_time">Heure *</label><input type="time" id="m-tm" step="1800"></div>
     </div>
     <div class="fgr">
-      <div class="fg"><label data-i18n="modal_fn">Prénom *</label><input type="text" id="m-fn" placeholder="Sophie"/></div>
-      <div class="fg"><label data-i18n="modal_ln">Nom *</label><input type="text" id="m-ln" placeholder="Martin"/></div>
+      <div class="fg"><label for="m-fn" data-i18n="modal_fn">Prénom *</label><input type="text" id="m-fn" placeholder="Sophie"></div>
+      <div class="fg"><label for="m-ln" data-i18n="modal_ln">Nom *</label><input type="text" id="m-ln" placeholder="Martin"></div>
     </div>
     <div class="fgr">
-      <div class="fg"><label>Email</label><input type="email" id="m-em" placeholder="sophie@email.com"/></div>
-      <div class="fg"><label data-i18n="lbl_ph">Téléphone</label><input type="tel" id="m-ph" placeholder="01 87 07 60 59" oninput="this.value=this.value.replace(/[^0-9+\s\-()']/g,'')"/></div>
+      <div class="fg"><label for="m-em">Email</label><input type="email" id="m-em" placeholder="sophie@email.com"></div>
+      <div class="fg"><label for="m-ph" data-i18n="lbl_ph">Téléphone</label><input type="tel" id="m-ph" placeholder="01 87 07 60 59"></div>
     </div>
-    <div class="fg"><label data-i18n="modal_note">Note (optionnel)</label><input type="text" id="m-note" placeholder="Informations particulières…"/></div>
+    <div class="fg"><label for="m-note" data-i18n="modal_note">Note (optionnel)</label><input type="text" id="m-note" placeholder="Informations particulières…"></div>
     <div class="btn-row">
-      <button class="btn-b" onclick="closeModal()" data-i18n="btn_cancel">Annuler</button>
-      <button class="btn-p" onclick="saveModal()" data-i18n="modal_save">Enregistrer</button>
+      <button class="btn-b" data-action="close-modal" data-i18n="btn_cancel">Annuler</button>
+      <button class="btn-p" data-action="save-modal" data-i18n="modal_save">Enregistrer</button>
     </div>
   </div>
 </div>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="main.js"></script>
-<script type="module" src="firebase.js"></script>
 </body>
 </html>
