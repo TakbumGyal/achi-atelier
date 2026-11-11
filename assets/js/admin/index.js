@@ -9,7 +9,6 @@
 import { $, registerActions, keepBelowNavbar } from '../utils/dom.js';
 import { t } from '../i18n.js';
 import { state, subscribe, signIn, signOut, setBlockToday, setSettings } from '../db.js';
-import { RETENTION } from '../config.js';
 import { buildProfiles } from './customers.js';
 import { initAgenda, renderAgenda } from './agenda.js';
 import { initClients, renderClients } from './clients.js';
@@ -111,18 +110,10 @@ async function toggleBlockToday() {
 
 /* ─── GDPR clean-up (runs once per login) ─── */
 
-function showNotice(html) {
-  const el = $('admin-notice');
-  el.innerHTML = `${html} <button class="notice-close" data-action="notice-close" aria-label="Fermer">✕</button>`;
-  el.hidden = false;
-}
-
+/* Runs silently — the owner doesn't need to see it (details in the console). */
 async function cleanup(plan) {
   const r = await runCleanup(plan);
-  const parts = [];
-  if (r.archived) parts.push(`${plural(r.archived, 'réservation')} de plus de ${RETENTION.bookingDays} jours archivée${r.archived > 1 ? 's' : ''}`);
-  if (r.expired) parts.push(`${plural(r.expired, 'fiche')} sans visite depuis ${RETENTION.customerYears} ans supprimée${r.expired > 1 ? 's' : ''}`);
-  if (parts.length) showNotice(`🧹 Nettoyage RGPD : ${parts.join(' · ')}.`);
+  console.info(`GDPR clean-up: ${r.archived} booking(s) archived, ${r.expired} expired card(s) deleted`);
 }
 
 async function checkRetention() {
@@ -188,7 +179,6 @@ export function initAdmin() {
     'admin-block-today': toggleBlockToday,
     'retention-backup': backup,
     'retention-run': startFirstCleanup,
-    'notice-close': () => { $('admin-notice').hidden = true; },
   });
 
   ['admin-email-input', 'admin-pw-input'].forEach(id =>
@@ -199,7 +189,6 @@ export function initAdmin() {
       retentionChecked = false;
       pendingPlan = null;
       $('retention-banner').hidden = true;
-      $('admin-notice').hidden = true;
       showAdminView();
     }
     if (!state.admin) return;

@@ -7,7 +7,7 @@
   body{cursor:auto}
   #cur,#cur-ring{display:none}
   .btn-fill,.btn-ol,.btn-p,.btn-b,.slot,.wday-btn,.csvc,.cnav,.bk-tab,
-  .nav-cta,.lb,.hamburger,.mm-close,.btn-xcl,.btn-logout,.modal-close,.up-item,.mc,.admin-tab,.client-row,.notice-close{cursor:pointer}
+  .nav-cta,.lb,.hamburger,.mm-close,.btn-xcl,.btn-logout,.modal-close,.up-item,.mc,.admin-tab,.client-row{cursor:pointer}
 }
 
 /* ── Small laptop / large tablet ── */

@@ -99,8 +99,6 @@
 .retention-banner p{margin:.4rem 0;color:var(--muted)}
 .retention-banner p strong{color:var(--ink)}
 .retention-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.7rem}
-.admin-notice{background:#EAF0DE;color:#3d5a1a;border-radius:var(--r);padding:.65rem 2.4rem .65rem 1rem;font-size:.8rem;margin-bottom:1rem;position:relative}
-.notice-close{position:absolute;top:.45rem;right:.6rem;background:none;border:none;color:inherit;cursor:none;font-size:.9rem}
 
 /* ── Customer badges ── */
 .cbadge{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.03em;padding:.12rem .5rem;border-radius:100px;background:var(--beige);color:var(--brown-d);white-space:nowrap;vertical-align:middle;margin:.1rem .15rem .1rem 0}
