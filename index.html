@@ -218,8 +218,13 @@
       <a href="#booking" class="btn-fill" data-i18n="contact_book_btn">Réserver un soin</a>
     </div>
     <div class="fade-up">
-      <div class="map-wrap">
-        <iframe src="https://maps.google.com/maps?q=9+rue+Trousseau+Paris+75011&amp;output=embed" allowfullscreen loading="lazy" title="Atelier Achi — 9 rue Trousseau Paris 11"></iframe>
+      <!-- Google Maps loads only on click (no Google cookies before consent — see ui.js) -->
+      <div class="map-wrap map-facade" id="map-box">
+        <div class="map-pin">📍</div>
+        <p class="map-addr">9 rue Trousseau<br>75011 Paris</p>
+        <button class="btn-fill" data-action="show-map" data-i18n="map_show">Afficher la carte</button>
+        <a class="map-ext" href="https://www.google.com/maps/search/?api=1&amp;query=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener" data-i18n="map_open">Ouvrir dans Google Maps ↗</a>
+        <p class="map-note" data-i18n="map_note">La carte est fournie par Google, qui peut déposer des cookies.</p>
       </div>
     </div>
   </div>
@@ -317,6 +322,10 @@
           <input id="f-msg" type="text" placeholder="Allergies, inspiration nail art…" maxlength="200">
           <p class="msg-photo-hint" data-i18n="msg_photo_hint">💡 Vous avez une photo de référence ? Mentionnez-le ici et répondez à votre email de confirmation en joignant votre image.</p>
         </div>
+        <p class="privacy-note">
+          <span data-i18n="privacy_note">🔒 Vos données servent uniquement à gérer votre rendez-vous. Elles ne sont ni vendues ni partagées.</span>
+          <a href="mentions-legales.html#confidentialite" data-i18n="privacy_link">En savoir plus</a>
+        </p>
         <div class="btn-row">
           <button class="btn-b" data-action="goto-step" data-step="2" data-i18n="btn_back">← Retour</button>
           <button class="btn-p" data-action="review-booking" data-i18n="btn_review">Récapitulatif →</button>
@@ -453,6 +462,7 @@
   </div>
   <div class="footer-bottom">
     <span>© <span id="footer-year">2026</span> Atelier Achi. <span data-i18n="footer_rights">Tous droits réservés.</span></span>
+    <a href="mentions-legales.html" data-i18n="footer_legal">Mentions légales &amp; confidentialité</a>
     <span data-i18n="footer_made">Fait avec 💗 à Paris</span>
   </div>
 </footer>

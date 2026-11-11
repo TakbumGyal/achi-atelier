@@ -89,3 +89,7 @@
 .bk-result-icon{font-size:2.8rem;margin-bottom:.7rem}
 .bk-result-title{font-family:var(--font-serif);font-size:1.5rem;margin-bottom:.5rem}
 .bk-result-text{font-size:.88rem;color:var(--muted);line-height:1.9;max-width:380px;margin:0 auto 1.4rem}
+
+/* Privacy reassurance under the contact form */
+.privacy-note{font-size:.72rem;color:var(--muted);line-height:1.5;margin-top:.2rem}
+.privacy-note a{color:var(--brown);font-weight:600}

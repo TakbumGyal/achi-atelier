@@ -143,3 +143,15 @@ footer .f-sub{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.42);max-
 .wa-btn{position:fixed;bottom:2rem;right:2rem;z-index:200;width:52px;height:52px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.4rem;box-shadow:0 4px 18px rgba(37,211,102,.42);animation:wap 2.5s ease-in-out infinite}
 @keyframes wap{0%,100%{box-shadow:0 4px 18px rgba(37,211,102,.42)}50%{box-shadow:0 4px 30px rgba(37,211,102,.65)}}
 .wa-btn:hover{transform:scale(1.1)}
+
+/* Map placeholder (Google Maps loads only on click) */
+.map-facade{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.7rem;padding:2rem;background:linear-gradient(145deg,var(--beige),var(--cream))}
+.map-pin{font-size:2rem}
+.map-addr{font-family:var(--font-serif);font-size:1.35rem;line-height:1.3;color:var(--ink)}
+.map-ext{font-size:.78rem;color:var(--brown);text-decoration:none;font-weight:600}
+.map-ext:hover{text-decoration:underline}
+.map-note{font-size:.68rem;color:var(--muted);max-width:280px}
+
+/* Footer legal link */
+.footer-bottom a{color:rgba(255,255,255,.45);text-decoration:none}
+.footer-bottom a:hover{color:var(--brown-m)}

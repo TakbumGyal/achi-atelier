@@ -54,6 +54,20 @@ function initMarquee() {
   $('mqt').innerHTML = items.repeat(MARQUEE_REPEAT);
 }
 
+/* Google Maps is only loaded when the visitor asks for it, so Google can't
+   set cookies before the visitor's choice (CNIL rules) — and the page is lighter. */
+const MAP_URL = 'https://maps.google.com/maps?q=9+rue+Trousseau+Paris+75011&output=embed';
+
+function initMap() {
+  registerActions({
+    'show-map': () => {
+      const box = $('map-box');
+      box.classList.remove('map-facade');
+      box.innerHTML = `<iframe src="${MAP_URL}" allowfullscreen title="Atelier Achi — 9 rue Trousseau Paris 11"></iframe>`;
+    },
+  });
+}
+
 function initScrollAnimations() {
   const obs = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('vis');
@@ -67,6 +81,7 @@ export function initUI() {
   initNavbar();
   initMobileMenu();
   initMarquee();
+  initMap();
   initScrollAnimations();
   $('footer-year').textContent = new Date().getFullYear();
 }
