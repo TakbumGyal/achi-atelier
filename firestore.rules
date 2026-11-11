@@ -7,6 +7,8 @@
 //   slots/{id}     Public availability: { date, time, dur } — no personal data.
 //                  Same id as its booking; created together in one batch.
 //   settings/config  { blockToday } — public read, admin write.
+//   customers/{id} Customer cards (visit counts, dates, services) — ADMIN ONLY.
+//   stats/{YYYY-MM} Anonymous monthly statistics — ADMIN ONLY.
 //   admins/{uid}   One empty document per admin account (created by hand in
 //                  the console). The website can never write here.
 
@@ -81,6 +83,16 @@ service cloud.firestore {
     match /settings/{docId} {
       allow read: if true;
       allow write: if isAdmin();
+    }
+
+    // Customer cards (visit counts, contact details) — admin only.
+    match /customers/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    // Anonymous monthly statistics — admin only.
+    match /stats/{month} {
+      allow read, write: if isAdmin();
     }
 
     match /admins/{uid} {

@@ -31,7 +31,8 @@ assets/
     menu.js                 Builds the price list from services.js
     booking.js              4-step client booking flow
     availability.js         Which time slots are free
-    admin.js                Admin dashboard
+    admin/                  Admin panel: index (login, tabs), agenda, clients,
+                            stats, customers (card logic), retention (GDPR clean-up)
     db.js                   Firestore connection (live bookings + settings)
     email.js                Confirmation email via EmailJS
     ui.js                   Loader, cursor, navbar, mobile menu, marquee, animations
@@ -60,6 +61,25 @@ assets/
   only if a document `admins/{its user id}` exists — the website can never create one.
 - The rules live in `firestore.rules` and must be **published in the Firebase console**
   (Firestore Database → Rules) after any change.
+
+### Data retention (GDPR)
+
+Runs automatically each time the admin logs in (`assets/js/admin/retention.js`,
+periods in `RETENTION` in `assets/js/config.js`):
+
+| Data | Kept for |
+|------|----------|
+| Booking details (time, message, …) | 30 days after the appointment |
+| Customer card (`customers`): name, contacts, visit count, visit dates & services | 3 years after the last activity |
+| Anonymous monthly statistics (`stats`) | indefinitely (no personal data) |
+
+Before a booking is deleted, its outcome (visit / cancellation / no-show) is added to the
+customer card and the statistics in the same atomic write. Booking messages are never
+copied to cards (they may contain health information such as allergies).
+The first clean-up shows a banner with a "download backup" button; after that it is silent.
+
+The admin's **Clientes** view also provides the GDPR tools: export everything about a
+customer (right of access) and delete it all (right to erasure).
 
 ### Add an admin
 

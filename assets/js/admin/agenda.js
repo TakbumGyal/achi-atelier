@@ -1,19 +1,14 @@
 /**
- * Admin panel: Firebase login, month calendar, day details, upcoming list,
- * manual booking modal, cancellation and the "block today" switch.
- * (The admin interface is in French only.)
- *
- * Access is enforced by the Firestore rules, not by this file: only users
- * with an admins/{uid} document can read customer bookings.
+ * Admin "Agenda" view: metrics, month calendar, day details (with customer
+ * badges and the "absente" button), upcoming list, and the add-booking modal.
  */
-import { $, esc, registerActions, keepBelowNavbar } from './utils/dom.js';
-import { BOOKABLE_SERVICES } from './data/services.js';
-import { toDateStr, todayStr, formatDuration } from './utils/dates.js';
-import { formatDate, t } from './i18n.js';
-import {
-  state, subscribe, signIn, signOut, createBooking, cancelBooking, setBlockToday,
-} from './db.js';
-import { sendConfirmationEmail } from './email.js';
+import { $, esc, registerActions } from '../utils/dom.js';
+import { BOOKABLE_SERVICES } from '../data/services.js';
+import { toDateStr, todayStr, formatDuration } from '../utils/dates.js';
+import { formatDate } from '../i18n.js';
+import { state, createBooking, cancelBooking, setNoShow } from '../db.js';
+import { sendConfirmationEmail } from '../email.js';
+import { visitNumber, profileFor, isPast } from './customers.js';
 
 const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 const WEEKDAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
@@ -22,68 +17,29 @@ const PREVIEW_PER_DAY = 2;
 
 let month = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 let selDay = null;
+let ctx = null;   // customer profiles, set by renderAgenda
 
 const isActive = b => b.status !== 'cancelled';
 const byTime = (a, b) => a.time.localeCompare(b.time);
+const plural = (n, word) => `${n} ${word}${n > 1 ? 's' : ''}`;
 
-/* ─── Tabs (client / admin) ─── */
-
-function switchTab(tab) {
-  ['client', 'admin'].forEach(x => {
-    $('bkt-' + x).classList.toggle('active', x === tab);
-    $('bp-' + x).classList.toggle('active', x === tab);
-  });
-  if (tab === 'admin') showAdminView();
-  keepBelowNavbar($('bkt-client').parentElement);
+/** "Nouvelle cliente" / "5e visite" / "⚠ 2 absences" badges for a booking. */
+function customerBadges(b) {
+  const n = visitNumber(ctx, b);
+  if (n === null) return '';
+  const p = profileFor(ctx, b);
+  let html = n === 1
+    ? '<span class="cbadge cbadge-new">Nouvelle cliente</span>'
+    : `<span class="cbadge">${n}e visite</span>`;
+  if (p?.summary.noShows) html += `<span class="cbadge cbadge-warn">⚠ ${plural(p.summary.noShows, 'absence')}</span>`;
+  return html;
 }
 
-/* ─── Auth ─── */
-
-function showAdminView() {
-  const loggedIn = !!state.admin;
-  $('admin-login').style.display = loggedIn ? 'none' : 'block';
-  $('admin-dash').classList.toggle('visible', loggedIn);
-  if (loggedIn) render();
-}
-
-function showLoginError(key) {
-  const el = $('admin-err');
-  el.textContent = t(key);
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 4000);
-}
-
-async function login() {
-  const email = $('admin-email-input').value.trim();
-  const pw = $('admin-pw-input');
-  const btn = $('btn-admin-login');
-  if (!email || !pw.value) { showLoginError('admin_err'); return; }
-
-  btn.disabled = true;
-  let result;
-  try {
-    result = await signIn(email, pw.value);
-  } catch {
-    result = 'invalid';
-  }
-  btn.disabled = false;
-  pw.value = '';
-  if (result === 'invalid') showLoginError('admin_err');
-  if (result === 'not-admin') showLoginError('admin_not_allowed');
-  // On success, the 'auth' event below switches to the dashboard.
-}
-
-async function logout() {
-  await signOut();
-}
-
-/* ─── Dashboard ─── */
-
-function render() {
+export function renderAgenda(profiles) {
+  ctx = profiles;
   renderMetrics();
   renderCalendar();
   renderUpcoming();
-  updateBlockTodayBtn();
 }
 
 function renderMetrics() {
@@ -120,7 +76,7 @@ function renderCalendar() {
 
     html += `<div class="${cls}" data-action="admin-day" data-date="${ds}">
       <div class="mc-num">${d.getDate()}</div>
-      ${active.slice(0, PREVIEW_PER_DAY).map(b => `<div class="apdot apdot-c">${b.time} ${esc(b.first)}</div>`).join('')}
+      ${active.slice(0, PREVIEW_PER_DAY).map(b => `<div class="apdot ${b.noShow ? 'apdot-x' : 'apdot-c'}">${b.time} ${esc(b.first)}</div>`).join('')}
       ${cancelled ? `<div class="apdot apdot-x">✕${cancelled}</div>` : ''}
       ${active.length > PREVIEW_PER_DAY ? `<div class="mc-more">+${active.length - PREVIEW_PER_DAY}</div>` : ''}
     </div>`;
@@ -130,21 +86,38 @@ function renderCalendar() {
   if (selDay) renderDayPanel(selDay);
 }
 
+function statusBadge(b) {
+  if (b.status === 'cancelled') return '<span class="abadge abadge-x">annulé</span>';
+  if (b.noShow) return '<span class="abadge abadge-x">absente</span>';
+  return '<span class="abadge abadge-c">confirmé</span>';
+}
+
 function renderDayPanel(ds) {
   const dayBookings = state.bookings.filter(b => b.date === ds).sort(byTime);
   const item = b => {
     const cancelled = !isActive(b);
+    const key = ctx?.keyOf.get(b._fid);
+    let actions = '';
+    if (!cancelled && !isPast(b)) {
+      actions = `<button class="btn-xcl" data-action="admin-cancel" data-id="${esc(b._fid)}">✕ Annuler</button>`;
+    } else if (!cancelled) {
+      actions = b.noShow
+        ? `<button class="btn-xcl" data-action="admin-noshow" data-id="${esc(b._fid)}" data-value="0">↺ Elle est venue</button>`
+        : `<button class="btn-xcl" data-action="admin-noshow" data-id="${esc(b._fid)}" data-value="1">Marquer absente</button>`;
+    }
+    if (key) actions += `<button class="btn-xcl btn-xcl--soft" data-action="client-open" data-key="${esc(key)}">👤 Fiche</button>`;
+
     return `<div class="appt-item">
       <div>
         <div class="appt-time">${b.time}</div>
-        <span class="abadge ${cancelled ? 'abadge-x' : 'abadge-c'}">${cancelled ? 'annulé' : 'confirmé'}</span>
+        ${statusBadge(b)}
       </div>
       <div>
-        <div class="appt-name">${esc(b.first)} ${esc(b.last)}</div>
+        <div class="appt-name">${esc(b.first)} ${esc(b.last)} ${customerBadges(b)}</div>
         <div class="appt-detail">${esc(b.service)} · ${b.dur}min · ${esc(b.price)}</div>
         <div class="appt-detail">✉ ${esc(b.email)}${b.phone ? ' · 📞 ' + esc(b.phone) : ''}</div>
         ${b.msg ? `<div class="appt-note">"${esc(b.msg)}"</div>` : ''}
-        ${cancelled ? '' : `<button class="btn-xcl" data-action="admin-cancel" data-id="${esc(b._fid)}">✕ Annuler</button>`}
+        <div class="appt-actions">${actions}</div>
       </div>
       <div class="appt-dur">${b.dur}min</div>
     </div>`;
@@ -162,7 +135,7 @@ function renderDayPanel(ds) {
 function renderUpcoming() {
   const today = todayStr();
   const upcoming = state.bookings
-    .filter(b => b.date >= today && isActive(b))
+    .filter(b => b.date >= today && isActive(b) && !isPast(b))
     .sort((a, b) => a.date.localeCompare(b.date) || byTime(a, b))
     .slice(0, UPCOMING_LIMIT);
 
@@ -172,16 +145,12 @@ function renderUpcoming() {
         <div class="up-date">${formatDate(b.date)} · ${b.time}</div>
         <div class="up-name">${esc(b.first)} ${esc(b.last)}</div>
         <div class="up-svc">${esc(b.service)} · ${esc(b.price)}</div>
+        <div class="up-badges">${customerBadges(b)}</div>
       </div>`).join('')
     : '<div class="na">Aucun rendez-vous à venir</div>';
 }
 
-function selectDay(ds) {
-  selDay = ds;
-  renderCalendar();
-}
-
-/* ─── Cancel / block today ─── */
+/* ─── Actions ─── */
 
 async function cancel(fid) {
   if (!confirm('Annuler ce rendez-vous ? Le créneau sera libéré pour les clientes.')) return;
@@ -193,27 +162,14 @@ async function cancel(fid) {
   }
 }
 
-function updateBlockTodayBtn() {
-  const btn = $('btn-block-today');
-  btn.classList.toggle('is-blocked', state.blockToday);
-  btn.textContent = state.blockToday ? '🔒 Résas du jour : BLOQUÉES' : '🔓 Résas du jour : ouvertes';
-}
-
-async function toggleBlockToday() {
-  const next = !state.blockToday;
-  const question = next
-    ? "Bloquer toutes les réservations pour aujourd'hui ? Les clientes ne pourront plus réserver de créneau à la date du jour."
-    : "Rouvrir les réservations pour aujourd'hui ?";
-  if (!confirm(question)) return;
+async function toggleNoShow(fid, value) {
   try {
-    await setBlockToday(next);
+    await setNoShow(fid, value);
   } catch (err) {
     console.error(err);
-    alert("Erreur : impossible d'enregistrer le réglage.");
+    alert("Erreur : impossible d'enregistrer.");
   }
 }
-
-/* ─── Manual booking modal ─── */
 
 function openModal(date) {
   $('m-dt').value = date || todayStr();
@@ -254,35 +210,21 @@ async function saveModal() {
   closeModal();
 }
 
-/* ─── Init ─── */
-
-export function initAdmin() {
+export function initAgenda() {
   $('m-svc').innerHTML = BOOKABLE_SERVICES
     .map((s, i) => `<option value="${i}">${esc(s.name)} (${formatDuration(s.dur)})</option>`).join('');
 
   registerActions({
-    'booking-tab': el => switchTab(el.dataset.tab),
-    'admin-login': login,
-    'admin-logout': logout,
     'admin-prev-month': () => { month.setMonth(month.getMonth() - 1); renderCalendar(); },
     'admin-next-month': () => { month.setMonth(month.getMonth() + 1); renderCalendar(); },
-    'admin-day': el => selectDay(el.dataset.date),
+    'admin-day': el => { selDay = el.dataset.date; renderCalendar(); },
     'admin-cancel': el => cancel(el.dataset.id),
-    'admin-block-today': toggleBlockToday,
+    'admin-noshow': el => toggleNoShow(el.dataset.id, el.dataset.value === '1'),
     'open-modal': el => openModal(el.dataset.date),
     'close-modal': closeModal,
     'save-modal': saveModal,
   });
 
-  ['admin-email-input', 'admin-pw-input'].forEach(id =>
-    $(id).addEventListener('keydown', e => { if (e.key === 'Enter') login(); }));
   $('m-ph').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^0-9+\s\-()']/g, ''); });
   $('modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-
-  subscribe(type => {
-    if (type === 'auth') showAdminView();
-    if (!state.admin) return;
-    if (type === 'bookings') render();
-    if (type === 'settings') updateBlockTodayBtn();
-  });
 }

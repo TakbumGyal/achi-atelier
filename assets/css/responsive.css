@@ -7,7 +7,7 @@
   body{cursor:auto}
   #cur,#cur-ring{display:none}
   .btn-fill,.btn-ol,.btn-p,.btn-b,.slot,.wday-btn,.csvc,.cnav,.bk-tab,
-  .nav-cta,.lb,.hamburger,.mm-close,.btn-xcl,.btn-logout,.modal-close,.up-item,.mc{cursor:pointer}
+  .nav-cta,.lb,.hamburger,.mm-close,.btn-xcl,.btn-logout,.modal-close,.up-item,.mc,.admin-tab,.client-row,.notice-close{cursor:pointer}
 }
 
 /* ── Small laptop / large tablet ── */
@@ -101,4 +101,14 @@
   .week-row{gap:.15rem}
   .wday-btn .df{display:none}
   .hours-banner{grid-template-columns:1fr}
+}
+
+/* Admin panels on small screens */
+@media (max-width: 768px) {
+  .st-kpis{grid-template-columns:1fr 1fr}
+  .st-grid{grid-template-columns:1fr}
+  .cd-metrics{grid-template-columns:1fr 1fr}
+  .client-row{flex-direction:column;align-items:flex-start}
+  .client-stats{text-align:left}
+  .admin-tab{padding:.55rem .6rem;font-size:.66rem}
 }

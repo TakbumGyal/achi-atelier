@@ -9,7 +9,14 @@ export const SALON = {
   closedWeekday: 1,       // 0 = Sunday, 1 = Monday, …
   slotStepMin: 10,        // booking slots are offered every N minutes
   maxCapacity: 1,         // overlapping bookings allowed at the same time
-  historyDays: 30,        // past bookings loaded into the admin view
+};
+
+/* GDPR retention (see the privacy notice and README).
+   Applied automatically each time the admin logs in. */
+export const RETENTION = {
+  bookingDays: 30,        // booking details are archived & deleted N days after the appointment
+  customerYears: 3,       // customer cards are deleted N years after the last activity
+  historyMax: 200,        // max visit entries kept on a customer card
 };
 
 /* Firebase web config — these keys are public by design; access is
@@ -27,6 +34,8 @@ export const COLLECTIONS = {
   bookings: 'bookings',   // customer details — admin only
   slots: 'slots',         // public availability (date, time, duration)
   admins: 'admins',       // one doc per admin user id
+  customers: 'customers', // customer cards (visit counts…) — admin only
+  stats: 'stats',         // anonymous monthly statistics — admin only
 };
 export const SETTINGS_DOC = ['settings', 'config'];
 

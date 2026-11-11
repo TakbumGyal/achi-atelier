@@ -165,6 +165,40 @@ test('admin can repair a missing slot', async () => {
   await assertSucceeds(setDoc(doc(admin(), 'slots', 'existing'), slotOf(booking())));
 });
 
+test('customer cards and stats: public and non-admins locked out', async () => {
+  await env.withSecurityRulesDisabled(async ctx => {
+    await setDoc(doc(ctx.firestore(), 'customers', 'email:sophie'), { first: 'Sophie', visits: 3 });
+    await setDoc(doc(ctx.firestore(), 'stats', '2026-10'), { visits: 12 });
+  });
+  for (const db of [anon(), stranger()]) {
+    await assertFails(getDoc(doc(db, 'customers', 'email:sophie')));
+    await assertFails(getDocs(collection(db, 'customers')));
+    await assertFails(setDoc(doc(db, 'customers', 'email:x'), { visits: 99 }));
+    await assertFails(deleteDoc(doc(db, 'customers', 'email:sophie')));
+    await assertFails(getDocs(collection(db, 'stats')));
+    await assertFails(setDoc(doc(db, 'stats', '2026-10'), { visits: 0 }));
+  }
+});
+
+test('admin can manage customer cards and stats, and archive a booking', async () => {
+  const db = admin();
+  await assertSucceeds(getDocs(collection(db, 'customers')));
+  await assertSucceeds(getDocs(collection(db, 'stats')));
+  const batch = writeBatch(db);
+  batch.set(doc(db, 'customers', 'email:sophie'), { first: 'Sophie', visits: 1 });
+  batch.set(doc(db, 'stats', '2026-10'), { visits: 1 });
+  batch.delete(doc(db, 'bookings', 'existing'));
+  batch.delete(doc(db, 'slots', 'existing'));
+  await assertSucceeds(batch.commit());
+  await assertSucceeds(updateDoc(doc(db, 'customers', 'email:sophie'), { visits: 2 }));
+  await assertSucceeds(deleteDoc(doc(db, 'customers', 'email:sophie')));
+});
+
+test('admin can mark a no-show', async () => {
+  await assertSucceeds(updateDoc(doc(admin(), 'bookings', 'existing'), { noShow: true }));
+  await assertFails(updateDoc(doc(anon(), 'bookings', 'existing'), { noShow: true }));
+});
+
 test('admin can read own admin doc but cannot write admins', async () => {
   await assertSucceeds(getDoc(doc(admin(), 'admins', ADMIN)));
   await assertFails(setDoc(doc(admin(), 'admins', 'new-admin'), {}));
