@@ -202,6 +202,10 @@ function initAdmin() {
       pendingPlan = null;
       $('retention-banner').hidden = true;
       showAdminView();
+      if (state.sessionExpired && !state.admin) {
+        state.sessionExpired = false;
+        showLoginError('admin_session_expired');
+      }
     }
     if (!state.admin) return;
     if (['bookings', 'customers', 'stats'].includes(type)) render();

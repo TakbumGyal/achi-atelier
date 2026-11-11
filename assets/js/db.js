@@ -11,7 +11,7 @@
  * The Firebase SDK is loaded lazily, so if it fails the rest of the site still works.
  */
 import {
-  FIREBASE_CONFIG, FIREBASE_SDK_URL, COLLECTIONS, SETTINGS_DOC, RETENTION, USE_EMULATOR,
+  FIREBASE_CONFIG, FIREBASE_SDK_URL, COLLECTIONS, SETTINGS_DOC, RETENTION, USE_EMULATOR, ADMIN_SESSION_MS,
 } from './config.js';
 import { todayStr, addDaysStr } from './utils/dates.js';
 
@@ -21,6 +21,7 @@ export const state = {
   retentionEnabled: false,// automatic GDPR clean-up switched on (after first run)
   loaded: false,          // first slots snapshot received
   admin: null,            // signed-in admin user, or null
+  sessionExpired: false,  // true right after an automatic logout (5 h limit)
   // admin only:
   bookings: [],           // [{ _fid, first, last, … }] — last 30 days + future
   customers: [],          // [{ _id, first, last, visits, … }]
@@ -36,6 +37,7 @@ let fs = null, authMod = null;   // SDK modules
 let app = null, db = null, auth = null;   // instances
 let stopAdmin = [];
 let connecting = null, authStarting = null;
+let expiryTimer = null;
 
 /** Start Firestore (availability + settings). Safe to call more than once. */
 export function connect() {
@@ -94,6 +96,8 @@ export function initAuth() {
     authMod = await import(FIREBASE_SDK_URL + 'firebase-auth.js');
     auth = authMod.getAuth(app);
     if (USE_EMULATOR) authMod.connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+    // Login lives only in this browser tab: closing the tab/browser logs out.
+    await authMod.setPersistence(auth, authMod.browserSessionPersistence);
     const firstCheck = new Promise(resolve => {
       let first = true;
       authMod.onAuthStateChanged(auth, async user => {
@@ -107,15 +111,43 @@ export function initAuth() {
   return authStarting;
 }
 
+/** Has this login lasted longer than the allowed admin session (5 h)? */
+function loginExpired(user) {
+  const signedInAt = Date.parse(user.metadata?.lastSignInTime || '');
+  return !signedInAt || Date.now() - signedInAt > ADMIN_SESSION_MS;
+}
+
+/* While logged in, check every minute whether the 5-hour limit is reached. */
+function watchExpiry(user) {
+  clearInterval(expiryTimer);
+  expiryTimer = setInterval(() => {
+    if (loginExpired(user)) {
+      clearInterval(expiryTimer);
+      state.sessionExpired = true;
+      authMod.signOut(auth);
+    }
+  }, USE_EMULATOR ? 5_000 : 60_000);
+}
+
 async function handleAuthChange(user) {
   stopAdmin.forEach(stop => stop());
   stopAdmin = [];
+  clearInterval(expiryTimer);
   Object.assign(state, { admin: null, bookings: [], customers: [], stats: [], adminReady: false });
+
+  if (user && loginExpired(user)) {        // e.g. reopened after more than 5 h
+    state.sessionExpired = true;
+    await authMod.signOut(auth);
+    emit('auth');                            // show the login form + "Session expirée"
+    return;
+  }
 
   if (user) {
     const adminDoc = await fs.getDoc(fs.doc(db, COLLECTIONS.admins, user.uid)).catch(() => null);
     if (adminDoc?.exists()) {
       state.admin = user;
+      state.sessionExpired = false;
+      watchExpiry(user);
       listenToAdminData();
     } else {
       await authMod.signOut(auth);   // signed in, but not an admin

@@ -45,6 +45,13 @@ export const USE_EMULATOR =
   ['localhost', '127.0.0.1'].includes(location.hostname) &&
   new URLSearchParams(location.search).has('emulator');
 
+/* Admin login: kept only in the current browser tab (gone when the tab or
+   browser is closed) and ends automatically ADMIN_SESSION_HOURS after logging in.
+   (Local tests may shorten it with ?sessionMinutes=N.) */
+const ADMIN_SESSION_HOURS = 5;
+const testMinutes = USE_EMULATOR && Number(new URLSearchParams(location.search).get('sessionMinutes'));
+export const ADMIN_SESSION_MS = testMinutes > 0 ? testMinutes * 60_000 : ADMIN_SESSION_HOURS * 3_600_000;
+
 /* EmailJS — sends the booking confirmation email. */
 export const EMAILJS = {
   serviceId: 'service_2rjw0sm',
