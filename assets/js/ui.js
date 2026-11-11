@@ -125,6 +125,40 @@ function initGiftCard() {
   });
 }
 
+/* Reviews: one row; arrows scroll one review at a time (computers).
+   Phones swipe the same row. */
+function initReviews() {
+  const grid = $('rv-grid');
+  if (!grid) return;
+  const prev = document.querySelector('.rv-prev'), next = document.querySelector('.rv-next');
+  const step = () => {
+    const card = grid.querySelector('.rv-card');
+    return card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(grid).columnGap || 0) : grid.clientWidth;
+  };
+  const maxScroll = () => grid.scrollWidth - grid.clientWidth;
+  let target = null;   // where the last click is heading (so fast clicks add up)
+  const update = () => {
+    const pos = target ?? grid.scrollLeft;
+    prev.disabled = pos <= 8;
+    next.disabled = pos >= maxScroll() - 8;
+  };
+  const go = dir => {
+    const s = step();
+    const from = target ?? grid.scrollLeft;
+    target = Math.max(0, Math.min(maxScroll(), (Math.round(from / s) + dir) * s));
+    grid.scrollTo({ left: target, behavior: 'smooth' });
+    update();
+  };
+  grid.addEventListener('scrollend', () => { target = null; update(); });
+  registerActions({
+    'rv-prev': () => go(-1),
+    'rv-next': () => go(1),
+  });
+  grid.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
 /* Sections fade in gently as they come into view. */
 function initReveal() {
   const els = document.querySelectorAll('.reveal');
@@ -142,6 +176,7 @@ export function initUI() {
   initMap();
   initLightbox();
   initGiftCard();
+  initReviews();
   initReveal();
   $('footer-year').textContent = new Date().getFullYear();
 }
