@@ -4,10 +4,15 @@ import { initBooking } from './booking.js';
 import { initUI } from './ui.js';
 import { connect } from './db.js';
 import { $, registerActions, keepBelowNavbar } from './utils/dom.js';
+import { setLang, initialLang } from './i18n.js';
 
 renderServiceMenu();
 initBooking();
 initUI();
+
+/* Show the site in the visitor's language (?lang=xx, or her last choice). */
+const startLang = initialLang();
+if (startLang !== 'fr') setLang(startLang);
 
 /* Booking tabs. The admin code (and Firebase Auth) is only downloaded when
    someone actually opens "Espace Admin" — normal visitors never load it. */

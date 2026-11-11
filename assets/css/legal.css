@@ -41,3 +41,10 @@ body.legal-page{cursor:auto;background:var(--cream)}
   .legal-main section{padding:1.3rem}
   .legal-table td:first-child{width:auto}
 }
+
+/* Language switch + translation notice */
+.legal-langs{display:flex;gap:.2rem}
+.legal-langs button{background:none;border:1px solid transparent;border-radius:100px;padding:.25rem .55rem;font-family:var(--font-sans);font-size:.7rem;font-weight:600;letter-spacing:.08em;color:var(--muted);cursor:pointer}
+.legal-langs button.active{color:var(--brown);border-color:var(--brown-l)}
+.legal-translation{font-size:.78rem;color:var(--muted);font-style:italic;border-left:2px solid var(--brown-l);padding-left:.8rem;margin-bottom:1.4rem}
+@media (max-width: 600px){ .legal-brand{display:none} }

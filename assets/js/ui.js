@@ -1,7 +1,8 @@
 /* Page chrome: loader, custom cursor, navbar, mobile menu, marquee,
    scroll-in animations, footer year. */
 import { $, registerActions } from './utils/dom.js';
-import { MARQUEE_ITEMS } from './data/services.js';
+import { marqueeItems } from './data/services.js';
+import { onLangChange } from './i18n.js';
 
 const LOADER_MS = 350;      // brief brand flash — no longer waits for every image
 const MARQUEE_REPEAT = 4;
@@ -49,9 +50,14 @@ function initMobileMenu() {
   });
 }
 
-function initMarquee() {
-  const items = MARQUEE_ITEMS.map(it => `<span class="mq-item">${it}<span class="mq-dot"></span></span>`).join('');
+function renderMarquee() {
+  const items = marqueeItems().map(it => `<span class="mq-item">${it}<span class="mq-dot"></span></span>`).join('');
   $('mqt').innerHTML = items.repeat(MARQUEE_REPEAT);
+}
+
+function initMarquee() {
+  renderMarquee();
+  onLangChange(renderMarquee);
 }
 
 /* Google Maps is only loaded when the visitor asks for it, so Google can't

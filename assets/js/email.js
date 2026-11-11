@@ -1,5 +1,6 @@
 import { EMAILJS, USE_EMULATOR } from './config.js';
 import { formatDate } from './i18n.js';
+import { serviceLabel } from './data/services.js';
 
 const EMAILJS_SDK = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
 let sdk = null;
@@ -22,7 +23,7 @@ export async function sendConfirmationEmail(bk) {
   const params = {
     to_email: bk.email,
     client_name: `${bk.first} ${bk.last}`,
-    service: bk.service,
+    service: serviceLabel(bk.service),
     date: formatDate(bk.date),
     time: bk.time,
     duration: bk.dur,

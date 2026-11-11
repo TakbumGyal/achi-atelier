@@ -14,42 +14,44 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Raleway:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/legal.css">
+  <script type="module" src="assets/js/legal.js"></script>
 </head>
 <body class="legal-page">
 
 <header class="legal-header">
-  <a href="./" class="legal-back">← Retour au site</a>
+  <a href="./" class="legal-back" data-back>← Retour au site</a>
+  <div class="legal-langs" role="group" aria-label="Langue">
+    <button data-set-lang="fr" class="active">FR</button>
+    <button data-set-lang="en">EN</button>
+    <button data-set-lang="es">ES</button>
+    <button data-set-lang="ru">RU</button>
+  </div>
   <a href="./" class="legal-brand">Atelier Achi<span>Nail Studio</span></a>
 </header>
 
-<main class="legal-main">
+<!-- ═══════════════════════════════ FRANÇAIS (version qui fait foi) ═══════════════════════════════ -->
+<main class="legal-main" data-lang="fr" lang="fr">
   <h1>Mentions légales <em>&amp;</em> confidentialité</h1>
   <p class="legal-updated">Dernière mise à jour : 11 novembre 2026</p>
-
   <nav class="legal-toc" aria-label="Sommaire">
-    <a href="#mentions">Mentions légales</a>
-    <a href="#confidentialite">Politique de confidentialité</a>
-    <a href="#cookies">Cookies</a>
+    <a href="#fr-mentions">Mentions légales</a>
+    <a href="#fr-confidentialite">Politique de confidentialité</a>
+    <a href="#fr-cookies">Cookies</a>
   </nav>
 
-  <!-- ═══════════ MENTIONS LÉGALES ═══════════ -->
-  <section id="mentions">
+  <section id="fr-mentions">
     <h2>Mentions légales</h2>
-
     <h3>Éditeur du site</h3>
     <p>
-      <strong>ATELIER ACHI</strong>, société à responsabilité limitée (SARL)
-      au capital de 2&nbsp;000&nbsp;€<br>
+      <strong>ATELIER ACHI</strong>, société à responsabilité limitée (SARL) au capital de 2&nbsp;000&nbsp;€<br>
       Siège social : 9 rue Trousseau, 75011 Paris, France<br>
       RCS Paris 101 754 307 — SIRET 101 754 307 00011<br>
       N° TVA intracommunautaire : FR53 101 754 307<br>
       Téléphone : <a href="tel:+33187076059">01 87 07 60 59</a><br>
       Email : <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>
     </p>
-
     <h3>Responsable de la publication</h3>
     <p>Lumo Tso BENGYAK, en qualité de gérant(e).</p>
-
     <h3>Hébergement</h3>
     <p>
       GitHub, Inc. (service GitHub Pages)<br>
@@ -57,7 +59,6 @@
       Contact : <a href="https://support.github.com" target="_blank" rel="noopener">support.github.com</a>
       (GitHub ne propose pas d’assistance téléphonique)
     </p>
-
     <h3>Propriété intellectuelle</h3>
     <p>
       Les textes, photographies, logo et éléments graphiques de ce site sont la propriété
@@ -65,20 +66,14 @@
     </p>
   </section>
 
-  <!-- ═══════════ CONFIDENTIALITÉ ═══════════ -->
-  <section id="confidentialite">
+  <section id="fr-confidentialite">
     <h2>Politique de confidentialité</h2>
     <p class="legal-lead">
       En bref : vos données servent <strong>uniquement</strong> à gérer vos rendez-vous.
       Elles ne sont jamais vendues ni utilisées pour de la publicité, et seul le salon y a accès.
     </p>
-
     <h3>1. Responsable du traitement</h3>
-    <p>
-      ATELIER ACHI, 9 rue Trousseau, 75011 Paris —
-      <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>.
-    </p>
-
+    <p>ATELIER ACHI, 9 rue Trousseau, 75011 Paris — <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>.</p>
     <h3>2. Données collectées</h3>
     <p>Lorsque vous réservez en ligne (ou que le salon enregistre votre rendez-vous) :</p>
     <ul>
@@ -94,7 +89,6 @@
       pour la sécurité de votre soin. Elle n’est jamais conservée dans votre fiche cliente et
       est supprimée avec la réservation (voir durées ci-dessous). Ne la mentionnez que si c’est utile.
     </p>
-
     <h3>3. Pourquoi nous les utilisons</h3>
     <table class="legal-table">
       <thead><tr><th>Utilisation</th><th>Base légale (RGPD)</th></tr></thead>
@@ -106,7 +100,6 @@
       </tbody>
     </table>
     <p>Aucune décision automatisée, aucun profilage, aucune newsletter, aucune publicité.</p>
-
     <h3>4. Durée de conservation</h3>
     <table class="legal-table">
       <thead><tr><th>Données</th><th>Conservées</th></tr></thead>
@@ -116,7 +109,6 @@
         <tr><td>Statistiques anonymes</td><td>Sans limite (aucune donnée personnelle)</td></tr>
       </tbody>
     </table>
-
     <h3>5. Qui y a accès</h3>
     <p>
       Uniquement le salon, via un espace administrateur protégé par mot de passe.
@@ -133,7 +125,6 @@
       notamment aux États-Unis, dans le cadre des garanties prévues par le RGPD
       (Data Privacy Framework UE–États-Unis et/ou clauses contractuelles types de la Commission européenne).
     </p>
-
     <h3>6. Vos droits</h3>
     <p>
       Vous pouvez à tout moment demander à <strong>consulter</strong>, <strong>corriger</strong>
@@ -146,7 +137,6 @@
       Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation
       à la CNIL : <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">www.cnil.fr</a>.
     </p>
-
     <h3>7. Sécurité</h3>
     <p>
       Les réservations sont stockées dans une base de données protégée : seul le compte
@@ -154,33 +144,311 @@
     </p>
   </section>
 
-  <!-- ═══════════ COOKIES ═══════════ -->
-  <section id="cookies">
+  <section id="fr-cookies">
     <h2>Cookies</h2>
-    <p>
-      Ce site n’utilise <strong>aucun cookie publicitaire ni de mesure d’audience</strong>.
-      C’est pourquoi aucun bandeau cookies ne s’affiche.
-    </p>
+    <p>Ce site n’utilise <strong>aucun cookie publicitaire ni de mesure d’audience</strong>. C’est pourquoi aucun bandeau cookies ne s’affiche.</p>
     <ul>
-      <li>
-        <strong>Carte Google Maps :</strong> elle ne se charge que si vous cliquez sur
-        « Afficher la carte ». Google peut alors déposer ses propres cookies
-        (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politique de Google</a>).
-      </li>
-      <li>
-        <strong>Polices d’écriture</strong> (Google Fonts) : leur chargement transmet votre adresse IP
-        à Google, sans cookie.
-      </li>
-      <li>
-        <strong>Espace administrateur :</strong> la connexion du salon est mémorisée dans le
-        navigateur du salon uniquement ; cela ne concerne pas les clientes.
-      </li>
+      <li><strong>Carte Google Maps :</strong> elle ne se charge que si vous cliquez sur « Afficher la carte ». Google peut alors déposer ses propres cookies (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politique de Google</a>).</li>
+      <li><strong>Polices d’écriture</strong> (Google Fonts) : leur chargement transmet votre adresse IP à Google, sans cookie.</li>
+      <li><strong>Choix de la langue :</strong> mémorisé dans votre navigateur (stockage local), sans cookie et sans suivi.</li>
+      <li><strong>Espace administrateur :</strong> la connexion du salon est mémorisée dans le navigateur du salon uniquement ; cela ne concerne pas les clientes.</li>
+    </ul>
+  </section>
+</main>
+
+<!-- ═══════════════════════════════ ENGLISH ═══════════════════════════════ -->
+<main class="legal-main" data-lang="en" lang="en" hidden>
+  <h1>Legal notice <em>&amp;</em> privacy</h1>
+  <p class="legal-updated">Last updated: 11 November 2026</p>
+  <p class="legal-translation">This is an English translation provided for your convenience. The French version is the legally binding one.</p>
+  <nav class="legal-toc" aria-label="Contents">
+    <a href="#en-mentions">Legal notice</a>
+    <a href="#en-confidentialite">Privacy policy</a>
+    <a href="#en-cookies">Cookies</a>
+  </nav>
+
+  <section id="en-mentions">
+    <h2>Legal notice</h2>
+    <h3>Website publisher</h3>
+    <p>
+      <strong>ATELIER ACHI</strong>, a French limited liability company (SARL) with a share capital of €2,000<br>
+      Registered office: 9 rue Trousseau, 75011 Paris, France<br>
+      Paris Trade and Companies Register (RCS) 101 754 307 — SIRET 101 754 307 00011<br>
+      EU VAT number: FR53 101 754 307<br>
+      Phone: <a href="tel:+33187076059">+33 1 87 07 60 59</a><br>
+      Email: <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>
+    </p>
+    <h3>Publication manager</h3>
+    <p>Lumo Tso BENGYAK, as manager (gérant(e)).</p>
+    <h3>Hosting</h3>
+    <p>
+      GitHub, Inc. (GitHub Pages service)<br>
+      88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States<br>
+      Contact: <a href="https://support.github.com" target="_blank" rel="noopener">support.github.com</a>
+      (GitHub does not offer phone support)
+    </p>
+    <h3>Intellectual property</h3>
+    <p>The texts, photographs, logo and graphics on this website belong to ATELIER ACHI unless stated otherwise. Any reproduction without permission is prohibited.</p>
+  </section>
+
+  <section id="en-confidentialite">
+    <h2>Privacy policy</h2>
+    <p class="legal-lead">In short: your details are used <strong>only</strong> to manage your appointments. They are never sold or used for advertising, and only the salon can access them.</p>
+    <h3>1. Data controller</h3>
+    <p>ATELIER ACHI, 9 rue Trousseau, 75011 Paris, France — <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>.</p>
+    <h3>2. Data we collect</h3>
+    <p>When you book online (or when the salon records your appointment):</p>
+    <ul>
+      <li>first and last name;</li>
+      <li>email address;</li>
+      <li>phone number (optional);</li>
+      <li>chosen service, date and time of the appointment;</li>
+      <li>your special request (optional).</li>
+    </ul>
+    <p><strong>Allergies and health information:</strong> if you tell us about an allergy in your special request, you agree that it will be used <strong>only</strong> for the safety of your treatment. It is never kept on your customer record and is deleted together with the booking (see retention periods below). Only mention it if it is useful.</p>
+    <h3>3. Why we use it</h3>
+    <table class="legal-table">
+      <thead><tr><th>Purpose</th><th>Legal basis (GDPR)</th></tr></thead>
+      <tbody>
+        <tr><td>Recording and managing your appointment, sending the confirmation email, contacting you if something changes</td><td>Steps prior to / performance of a contract (Art. 6(1)(b))</td></tr>
+        <tr><td>Keeping a customer record (number of visits, dates, services) to welcome you better and manage missed appointments</td><td>The salon’s legitimate interest (Art. 6(1)(f))</td></tr>
+        <tr><td>Using an allergy you tell us about</td><td>Your explicit consent (Art. 9(2)(a))</td></tr>
+        <tr><td>Salon statistics (appointments per month, popular services…)</td><td>Anonymous data — no personal data</td></tr>
+      </tbody>
+    </table>
+    <p>No automated decisions, no profiling, no newsletter, no advertising.</p>
+    <h3>4. How long we keep it</h3>
+    <table class="legal-table">
+      <thead><tr><th>Data</th><th>Kept for</th></tr></thead>
+      <tbody>
+        <tr><td>Booking details (time, special request…)</td><td><strong>30 days</strong> after the appointment, then deleted</td></tr>
+        <tr><td>Customer record (name, contact details, number and dates of visits, services)</td><td><strong>3 years</strong> after your last visit, then deleted</td></tr>
+        <tr><td>Anonymous statistics</td><td>No limit (no personal data)</td></tr>
+      </tbody>
+    </table>
+    <h3>5. Who can access it</h3>
+    <p>Only the salon, through a password-protected admin area. Your details are not visible to other visitors of the website. We use technical service providers acting on our behalf:</p>
+    <ul>
+      <li><strong>Google (Firebase)</strong> — secure storage of bookings;</li>
+      <li><strong>EmailJS</strong> and <strong>Google (Gmail)</strong> — sending the confirmation email;</li>
+      <li><strong>GitHub</strong> — website hosting (no booking data).</li>
+    </ul>
+    <p>Some of these providers may process data outside the European Union, in particular in the United States, under the safeguards provided by the GDPR (EU–US Data Privacy Framework and/or the European Commission’s standard contractual clauses).</p>
+    <h3>6. Your rights</h3>
+    <p>You can ask at any time to <strong>access</strong>, <strong>correct</strong> or <strong>delete</strong> your data, object to its use, restrict its use or receive a copy of it. Simply write to <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a> or to 9 rue Trousseau, 75011 Paris, France. We reply within one month.</p>
+    <p>If you believe your rights have not been respected, you can lodge a complaint with the CNIL (the French data protection authority): <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">www.cnil.fr</a>.</p>
+    <h3>7. Security</h3>
+    <p>Bookings are stored in a protected database: only the salon’s admin account can read them. Data is transmitted encrypted (HTTPS).</p>
+  </section>
+
+  <section id="en-cookies">
+    <h2>Cookies</h2>
+    <p>This website uses <strong>no advertising or analytics cookies</strong>. That is why no cookie banner is shown.</p>
+    <ul>
+      <li><strong>Google Maps:</strong> the map only loads if you click “Show the map”. Google may then set its own cookies (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google’s policy</a>).</li>
+      <li><strong>Fonts</strong> (Google Fonts): loading them sends your IP address to Google, without cookies.</li>
+      <li><strong>Language choice:</strong> remembered in your browser (local storage), without cookies or tracking.</li>
+      <li><strong>Admin area:</strong> the salon’s login is remembered in the salon’s own browser only; it does not concern customers.</li>
+    </ul>
+  </section>
+</main>
+
+<!-- ═══════════════════════════════ ESPAÑOL ═══════════════════════════════ -->
+<main class="legal-main" data-lang="es" lang="es" hidden>
+  <h1>Aviso legal <em>y</em> privacidad</h1>
+  <p class="legal-updated">Última actualización: 11 de noviembre de 2026</p>
+  <p class="legal-translation">Esta es una traducción al español para su comodidad. La versión francesa es la única jurídicamente vinculante.</p>
+  <nav class="legal-toc" aria-label="Índice">
+    <a href="#es-mentions">Aviso legal</a>
+    <a href="#es-confidentialite">Política de privacidad</a>
+    <a href="#es-cookies">Cookies</a>
+  </nav>
+
+  <section id="es-mentions">
+    <h2>Aviso legal</h2>
+    <h3>Editor del sitio</h3>
+    <p>
+      <strong>ATELIER ACHI</strong>, sociedad de responsabilidad limitada francesa (SARL) con un capital de 2.000 €<br>
+      Domicilio social: 9 rue Trousseau, 75011 París, Francia<br>
+      Registro Mercantil de París (RCS) 101 754 307 — SIRET 101 754 307 00011<br>
+      Número de IVA intracomunitario: FR53 101 754 307<br>
+      Teléfono: <a href="tel:+33187076059">+33 1 87 07 60 59</a><br>
+      Email: <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>
+    </p>
+    <h3>Responsable de la publicación</h3>
+    <p>Lumo Tso BENGYAK, en calidad de gerente.</p>
+    <h3>Alojamiento</h3>
+    <p>
+      GitHub, Inc. (servicio GitHub Pages)<br>
+      88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, Estados Unidos<br>
+      Contacto: <a href="https://support.github.com" target="_blank" rel="noopener">support.github.com</a>
+      (GitHub no ofrece asistencia telefónica)
+    </p>
+    <h3>Propiedad intelectual</h3>
+    <p>Los textos, fotografías, logotipo y elementos gráficos de este sitio son propiedad de ATELIER ACHI, salvo indicación contraria. Queda prohibida cualquier reproducción sin autorización.</p>
+  </section>
+
+  <section id="es-confidentialite">
+    <h2>Política de privacidad</h2>
+    <p class="legal-lead">En resumen: sus datos se usan <strong>únicamente</strong> para gestionar sus citas. Nunca se venden ni se usan para publicidad, y solo el salón tiene acceso a ellos.</p>
+    <h3>1. Responsable del tratamiento</h3>
+    <p>ATELIER ACHI, 9 rue Trousseau, 75011 París, Francia — <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>.</p>
+    <h3>2. Datos recogidos</h3>
+    <p>Cuando reserva en línea (o cuando el salón registra su cita):</p>
+    <ul>
+      <li>nombre y apellidos;</li>
+      <li>dirección de email;</li>
+      <li>número de teléfono (opcional);</li>
+      <li>servicio elegido, fecha y hora de la cita;</li>
+      <li>su petición especial (opcional).</li>
+    </ul>
+    <p><strong>Alergias e información de salud:</strong> si nos indica una alergia en la petición especial, acepta que se utilice <strong>únicamente</strong> para la seguridad de su tratamiento. Nunca se guarda en su ficha de clienta y se elimina junto con la reserva (ver plazos más abajo). Menciónela solo si es útil.</p>
+    <h3>3. Para qué los usamos</h3>
+    <table class="legal-table">
+      <thead><tr><th>Uso</th><th>Base jurídica (RGPD)</th></tr></thead>
+      <tbody>
+        <tr><td>Registrar y gestionar su cita, enviarle el email de confirmación, contactarle si hay cambios</td><td>Medidas precontractuales / ejecución del contrato (art. 6.1.b)</td></tr>
+        <tr><td>Mantener una ficha de clienta (número de visitas, fechas, servicios) para atenderle mejor y gestionar las ausencias</td><td>Interés legítimo del salón (art. 6.1.f)</td></tr>
+        <tr><td>Utilizar una alergia que nos indique</td><td>Su consentimiento explícito (art. 9.2.a)</td></tr>
+        <tr><td>Estadísticas del salón (citas por mes, servicios populares…)</td><td>Datos anónimos — ningún dato personal</td></tr>
+      </tbody>
+    </table>
+    <p>Sin decisiones automatizadas, sin elaboración de perfiles, sin boletín, sin publicidad.</p>
+    <h3>4. Plazo de conservación</h3>
+    <table class="legal-table">
+      <thead><tr><th>Datos</th><th>Conservados</th></tr></thead>
+      <tbody>
+        <tr><td>Detalles de la reserva (hora, petición especial…)</td><td><strong>30 días</strong> después de la cita, y luego se eliminan</td></tr>
+        <tr><td>Ficha de clienta (nombre, datos de contacto, número y fechas de visitas, servicios)</td><td><strong>3 años</strong> después de su última visita, y luego se elimina</td></tr>
+        <tr><td>Estadísticas anónimas</td><td>Sin límite (ningún dato personal)</td></tr>
+      </tbody>
+    </table>
+    <h3>5. Quién tiene acceso</h3>
+    <p>Solo el salón, mediante un espacio de administración protegido por contraseña. Sus datos no son visibles para los demás visitantes del sitio. Recurrimos a proveedores técnicos que actúan en nuestro nombre:</p>
+    <ul>
+      <li><strong>Google (Firebase)</strong> — almacenamiento seguro de las reservas;</li>
+      <li><strong>EmailJS</strong> y <strong>Google (Gmail)</strong> — envío del email de confirmación;</li>
+      <li><strong>GitHub</strong> — alojamiento del sitio (ningún dato de reserva).</li>
+    </ul>
+    <p>Algunos de estos proveedores pueden tratar datos fuera de la Unión Europea, en particular en Estados Unidos, con las garantías previstas por el RGPD (Marco de Privacidad de Datos UE–EE. UU. y/o cláusulas contractuales tipo de la Comisión Europea).</p>
+    <h3>6. Sus derechos</h3>
+    <p>Puede solicitar en cualquier momento <strong>consultar</strong>, <strong>rectificar</strong> o <strong>suprimir</strong> sus datos, oponerse a su uso, limitarlo o recibir una copia. Basta con escribir a <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a> o a 9 rue Trousseau, 75011 París, Francia. Respondemos en el plazo de un mes.</p>
+    <p>Si considera que sus derechos no se respetan, puede presentar una reclamación ante la CNIL (autoridad francesa de protección de datos): <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">www.cnil.fr</a>.</p>
+    <h3>7. Seguridad</h3>
+    <p>Las reservas se almacenan en una base de datos protegida: solo la cuenta de administración del salón puede leerlas. Los datos se transmiten cifrados (HTTPS).</p>
+  </section>
+
+  <section id="es-cookies">
+    <h2>Cookies</h2>
+    <p>Este sitio <strong>no utiliza cookies publicitarias ni de medición de audiencia</strong>. Por eso no se muestra ningún banner de cookies.</p>
+    <ul>
+      <li><strong>Google Maps:</strong> el mapa solo se carga si hace clic en «Mostrar el mapa». Google puede entonces instalar sus propias cookies (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">política de Google</a>).</li>
+      <li><strong>Tipografías</strong> (Google Fonts): al cargarlas se transmite su dirección IP a Google, sin cookies.</li>
+      <li><strong>Elección del idioma:</strong> se recuerda en su navegador (almacenamiento local), sin cookies ni seguimiento.</li>
+      <li><strong>Espacio de administración:</strong> la sesión del salón se recuerda solo en el navegador del salón; no afecta a las clientas.</li>
+    </ul>
+  </section>
+</main>
+
+<!-- ═══════════════════════════════ РУССКИЙ ═══════════════════════════════ -->
+<main class="legal-main" data-lang="ru" lang="ru" hidden>
+  <h1>Правовая информация <em>и</em> конфиденциальность</h1>
+  <p class="legal-updated">Последнее обновление: 11 ноября 2026 г.</p>
+  <p class="legal-translation">Это перевод на русский язык для вашего удобства. Юридическую силу имеет только версия на французском языке.</p>
+  <nav class="legal-toc" aria-label="Содержание">
+    <a href="#ru-mentions">Правовая информация</a>
+    <a href="#ru-confidentialite">Политика конфиденциальности</a>
+    <a href="#ru-cookies">Файлы cookie</a>
+  </nav>
+
+  <section id="ru-mentions">
+    <h2>Правовая информация</h2>
+    <h3>Владелец сайта</h3>
+    <p>
+      <strong>ATELIER ACHI</strong>, французское общество с ограниченной ответственностью (SARL) с уставным капиталом 2 000 €<br>
+      Юридический адрес: 9 rue Trousseau, 75011 Париж, Франция<br>
+      Торговый реестр Парижа (RCS) 101 754 307 — SIRET 101 754 307 00011<br>
+      Номер плательщика НДС в ЕС: FR53 101 754 307<br>
+      Телефон: <a href="tel:+33187076059">+33 1 87 07 60 59</a><br>
+      Email: <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>
+    </p>
+    <h3>Ответственный за публикацию</h3>
+    <p>Lumo Tso BENGYAK, управляющий (gérant(e)).</p>
+    <h3>Хостинг</h3>
+    <p>
+      GitHub, Inc. (сервис GitHub Pages)<br>
+      88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, США<br>
+      Контакт: <a href="https://support.github.com" target="_blank" rel="noopener">support.github.com</a>
+      (GitHub не предоставляет поддержку по телефону)
+    </p>
+    <h3>Интеллектуальная собственность</h3>
+    <p>Тексты, фотографии, логотип и графические элементы этого сайта принадлежат ATELIER ACHI, если не указано иное. Любое воспроизведение без разрешения запрещено.</p>
+  </section>
+
+  <section id="ru-confidentialite">
+    <h2>Политика конфиденциальности</h2>
+    <p class="legal-lead">Коротко: ваши данные используются <strong>только</strong> для управления вашими записями. Они никогда не продаются и не используются для рекламы, и доступ к ним есть только у салона.</p>
+    <h3>1. Оператор данных</h3>
+    <p>ATELIER ACHI, 9 rue Trousseau, 75011 Париж, Франция — <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>.</p>
+    <h3>2. Какие данные мы собираем</h3>
+    <p>Когда вы записываетесь онлайн (или когда салон записывает вас сам):</p>
+    <ul>
+      <li>имя и фамилия;</li>
+      <li>адрес электронной почты;</li>
+      <li>номер телефона (необязательно);</li>
+      <li>выбранная услуга, дата и время записи;</li>
+      <li>ваши особые пожелания (необязательно).</li>
+    </ul>
+    <p><strong>Аллергии и сведения о здоровье:</strong> если вы сообщаете нам об аллергии в особых пожеланиях, вы соглашаетесь, что эта информация будет использоваться <strong>только</strong> для безопасности процедуры. Она никогда не сохраняется в вашей карточке клиента и удаляется вместе с записью (см. сроки ниже). Указывайте её, только если это нужно.</p>
+    <h3>3. Зачем мы их используем</h3>
+    <table class="legal-table">
+      <thead><tr><th>Цель</th><th>Правовое основание (GDPR)</th></tr></thead>
+      <tbody>
+        <tr><td>Оформление и ведение вашей записи, отправка письма с подтверждением, связь с вами при изменениях</td><td>Преддоговорные меры / исполнение договора (ст. 6.1.b)</td></tr>
+        <tr><td>Ведение карточки клиента (число визитов, даты, услуги), чтобы лучше вас принимать и учитывать неявки</td><td>Законный интерес салона (ст. 6.1.f)</td></tr>
+        <tr><td>Использование сведений об аллергии, которые вы сообщили</td><td>Ваше явное согласие (ст. 9.2.a)</td></tr>
+        <tr><td>Статистика салона (записи в месяц, популярные услуги…)</td><td>Анонимные данные — без персональных данных</td></tr>
+      </tbody>
+    </table>
+    <p>Никаких автоматизированных решений, профилирования, рассылок и рекламы.</p>
+    <h3>4. Сроки хранения</h3>
+    <table class="legal-table">
+      <thead><tr><th>Данные</th><th>Срок хранения</th></tr></thead>
+      <tbody>
+        <tr><td>Детали записи (время, особые пожелания…)</td><td><strong>30 дней</strong> после визита, затем удаляются</td></tr>
+        <tr><td>Карточка клиента (имя, контакты, число и даты визитов, услуги)</td><td><strong>3 года</strong> после последнего визита, затем удаляется</td></tr>
+        <tr><td>Анонимная статистика</td><td>Без ограничения (без персональных данных)</td></tr>
+      </tbody>
+    </table>
+    <h3>5. Кто имеет доступ</h3>
+    <p>Только салон, через защищённую паролем панель администратора. Ваши данные не видны другим посетителям сайта. Мы пользуемся услугами технических подрядчиков, действующих от нашего имени:</p>
+    <ul>
+      <li><strong>Google (Firebase)</strong> — защищённое хранение записей;</li>
+      <li><strong>EmailJS</strong> и <strong>Google (Gmail)</strong> — отправка письма с подтверждением;</li>
+      <li><strong>GitHub</strong> — хостинг сайта (без данных о записях).</li>
+    </ul>
+    <p>Некоторые из этих подрядчиков могут обрабатывать данные за пределами Европейского союза, в частности в США, с гарантиями, предусмотренными GDPR (Рамочное соглашение ЕС–США о защите данных и/или стандартные договорные положения Европейской комиссии).</p>
+    <h3>6. Ваши права</h3>
+    <p>Вы можете в любой момент запросить <strong>доступ</strong> к своим данным, их <strong>исправление</strong> или <strong>удаление</strong>, возразить против их использования, ограничить его или получить копию. Для этого напишите на <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a> или по адресу 9 rue Trousseau, 75011 Париж, Франция. Мы отвечаем в течение месяца.</p>
+    <p>Если вы считаете, что ваши права нарушены, вы можете подать жалобу в CNIL (французский орган по защите данных): <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">www.cnil.fr</a>.</p>
+    <h3>7. Безопасность</h3>
+    <p>Записи хранятся в защищённой базе данных: читать их может только учётная запись администратора салона. Данные передаются в зашифрованном виде (HTTPS).</p>
+  </section>
+
+  <section id="ru-cookies">
+    <h2>Файлы cookie</h2>
+    <p>Этот сайт <strong>не использует рекламные и аналитические cookie</strong>. Поэтому баннер о cookie не показывается.</p>
+    <ul>
+      <li><strong>Google Maps:</strong> карта загружается, только если вы нажмёте «Показать карту». После этого Google может установить свои cookie (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">политика Google</a>).</li>
+      <li><strong>Шрифты</strong> (Google Fonts): при их загрузке ваш IP-адрес передаётся Google, без cookie.</li>
+      <li><strong>Выбор языка:</strong> запоминается в вашем браузере (локальное хранилище), без cookie и без отслеживания.</li>
+      <li><strong>Панель администратора:</strong> вход салона запоминается только в браузере салона; к клиентам это не относится.</li>
     </ul>
   </section>
 </main>
 
 <footer class="legal-footer">
-  <a href="./">← Retour au site</a>
+  <a href="./" data-back>← Retour au site</a>
   <span>© ATELIER ACHI · 9 rue Trousseau, 75011 Paris</span>
 </footer>
 

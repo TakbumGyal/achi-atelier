@@ -46,8 +46,8 @@ assets/
 | I want to…                         | Edit                                                     |
 |------------------------------------|----------------------------------------------------------|
 | Change a price or duration         | `assets/js/data/services.js` (updates the price list **and** booking) |
-| Add / remove a service             | `assets/js/data/services.js`                              |
-| Change any text or a translation   | `assets/js/data/translations.js`                          |
+| Add / remove a service             | `assets/js/data/services.js` — give it its EN/ES/RU names in `t` |
+| Change any text or a translation   | `assets/js/data/translations.js` (legal page: `mentions-legales.html`, one block per language — French is the binding version) |
 | Change opening hours / closed day  | `assets/js/config.js` **and** the hours text in `translations.js` |
 | Replace a photo                    | Put the new photo in `images-src/` (same name), run `npm run images` |
 | Change colours / fonts             | Variables at the top of `assets/css/base.css`             |

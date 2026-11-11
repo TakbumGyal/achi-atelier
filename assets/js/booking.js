@@ -6,7 +6,7 @@
 import { $, esc, show, registerActions, keepBelowNavbar } from './utils/dom.js';
 import { t, formatDate, onLangChange } from './i18n.js';
 import { SALON } from './config.js';
-import { SERVICE_CATEGORIES, BOOKABLE_SERVICES } from './data/services.js';
+import { SERVICE_CATEGORIES, BOOKABLE_SERVICES, serviceLabel } from './data/services.js';
 import { toDateStr, todayStr, nowMins, addDaysStr, formatDuration } from './utils/dates.js';
 import { availableSlots, isTaken, isPastSlot, isClosedDay } from './availability.js';
 import { state, subscribe, createBooking } from './db.js';
@@ -46,12 +46,12 @@ function goStep(n) {
   document.querySelectorAll('.stp-line[data-step]').forEach(l => l.classList.toggle('done', +l.dataset.step < n));
 
   if (n === 2) {
-    $('sum-svc-2').textContent = sel.svc ? `${sel.svc.name} · ${formatDuration(sel.svc.dur)}` : '—';
+    $('sum-svc-2').textContent = sel.svc ? `${serviceLabel(sel.svc.name)} · ${formatDuration(sel.svc.dur)}` : '—';
     renderWeek();
   }
   if (n === 3) {
     loadEmailJs().catch(() => {});   // get the email library ready before "Confirm"
-    $('sum-svc-3').textContent = sel.svc?.name || '—';
+    $('sum-svc-3').textContent = sel.svc ? serviceLabel(sel.svc.name) : '—';
     $('sum-date-3').textContent = sel.date ? formatDate(sel.date) : '—';
     $('sum-time-3').textContent = sel.time || '—';
   }
@@ -73,9 +73,9 @@ function renderServiceCards() {
     <div>
       <div class="csvc-group-title" data-i18n="${cat.titleKey}">${t(cat.titleKey)}</div>
       <div class="csvc-cards">${cat.services.map(s => `
-        <div class="csvc" role="button" tabindex="0" data-action="pick-service" data-svc="${esc(s.name)}">
+        <div class="csvc${sel.svc?.name === s.name ? ' sel' : ''}" role="button" tabindex="0" data-action="pick-service" data-svc="${esc(s.name)}">
           <span class="csvc-check">✓</span>
-          <div class="csvc-name">${esc(s.name)}</div>
+          <div class="csvc-name">${esc(serviceLabel(s.name))}</div>
           <div class="csvc-dur">${formatDuration(s.dur)}</div>
           <div class="csvc-price">${esc(s.price)}</div>
         </div>`).join('')}
@@ -219,7 +219,7 @@ function reviewBooking() {
 function renderConfirm() {
   const f = readForm();
   const rows = [
-    [t('tbl_svc'), `<strong>${esc(sel.svc.name)}</strong>`],
+    [t('tbl_svc'), `<strong>${esc(serviceLabel(sel.svc.name))}</strong>`],
     [t('tbl_dur'), formatDuration(sel.svc.dur)],
     [t('tbl_price'), `<strong class="price">${esc(sel.svc.price)}</strong>`],
     [t('tbl_date'), formatDate(sel.date)],
@@ -280,7 +280,7 @@ async function confirmBooking() {
   sendConfirmationEmail(bk); // fire and forget
 
   const text = t('success_sub')
-    .replace('{name}', esc(f.fn)).replace('{svc}', esc(sel.svc.name))
+    .replace('{name}', esc(f.fn)).replace('{svc}', esc(serviceLabel(sel.svc.name)))
     .replace('{date}', formatDate(sel.date)).replace('{time}', sel.time);
   $('confirm-box').innerHTML = resultBox('🎉', t('success_title'), text,
     `<button class="btn-p" data-action="new-booking">${t('btn_another')}</button>`);
@@ -332,7 +332,19 @@ export function initBooking() {
     if ((type === 'slots' || type === 'settings') && ready && currentStep === 2) renderWeek();  // live availability
   });
 
-  onLangChange(() => { if (ready && currentStep === 2) renderWeek(); });
+  onLangChange(() => {
+    renderServiceCards();
+    if (!ready) return;
+    if (currentStep === 2) {
+      $('sum-svc-2').textContent = sel.svc ? `${serviceLabel(sel.svc.name)} · ${formatDuration(sel.svc.dur)}` : '—';
+      renderWeek();
+    }
+    if (currentStep === 3) {
+      $('sum-svc-3').textContent = sel.svc ? serviceLabel(sel.svc.name) : '—';
+      $('sum-date-3').textContent = sel.date ? formatDate(sel.date) : '—';
+    }
+    if (currentStep === 4 && sel.svc && $('confirm-box').querySelector('.confirm-tbl')) renderConfirm();
+  });
 
   setTimeout(() => {
     if (!ready && !failed) $('bk-loading').textContent = t('load_error');
