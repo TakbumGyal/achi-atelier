@@ -26,9 +26,6 @@ const IMAGES = [
   { src: 'logo.png', out: 'logo', width: 600, keepPng: true, noWebp: true }, // social-sharing image
   { src: 'hero.jpg', out: 'hero', width: 840 },                       // desktop hero
   { src: 'hero.jpg', out: 'hero-sm', width: 640, noFallback: true },  // phones / tablets (WebP only)
-  { src: 'about/about-1.jpg', out: 'about/about-1', width: 700 },
-  { src: 'about/about-2.jpg', out: 'about/about-2', width: 700 },
-  { src: 'about/about-3.jpg', out: 'about/about-3', width: 1100 },
   { src: 'gallery/gallery-1.png', out: 'gallery/gallery-1', width: 900 },
   { src: 'gallery/gallery-2.jpg', out: 'gallery/gallery-2', width: 900 },
   { src: 'gallery/gallery-3.jpg', out: 'gallery/gallery-3', width: 900 },

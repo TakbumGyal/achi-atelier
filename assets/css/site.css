@@ -156,11 +156,10 @@ section { position: relative; }
 .gal-item:hover img { transform: scale(1.05); }
 .gal-foot { display: flex; justify-content: center; margin-top: 2.2rem; padding: 0 var(--gutter); }
 @media (min-width: 901px) {
-  /* 4 columns, fixed row height: big first photo (2×2), last photo spans 2 columns → 8 photos fill 3 full rows */
+  /* 4 columns, fixed row height: big first photo (2×2) + 4 photos → 2 full rows */
   .gal-grid { max-width: var(--page); margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(180px, 19vw, 270px); overflow: visible; padding: 0 var(--gutter); gap: 1rem; }
   .gal-item { aspect-ratio: auto; height: 100%; }
   .gal-item:first-child { grid-column: span 2; grid-row: span 2; }
-  .gal-item:last-child { grid-column: span 2; }
 }
 
 /* Lightbox */
