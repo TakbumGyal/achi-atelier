@@ -11,7 +11,9 @@ Bookings are stored in **Firebase Firestore**; confirmation emails go through **
 ```
 index.html                  Page markup (all sections)
 CNAME                       Custom domain for GitHub Pages
-firestore.rules             Firestore security rules (copy into Firebase console)
+firestore.rules             Firestore security rules (publish in Firebase console)
+firebase.json, package.json Local testing only (emulator, rule tests) — not used by the live site
+tests/                      Security-rules tests
 assets/
   css/
     base.css                Colours, fonts, buttons, form fields, animations
@@ -49,18 +51,50 @@ assets/
 | Replace a photo                    | Overwrite the file in `assets/img/` with the same name    |
 | Change colours / fonts             | Variables at the top of `assets/css/base.css`             |
 
+## Security model
+
+- **`bookings`** (customer name, email, phone…) can only be read by a logged-in admin.
+- **`slots`** holds only date / time / duration and is public — the booking calendar uses it.
+  Each booking and its slot are written together; the rules reject one without the other.
+- **Admins** sign in with Firebase Authentication (email + password). An account is an admin
+  only if a document `admins/{its user id}` exists — the website can never create one.
+- The rules live in `firestore.rules` and must be **published in the Firebase console**
+  (Firestore Database → Rules) after any change.
+
+### Add an admin
+
+1. Firebase console → Authentication → Users → *Add user* (email + strong password).
+2. Copy the new user's **User UID**.
+3. Firestore Database → Data → collection `admins` → *Add document* → Document ID = that UID
+   (add any field, e.g. `name: "Salon"`).
+
+To remove an admin, delete their `admins` document and the user in Authentication.
+
 ## Run locally
 
 The site uses ES modules, so it must be served over HTTP (opening the file directly won't work):
 
 ```bash
 npx serve .
-# or
-python -m http.server 8000
 ```
 
-> ⚠️ The local site talks to the **live** Firestore database. Bookings you make while
-> testing are real — cancel them from the admin panel afterwards.
+> ⚠️ Opened normally, the local site talks to the **live** database — bookings you make are real.
+
+To test safely against a local fake database instead (needs Java):
+
+```bash
+npm install
+npm run emulators            # local Firestore + Auth
+npx serve .                  # in a second terminal
+# open http://localhost:3000/?emulator
+```
+
+### Test the security rules
+
+```bash
+npm install
+npm run test:rules
+```
 
 ## Deploy
 

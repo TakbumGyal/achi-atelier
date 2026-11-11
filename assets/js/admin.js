@@ -1,14 +1,18 @@
 /**
- * Admin panel: login, month calendar, day details, upcoming list,
+ * Admin panel: Firebase login, month calendar, day details, upcoming list,
  * manual booking modal, cancellation and the "block today" switch.
  * (The admin interface is in French only.)
+ *
+ * Access is enforced by the Firestore rules, not by this file: only users
+ * with an admins/{uid} document can read customer bookings.
  */
-import { $, esc, registerActions } from './utils/dom.js';
-import { ADMIN_PW_HASH } from './config.js';
+import { $, esc, registerActions, keepBelowNavbar } from './utils/dom.js';
 import { BOOKABLE_SERVICES } from './data/services.js';
 import { toDateStr, todayStr, formatDuration } from './utils/dates.js';
-import { formatDate } from './i18n.js';
-import { state, subscribe, addBooking, cancelBooking, setBlockToday } from './db.js';
+import { formatDate, t } from './i18n.js';
+import {
+  state, subscribe, signIn, signOut, createBooking, cancelBooking, setBlockToday,
+} from './db.js';
 import { sendConfirmationEmail } from './email.js';
 
 const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -16,7 +20,6 @@ const WEEKDAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 const UPCOMING_LIMIT = 8;
 const PREVIEW_PER_DAY = 2;
 
-let loggedIn = false;
 let month = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 let selDay = null;
 
@@ -30,42 +33,48 @@ function switchTab(tab) {
     $('bkt-' + x).classList.toggle('active', x === tab);
     $('bp-' + x).classList.toggle('active', x === tab);
   });
-  if (tab === 'admin') {
-    if (loggedIn) render();
-    else showLogin();
-  }
+  if (tab === 'admin') showAdminView();
+  keepBelowNavbar($('bkt-client').parentElement);
 }
 
 /* ─── Auth ─── */
 
-async function sha256Hex(text) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-  return Array.from(new Uint8Array(buf), b => b.toString(16).padStart(2, '0')).join('');
+function showAdminView() {
+  const loggedIn = !!state.admin;
+  $('admin-login').style.display = loggedIn ? 'none' : 'block';
+  $('admin-dash').classList.toggle('visible', loggedIn);
+  if (loggedIn) render();
 }
 
-function showLogin() {
-  $('admin-login').style.display = 'block';
-  $('admin-dash').classList.remove('visible');
+function showLoginError(key) {
+  const el = $('admin-err');
+  el.textContent = t(key);
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 4000);
 }
 
 async function login() {
-  const input = $('admin-pw-input');
-  if (await sha256Hex(input.value) === ADMIN_PW_HASH) {
-    loggedIn = true;
-    $('admin-login').style.display = 'none';
-    $('admin-dash').classList.add('visible');
-    render();
-  } else {
-    $('admin-err').classList.add('show');
-    input.value = '';
-    setTimeout(() => $('admin-err').classList.remove('show'), 3000);
+  const email = $('admin-email-input').value.trim();
+  const pw = $('admin-pw-input');
+  const btn = $('btn-admin-login');
+  if (!email || !pw.value) { showLoginError('admin_err'); return; }
+
+  btn.disabled = true;
+  let result;
+  try {
+    result = await signIn(email, pw.value);
+  } catch {
+    result = 'invalid';
   }
+  btn.disabled = false;
+  pw.value = '';
+  if (result === 'invalid') showLoginError('admin_err');
+  if (result === 'not-admin') showLoginError('admin_not_allowed');
+  // On success, the 'auth' event below switches to the dashboard.
 }
 
-function logout() {
-  loggedIn = false;
-  $('admin-pw-input').value = '';
-  showLogin();
+async function logout() {
+  await signOut();
 }
 
 /* ─── Dashboard ─── */
@@ -135,7 +144,7 @@ function renderDayPanel(ds) {
         <div class="appt-detail">${esc(b.service)} · ${b.dur}min · ${esc(b.price)}</div>
         <div class="appt-detail">✉ ${esc(b.email)}${b.phone ? ' · 📞 ' + esc(b.phone) : ''}</div>
         ${b.msg ? `<div class="appt-note">"${esc(b.msg)}"</div>` : ''}
-        ${cancelled ? '' : `<button class="btn-xcl" data-action="admin-cancel" data-id="${b.id}">✕ Annuler</button>`}
+        ${cancelled ? '' : `<button class="btn-xcl" data-action="admin-cancel" data-id="${esc(b._fid)}">✕ Annuler</button>`}
       </div>
       <div class="appt-dur">${b.dur}min</div>
     </div>`;
@@ -174,10 +183,10 @@ function selectDay(ds) {
 
 /* ─── Cancel / block today ─── */
 
-async function cancel(id) {
+async function cancel(fid) {
   if (!confirm('Annuler ce rendez-vous ? Le créneau sera libéré pour les clientes.')) return;
   try {
-    await cancelBooking(id);
+    await cancelBooking(fid);
   } catch (err) {
     console.error(err);
     alert("Erreur : impossible d'annuler ce rendez-vous.");
@@ -200,7 +209,7 @@ async function toggleBlockToday() {
     await setBlockToday(next);
   } catch (err) {
     console.error(err);
-    alert("Erreur : impossible d'enregistrer le réglage. Vérifiez les règles Firestore (collection settings).");
+    alert("Erreur : impossible d'enregistrer le réglage.");
   }
 }
 
@@ -228,13 +237,13 @@ async function saveModal() {
     return;
   }
   const bk = {
-    id: state.nextId++, first, last,
+    first, last,
     email: $('m-em').value.trim(), phone: $('m-ph').value.trim(),
     service: svc.name, dur: svc.dur, price: svc.price,
-    date, time, msg: $('m-note').value.trim(), status: 'confirmed', source: 'admin',
+    date, time, msg: $('m-note').value.trim(),
   };
   try {
-    await addBooking(bk);
+    await createBooking(bk, 'admin');
   } catch (err) {
     console.error(err);
     alert("Erreur : le rendez-vous n'a pas pu être enregistré.");
@@ -258,19 +267,21 @@ export function initAdmin() {
     'admin-prev-month': () => { month.setMonth(month.getMonth() - 1); renderCalendar(); },
     'admin-next-month': () => { month.setMonth(month.getMonth() + 1); renderCalendar(); },
     'admin-day': el => selectDay(el.dataset.date),
-    'admin-cancel': el => cancel(+el.dataset.id),
+    'admin-cancel': el => cancel(el.dataset.id),
     'admin-block-today': toggleBlockToday,
     'open-modal': el => openModal(el.dataset.date),
     'close-modal': closeModal,
     'save-modal': saveModal,
   });
 
-  $('admin-pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+  ['admin-email-input', 'admin-pw-input'].forEach(id =>
+    $(id).addEventListener('keydown', e => { if (e.key === 'Enter') login(); }));
   $('m-ph').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^0-9+\s\-()']/g, ''); });
   $('modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
   subscribe(type => {
-    if (!loggedIn) return;
+    if (type === 'auth') showAdminView();
+    if (!state.admin) return;
     if (type === 'bookings') render();
     if (type === 'settings') updateBlockTodayBtn();
   });

@@ -328,10 +328,13 @@
         <h3 data-i18n="admin_login_title">Espace Administrateur</h3>
         <p data-i18n="admin_login_sub">Entrez votre mot de passe pour accéder au tableau de bord.</p>
         <div class="fg">
+          <input type="email" id="admin-email-input" placeholder="Email" autocomplete="username" aria-label="Email">
+        </div>
+        <div class="fg">
           <input type="password" id="admin-pw-input" placeholder="••••••••" autocomplete="current-password" aria-label="Mot de passe">
         </div>
-        <button class="btn-p btn-block" data-action="admin-login" data-i18n="admin_login_btn">Connexion</button>
-        <p class="err-msg" id="admin-err" data-i18n="admin_err">Mot de passe incorrect</p>
+        <button class="btn-p btn-block" id="btn-admin-login" data-action="admin-login" data-i18n="admin_login_btn">Connexion</button>
+        <p class="err-msg" id="admin-err"></p>
       </div>
 
       <div class="admin-dash" id="admin-dash">

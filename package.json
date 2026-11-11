@@ -1,0 +1,15 @@
+{
+  "name": "achi-atelier",
+  "private": true,
+  "description": "Atelier Achi website. No build step — these scripts are only for local testing.",
+  "type": "module",
+  "scripts": {
+    "test:rules": "firebase emulators:exec --only firestore --project achirestaurant-dd2b5 \"node --test tests/firestore-rules.test.js\"",
+    "emulators": "firebase emulators:start --only firestore,auth --project achirestaurant-dd2b5"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^4.0.1",
+    "firebase": "^11.10.0",
+    "firebase-tools": "^14.11.0"
+  }
+}

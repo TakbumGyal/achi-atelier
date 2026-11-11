@@ -3,13 +3,13 @@
  *   1. choose a service   2. choose a day + time
  *   3. enter contact info 4. review and confirm
  */
-import { $, esc, show, registerActions } from './utils/dom.js';
+import { $, esc, show, registerActions, keepBelowNavbar } from './utils/dom.js';
 import { t, formatDate, onLangChange } from './i18n.js';
 import { SALON } from './config.js';
 import { SERVICE_CATEGORIES, BOOKABLE_SERVICES } from './data/services.js';
 import { toDateStr, todayStr, nowMins, addDaysStr, formatDuration } from './utils/dates.js';
 import { availableSlots, isTaken, isPastSlot, isClosedDay } from './availability.js';
-import { state, subscribe, addBooking } from './db.js';
+import { state, subscribe, createBooking } from './db.js';
 import { sendConfirmationEmail } from './email.js';
 
 /* If the database is slow, show the booking form anyway after this delay. */
@@ -54,6 +54,7 @@ function goStep(n) {
     $('sum-time-3').textContent = sel.time || '—';
   }
   if (n === 4) renderConfirm();
+  keepBelowNavbar($('bp-client'));   // a shorter step can leave the form under the navbar
 }
 
 function showForm() {
@@ -261,12 +262,12 @@ async function confirmBooking() {
   }
 
   const bk = {
-    id: state.nextId++, first: f.fn, last: f.ln, email: f.em, phone: f.ph,
+    first: f.fn, last: f.ln, email: f.em, phone: f.ph,
     service: sel.svc.name, dur: sel.svc.dur, price: sel.svc.price,
-    date: sel.date, time: sel.time, msg: f.msg, status: 'confirmed',
+    date: sel.date, time: sel.time, msg: f.msg,
   };
   try {
-    await addBooking(bk);
+    await createBooking(bk);
   } catch (err) {
     console.error('Booking failed:', err);
     btn.disabled = false;
@@ -325,8 +326,8 @@ export function initBooking() {
       if (!ready) { failed = true; $('bk-loading').textContent = t('load_error'); }
       return;
     }
-    if (type === 'bookings') showForm();
-    if (ready && currentStep === 2) renderWeek();  // live availability
+    if (type === 'slots') showForm();
+    if ((type === 'slots' || type === 'settings') && ready && currentStep === 2) renderWeek();  // live availability
   });
 
   onLangChange(() => { if (ready && currentStep === 2) renderWeek(); });

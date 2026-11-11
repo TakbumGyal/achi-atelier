@@ -23,8 +23,18 @@ export const FIREBASE_CONFIG = {
   appId: '1:925337298046:web:e233e8cf481575240ce42f',
 };
 export const FIREBASE_SDK_URL = 'https://www.gstatic.com/firebasejs/12.13.0/';
-export const BOOKINGS_COLLECTION = 'bookings';
+export const COLLECTIONS = {
+  bookings: 'bookings',   // customer details — admin only
+  slots: 'slots',         // public availability (date, time, duration)
+  admins: 'admins',       // one doc per admin user id
+};
 export const SETTINGS_DOC = ['settings', 'config'];
+
+/* Local testing against the Firebase emulator: open the site on localhost
+   with ?emulator in the URL (see README). Never used on the live site. */
+export const USE_EMULATOR =
+  ['localhost', '127.0.0.1'].includes(location.hostname) &&
+  new URLSearchParams(location.search).has('emulator');
 
 /* EmailJS — sends the booking confirmation email. */
 export const EMAILJS = {
@@ -32,6 +42,3 @@ export const EMAILJS = {
   templateId: 'template_pbtrcdi',
   publicKey: 'EDlPX0xd-miXeB4OW',
 };
-
-/* SHA-256 of the admin password. */
-export const ADMIN_PW_HASH = '2b7cccaf9ae588b9b85399d000fc5b47b766dd723b028ac26c68d020da21889b';

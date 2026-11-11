@@ -1,25 +1,22 @@
 /**
- * Pure booking-availability rules: which slots are free on a given day.
+ * Booking-availability rules: which slots are free on a given day.
+ * Works only from the public `slots` (no customer data needed).
  */
 import { SALON } from './config.js';
 import { todayStr, nowMins, toMins, minsToTime, weekdayOf } from './utils/dates.js';
 import { state } from './db.js';
 
-const isActive = b => b.status !== 'cancelled';
-
 export const isClosedDay = ds => weekdayOf(ds) === SALON.closedWeekday;
 
-/** Number of active bookings overlapping [time, time + dur) on day `ds`. */
-function overlapCount(ds, time, dur, excludeId = null) {
+/** Number of booked slots overlapping [time, time + dur) on day `ds`. */
+function overlapCount(ds, time, dur) {
   const start = toMins(time), end = start + dur;
-  return state.bookings.filter(b =>
-    b.date === ds && isActive(b) && b.id !== excludeId &&
-    start < toMins(b.time) + b.dur && end > toMins(b.time),
+  return state.slots.filter(s =>
+    s.date === ds && start < toMins(s.time) + s.dur && end > toMins(s.time),
   ).length;
 }
 
-export const isTaken = (ds, time, dur, excludeId) =>
-  overlapCount(ds, time, dur, excludeId) >= SALON.maxCapacity;
+export const isTaken = (ds, time, dur) => overlapCount(ds, time, dur) >= SALON.maxCapacity;
 
 /** True if the slot is in the past, or today is blocked by the admin. */
 export function isPastSlot(ds, time) {
