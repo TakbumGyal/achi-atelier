@@ -1,9 +1,9 @@
-/* Entry point — loaded from index.html as an ES module. */
+/* Entry point of the public site — loaded from index.html as an ES module.
+   (The admin panel lives on its own private page: admin.html.) */
 import { renderServiceMenu } from './menu.js';
-import { initBooking } from './booking.js';
+import { initBooking, openBooking } from './booking.js';
 import { initUI } from './ui.js';
 import { connect } from './db.js';
-import { $, registerActions, keepBelowNavbar } from './utils/dom.js';
 import { setLang, initialLang } from './i18n.js';
 
 renderServiceMenu();
@@ -14,26 +14,10 @@ initUI();
 const startLang = initialLang();
 if (startLang !== 'fr') setLang(startLang);
 
-/* Booking tabs. The admin code (and Firebase Auth) is only downloaded when
-   someone actually opens "Espace Admin" — normal visitors never load it. */
-registerActions({
-  'booking-tab': el => {
-    const tab = el.dataset.tab;
-    ['client', 'admin'].forEach(x => {
-      $('bkt-' + x).classList.toggle('active', x === tab);
-      $('bp-' + x).classList.toggle('active', x === tab);
-    });
-    keepBelowNavbar($('bkt-client').parentElement);
-    if (tab === 'admin') import('./admin/index.js').then(m => m.openAdmin());
-  },
-});
+/* Old links / bookmarks to "#booking" open the booking panel. */
+if (location.hash === '#booking') openBooking();
 
-/* Load availability (Firestore) after the page has shown, so it doesn't
-   compete with the photos — or right away if the visitor heads to booking. */
-let started = false;
-const startDb = () => { if (!started) { started = true; connect().catch(() => {}); } };
-if (document.readyState === 'complete') startDb();
-else window.addEventListener('load', startDb, { once: true });
-new IntersectionObserver((entries, obs) => {
-  if (entries.some(e => e.isIntersecting)) { startDb(); obs.disconnect(); }
-}, { rootMargin: '1200px' }).observe($('booking'));
+/* Load availability once the page has shown (so it doesn't compete with the
+   photos). Opening the booking panel starts it immediately if needed. */
+if (document.readyState === 'complete') connect().catch(() => {});
+else window.addEventListener('load', () => connect().catch(() => {}), { once: true });

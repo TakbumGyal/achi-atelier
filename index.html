@@ -2,10 +2,11 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Atelier Achi — Nail Studio · Paris 11</title>
   <meta name="description" content="Atelier Achi Nail Studio — Salon de manucure et beauté des ongles à Paris 11ème. Réservez votre soin en ligne.">
   <meta name="keywords" content="nail studio paris, manucure paris 11, onglerie paris, semi-permanent paris, atelier achi, ongles paris 11">
+  <meta name="theme-color" content="#FAF7F0">
   <link rel="canonical" href="https://www.atelierachi.com/">
 
   <!-- Social sharing -->
@@ -37,74 +38,86 @@
   }
   </script>
 
-  <!-- Icons -->
   <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
   <link rel="icon" type="image/png" sizes="64x64" href="assets/icons/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 
-  <!-- Fonts & styles -->
+  <!-- Fonts load in the background so they don't delay the first paint -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Fonts load in the background (media="print" trick) so they don't delay the first paint -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap"></noscript>
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/sections.css">
-  <link rel="stylesheet" href="assets/css/booking.css">
-  <link rel="stylesheet" href="assets/css/admin.css" media="print" onload="this.media='all'"><!-- admin only: non-blocking -->
-  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@400;500;600;700&display=swap"></noscript>
 
-  <!-- Scripts (deferred / module — run after the page is parsed) -->
+  <link rel="preload" as="image" href="assets/img/hero.webp" media="(min-width: 901px)" type="image/webp">
+  <link rel="preload" as="image" href="assets/img/hero-sm.webp" media="(max-width: 900px)" type="image/webp">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/booking.css">
+
   <script type="module" src="assets/js/main.js"></script>
 </head>
 <body>
 
-<!-- ═══════════ LOADER ═══════════ -->
-<div id="loader">
-  <p class="ld-sub" data-i18n="loader_sub">Nail Studio · Paris 11</p>
-  <div class="ld-name">Atelier Achi</div>
-  <div class="ld-bar-wrap"><div class="ld-bar"></div></div>
-</div>
+<!-- Line icons (used with <svg><use href="#i-…"/></svg>) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 6 6L15 14l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"/><path d="M9 10h6M9 13.5h4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7z"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><path d="M3.5 11 20.5 3.5 13 20.5l-2-7.5-7.5-2z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  </defs>
+</svg>
 
-<!-- Custom cursor (desktop) -->
-<div id="cur"></div>
-<div id="cur-ring"></div>
+<a class="skip-link" href="#main" data-i18n="skip_link">Aller au contenu</a>
 
-<!-- ═══════════ NAVBAR ═══════════ -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">
-    <picture><source srcset="assets/img/logo-nav.webp" type="image/webp"><img src="assets/img/logo-nav.png" alt="Atelier Achi Nail Studio" width="280" height="280"></picture>
-  </a>
-  <ul class="nav-center">
-    <li><a href="#about" data-i18n="nav_about">À propos</a></li>
-    <li><a href="#services" data-i18n="nav_services">Soins</a></li>
-    <li><a href="#gallery" data-i18n="nav_gallery">Galerie</a></li>
-    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
-  </ul>
-  <div class="nav-right">
-    <div class="lang-sw">
-      <button class="lb active" data-action="lang" data-lang="fr">FR</button>
-      <span class="lb-sep">·</span>
-      <button class="lb" data-action="lang" data-lang="en">EN</button>
-      <span class="lb-sep">·</span>
-      <button class="lb" data-action="lang" data-lang="es">ES</button>
-      <span class="lb-sep">·</span>
-      <button class="lb" data-action="lang" data-lang="ru">RU</button>
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="site-header" id="navbar">
+  <div class="hdr-inner">
+    <a href="#" class="hdr-logo" aria-label="Atelier Achi — accueil">
+      <picture><source srcset="assets/img/logo-nav.webp" type="image/webp"><img src="assets/img/logo-nav.png" alt="Atelier Achi Nail Studio" width="280" height="280"></picture>
+    </a>
+    <nav class="hdr-nav" aria-label="Navigation principale">
+      <a href="#about" data-i18n="nav_atelier">L’atelier</a>
+      <a href="#services" data-i18n="nav_services">Soins</a>
+      <a href="#gallery" data-i18n="nav_gallery">Galerie</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <div class="hdr-right">
+      <div class="lang-sw" role="group" aria-label="Langue">
+        <button class="lb active" data-action="lang" data-lang="fr">FR</button>
+        <button class="lb" data-action="lang" data-lang="en">EN</button>
+        <button class="lb" data-action="lang" data-lang="es">ES</button>
+        <button class="lb" data-action="lang" data-lang="ru">RU</button>
+      </div>
+      <a href="#booking" class="btn btn-dark btn-sm hdr-cta" data-action="open-booking" data-i18n="nav_book">Réserver</a>
+      <button class="hdr-burger" data-action="toggle-menu" aria-label="Menu" data-i18n-aria="aria_menu" aria-expanded="false">
+        <svg class="ic"><use href="#i-menu"/></svg>
+      </button>
     </div>
-    <a href="#booking" class="nav-cta" data-i18n="nav_book">Réserver</a>
   </div>
-  <button class="hamburger" data-action="toggle-menu" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
+</header>
 
 <!-- Mobile menu -->
-<div class="mobile-menu" id="mobile-menu">
-  <button class="mm-close" data-action="close-menu" aria-label="Fermer">✕</button>
-  <a href="#about" data-i18n="nav_about">À propos</a>
-  <a href="#services" data-i18n="nav_services">Soins</a>
-  <a href="#gallery" data-i18n="nav_gallery">Galerie</a>
-  <a href="#contact" data-i18n="nav_contact">Contact</a>
-  <a href="#booking" class="mm-book" data-i18n="nav_book">Réserver</a>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <button class="mm-close" data-action="close-menu" aria-label="Fermer" data-i18n-aria="aria_close"><svg class="ic"><use href="#i-close"/></svg></button>
+  <nav class="mm-nav">
+    <a href="#about" data-i18n="nav_atelier">L’atelier</a>
+    <a href="#services" data-i18n="nav_services">Soins</a>
+    <a href="#gallery" data-i18n="nav_gallery">Galerie</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
+  </nav>
+  <a href="#booking" class="btn btn-dark" data-action="open-booking" data-i18n="nav_book">Réserver</a>
   <div class="mm-lang">
     <button class="lb active" data-action="lang" data-lang="fr">FR</button>
     <button class="lb" data-action="lang" data-lang="en">EN</button>
@@ -113,149 +126,224 @@
   </div>
 </div>
 
+<main id="main">
+
 <!-- ═══════════ HERO ═══════════ -->
-<section id="hero">
-  <div class="hero-deco-1"></div>
-  <div class="hero-deco-2"></div>
-  <div class="hero-l">
-    <p class="hero-eyebrow" data-i18n="hero_eyebrow">Nail Studio · Paris 11ème</p>
-    <h1 data-i18n="hero_h1">Là où chaque main<br>raconte une <em>belle histoire</em></h1>
+<section class="hero">
+  <div class="hero-text">
+    <p class="eyebrow" data-i18n="hero_eyebrow">Nail Studio · Paris 11ème</p>
+    <h1 class="hero-title" data-i18n="hero_h1">Là où chaque main<br>raconte une <em>belle histoire</em></h1>
     <p class="hero-sub" data-i18n="hero_sub">Entrez dans un univers d'artisanat délicat et de relaxation totale. Chez Atelier Achi, nous transformons vos ongles en petits chefs-d'œuvre — avec soin, passion et précision parisienne.</p>
     <div class="hero-btns">
-      <a href="#booking" class="btn-fill" data-i18n="hero_cta1">Réserver maintenant</a>
-      <a href="#services" class="btn-ol" data-i18n="hero_cta2">Voir nos soins</a>
+      <a href="#booking" class="btn btn-dark" data-action="open-booking"><span data-i18n="hero_cta1">Réserver maintenant</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      <a href="#services" class="btn btn-line" data-i18n="hero_cta2">Voir nos soins</a>
     </div>
-    <div class="hero-stats">
-      <div><span class="stat-num">500+</span><span class="stat-lbl" data-i18n="stat1">Clientes satisfaites</span></div>
-      <div><span class="stat-num">7+</span><span class="stat-lbl" data-i18n="stat2">Ans d'expertise</span></div>
-      <div><span class="stat-num">30+</span><span class="stat-lbl" data-i18n="stat3">Créations uniques</span></div>
-    </div>
+    <ul class="hero-meta">
+      <li><svg class="ic"><use href="#i-clock"/></svg><span data-i18n="hero_hours">Du mardi au dimanche · 10h – 20h</span></li>
+      <li><svg class="ic"><use href="#i-pin"/></svg><span>9 rue Trousseau, Paris 11</span></li>
+    </ul>
   </div>
-  <div class="hero-r">
-    <div class="hero-img-wrap">
-      <div class="hero-img-container">
-        <picture>
-          <source media="(max-width: 1100px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-          <source srcset="assets/img/hero.webp" type="image/webp">
-          <img class="hero-main-img" src="assets/img/hero.jpg" alt="Atelier Achi — Nail Art Paris" width="840" height="1260" fetchpriority="high">
-        </picture>
-      </div>
+  <div class="hero-visual">
+    <div class="hero-arch">
+      <picture>
+        <source media="(max-width: 900px)" srcset="assets/img/hero-sm.webp" type="image/webp">
+        <source srcset="assets/img/hero.webp" type="image/webp">
+        <img src="assets/img/hero.jpg" alt="Atelier Achi — Nail Art Paris" width="840" height="1260" fetchpriority="high">
+      </picture>
+    </div>
+    <div class="hero-badge">
+      <svg class="ic"><use href="#i-spark"/></svg>
+      <span data-i18n="hero_badge">Semi-permanent · Gel X · Nail art</span>
     </div>
   </div>
 </section>
 
-<!-- Scrolling banner (filled by ui.js) -->
-<div class="mq-wrap"><div class="mq-track" id="mqt"></div></div>
+<!-- Key figures -->
+<section class="figures" aria-label="Chiffres clés">
+  <div><span class="fig-num">500+</span><span class="fig-lbl" data-i18n="stat1">Clientes satisfaites</span></div>
+  <div><span class="fig-num">7+</span><span class="fig-lbl" data-i18n="stat2">Ans d'expertise</span></div>
+  <div><span class="fig-num">30+</span><span class="fig-lbl" data-i18n="stat3">Créations uniques</span></div>
+</section>
 
-<!-- ═══════════ ABOUT ═══════════ -->
-<section id="about">
-  <div class="about-grid fade-up">
-    <div class="about-img"><picture><source srcset="assets/img/about/about-1.webp" type="image/webp"><img src="assets/img/about/about-1.jpg" alt="Artisanat" data-i18n-alt="alt_about1" loading="lazy" decoding="async"></picture></div>
-    <div class="about-img"><picture><source srcset="assets/img/about/about-2.webp" type="image/webp"><img src="assets/img/about/about-2.jpg" alt="Notre Atelier" data-i18n-alt="alt_about2" loading="lazy" decoding="async"></picture></div>
-    <div class="about-img"><picture><source srcset="assets/img/about/about-3.webp" type="image/webp"><img src="assets/img/about/about-3.jpg" alt="L'Expérience" data-i18n-alt="alt_about3" loading="lazy" decoding="async" style="--pos: center 32%"></picture></div>
+<!-- ═══════════ L'ATELIER ═══════════ -->
+<section class="about" id="about">
+  <div class="about-photos reveal">
+    <div class="ph ph-a"><picture><source srcset="assets/img/about/about-1.webp" type="image/webp"><img src="assets/img/about/about-1.jpg" alt="Artisanat" data-i18n-alt="alt_about1" loading="lazy" decoding="async" width="700" height="872"></picture></div>
+    <div class="ph ph-b"><picture><source srcset="assets/img/about/about-2.webp" type="image/webp"><img src="assets/img/about/about-2.jpg" alt="Notre Atelier" data-i18n-alt="alt_about2" loading="lazy" decoding="async" width="700" height="475"></picture></div>
+    <div class="ph ph-c"><picture><source srcset="assets/img/about/about-3.webp" type="image/webp"><img src="assets/img/about/about-3.jpg" alt="L'Expérience" data-i18n-alt="alt_about3" loading="lazy" decoding="async" width="1100" height="1467" style="--pos: center 32%"></picture></div>
   </div>
-  <div class="about-text fade-up">
-    <p class="sec-eyebrow" data-i18n="about_eyebrow">Notre histoire</p>
-    <h2 data-i18n="about_h2">Façonné avec <em>Passion</em>,<br>livré avec Soin</h2>
+  <div class="about-text reveal">
+    <p class="eyebrow" data-i18n="about_eyebrow">Notre histoire</p>
+    <h2 class="h2" data-i18n="about_h2">Façonné avec <em>Passion</em>,<br>livré avec Soin</h2>
     <p data-i18n="about_p1">Atelier Achi est bien plus qu'un salon de beauté — c'est votre sanctuaire personnel. Niché au cœur du 11ème arrondissement de Paris, nous allions artisanat expert et chaleur humaine pour créer une expérience aussi belle que le résultat.</p>
     <p data-i18n="about_p2">Qu'il s'agisse d'une finition minimaliste ou d'un nail art élaboré, chaque soin est pensé pour vous — avec les meilleurs produits et une attention méticuleuse aux moindres détails.</p>
-    <div class="val-row">
-      <span class="val-chip" data-i18n="val1">Produits Premium</span>
-      <span class="val-chip" data-i18n="val2">Hygiène irréprochable</span>
-      <span class="val-chip" data-i18n="val3">Sur-mesure</span>
-      <span class="val-chip" data-i18n="val4">Savoir-faire Parisien</span>
-    </div>
+    <ul class="values">
+      <li><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="val1">Produits Premium</span></li>
+      <li><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="val2">Hygiène irréprochable</span></li>
+      <li><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="val3">Sur-mesure</span></li>
+      <li><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="val4">Savoir-faire Parisien</span></li>
+    </ul>
   </div>
 </section>
 
-<!-- ═══════════ SERVICES / PRICES ═══════════ -->
-<section id="services">
-  <div class="sec-hdr fade-up">
-    <span class="tag" data-i18n="svc_tag">Nos prestations</span>
-    <h2 data-i18n="svc_h2">Des soins pensés <em>pour vous</em></h2>
-    <p data-i18n="svc_sub">Chaque prestation est conçue pour révéler votre beauté naturelle, avec des produits qui nourrissent autant qu'ils transforment.</p>
+<!-- ═══════════ SERVICES ═══════════ -->
+<section class="services" id="services">
+  <div class="sec-head reveal">
+    <p class="eyebrow eyebrow--center" data-i18n="svc_tag">Nos prestations</p>
+    <h2 class="h2" data-i18n="svc_h2">Des soins pensés <em>pour vous</em></h2>
+    <p class="sec-sub" data-i18n="svc_sub">Chaque prestation est conçue pour révéler votre beauté naturelle, avec des produits qui nourrissent autant qu'ils transforment.</p>
   </div>
-  <!-- Price list is generated from assets/js/data/services.js -->
+  <!-- Tabs + price list generated from assets/js/data/services.js -->
   <div class="svc-menu" id="svc-menu"></div>
 </section>
 
 <!-- ═══════════ GALLERY ═══════════ -->
-<section id="gallery">
-  <div class="sec-hdr fade-up">
-    <span class="tag" data-i18n="gal_tag">Inspiration</span>
-    <h2 data-i18n="gal_h2">Un aperçu de <em>notre travail</em></h2>
-    <p data-i18n="gal_sub">Chaque soin est unique. Découvrez quelques-unes de nos créations favorites.</p>
+<section class="gallery" id="gallery">
+  <div class="sec-head sec-head--light reveal">
+    <p class="eyebrow eyebrow--center" data-i18n="gal_tag">Inspiration</p>
+    <h2 class="h2" data-i18n="gal_h2">Un aperçu de <em>notre travail</em></h2>
+    <p class="sec-sub" data-i18n="gal_sub">Chaque soin est unique. Découvrez quelques-unes de nos créations favorites.</p>
   </div>
-  <div class="gal-grid">
-    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-1.webp" type="image/webp"><img src="assets/img/gallery/gallery-1.jpg" alt="Nail Art Signature" data-i18n-alt="alt_gal1" loading="lazy" decoding="async" style="--pos: center 35%"></picture></div></div>
-    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-2.webp" type="image/webp"><img src="assets/img/gallery/gallery-2.jpg" alt="Manucure Classique" data-i18n-alt="alt_gal2" loading="lazy" decoding="async"></picture></div></div>
-    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-3.webp" type="image/webp"><img src="assets/img/gallery/gallery-3.jpg" alt="Semi-permanent" data-i18n-alt="alt_gal3" loading="lazy" decoding="async"></picture></div></div>
-    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-4.webp" type="image/webp"><img src="assets/img/gallery/gallery-4.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async"></picture></div></div>
-    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-5.webp" type="image/webp"><img src="assets/img/gallery/gallery-5.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async"></picture></div></div>
+  <div class="gal-grid" id="gal-grid">
+    <button class="gal-item" data-action="open-photo" data-index="0"><picture><source srcset="assets/img/gallery/gallery-1.webp" type="image/webp"><img src="assets/img/gallery/gallery-1.jpg" alt="Nail Art Signature" data-i18n-alt="alt_gal1" loading="lazy" decoding="async" width="900" height="1125" style="--pos: center 35%"></picture></button>
+    <button class="gal-item" data-action="open-photo" data-index="1"><picture><source srcset="assets/img/gallery/gallery-2.webp" type="image/webp"><img src="assets/img/gallery/gallery-2.jpg" alt="Manucure Classique" data-i18n-alt="alt_gal2" loading="lazy" decoding="async" width="900" height="1125"></picture></button>
+    <button class="gal-item" data-action="open-photo" data-index="2"><picture><source srcset="assets/img/gallery/gallery-3.webp" type="image/webp"><img src="assets/img/gallery/gallery-3.jpg" alt="Semi-permanent" data-i18n-alt="alt_gal3" loading="lazy" decoding="async" width="900" height="753"></picture></button>
+    <button class="gal-item" data-action="open-photo" data-index="3"><picture><source srcset="assets/img/gallery/gallery-4.webp" type="image/webp"><img src="assets/img/gallery/gallery-4.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async" width="900" height="1200"></picture></button>
+    <button class="gal-item" data-action="open-photo" data-index="4"><picture><source srcset="assets/img/gallery/gallery-5.webp" type="image/webp"><img src="assets/img/gallery/gallery-5.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async" width="900" height="1200"></picture></button>
+  </div>
+  <div class="gal-foot">
+    <a class="btn btn-line-light" href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener">
+      <svg class="ic"><use href="#i-insta"/></svg><span data-i18n="gal_more">Plus de créations sur Instagram</span>
+    </a>
   </div>
 </section>
 
-<!-- ═══════════ OPENING HOURS ═══════════ -->
-<div class="hours-banner">
-  <div class="hi"><div class="dot"></div><strong data-i18n="hours1_title">Mardi – Vendredi</strong><span data-i18n="hours1_time">10h00 – 20h00</span></div>
-  <div class="hi"><div class="dot"></div><strong data-i18n="hours2_title">Samedi – Dimanche</strong><span data-i18n="hours2_time">10h00 – 20h00</span></div>
-  <div class="hi"><div class="dot"></div><strong data-i18n="hours3_title">Lundi</strong><span data-i18n="hours3_time">Fermé</span></div>
-  <div class="hi"><div class="dot"></div><strong data-i18n="hours4_title">Sans rendez-vous</strong><span data-i18n="hours4_time">Sur disponibilité</span></div>
+<!-- ═══════════ VISIT / CONTACT ═══════════ -->
+<section class="visit" id="contact">
+  <div class="visit-info reveal">
+    <p class="eyebrow" data-i18n="contact_eyebrow">Nous trouver</p>
+    <h2 class="h2" data-i18n="contact_h2">Venez nous <em>rendre visite</em></h2>
+
+    <h3 class="visit-sub" data-i18n="hours_title">Horaires</h3>
+    <dl class="hours">
+      <div><dt data-i18n="hours1_title">Mardi – Vendredi</dt><dd data-i18n="hours1_time">10h00 – 20h00</dd></div>
+      <div><dt data-i18n="hours2_title">Samedi – Dimanche</dt><dd data-i18n="hours2_time">10h00 – 20h00</dd></div>
+      <div class="closed"><dt data-i18n="hours3_title">Lundi</dt><dd data-i18n="hours3_time">Fermé</dd></div>
+      <div><dt data-i18n="hours4_title">Sans rendez-vous</dt><dd data-i18n="hours4_time">Sur disponibilité</dd></div>
+    </dl>
+
+    <ul class="contact-list">
+      <li><svg class="ic"><use href="#i-pin"/></svg><span>9 rue Trousseau, 75011 Paris</span></li>
+      <li><svg class="ic"><use href="#i-phone"/></svg><a href="tel:+33187076059">01 87 07 60 59</a></li>
+      <li><svg class="ic"><use href="#i-mail"/></svg><a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a></li>
+      <li><svg class="ic"><use href="#i-insta"/></svg><a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener">@atelier_achi</a></li>
+    </ul>
+
+    <div class="visit-btns">
+      <a class="btn btn-dark" href="#booking" data-action="open-booking"><svg class="ic"><use href="#i-calendar"/></svg><span data-i18n="contact_book_btn">Réserver un soin</span></a>
+      <a class="btn btn-line" href="https://www.google.com/maps/dir/?api=1&amp;destination=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener"><svg class="ic"><use href="#i-route"/></svg><span data-i18n="btn_directions">Itinéraire</span></a>
+      <a class="btn btn-line" href="https://wa.me/33668202050" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
+    </div>
+  </div>
+
+  <!-- Google Maps loads only on click (no Google cookies before the visitor's choice) -->
+  <div class="visit-map reveal">
+    <div class="map-wrap map-facade" id="map-box">
+      <svg class="ic map-pin-ic"><use href="#i-pin"/></svg>
+      <p class="map-addr">9 rue Trousseau<br>75011 Paris</p>
+      <button class="btn btn-dark btn-sm" data-action="show-map" data-i18n="map_show">Afficher la carte</button>
+      <a class="map-ext" href="https://www.google.com/maps/search/?api=1&amp;query=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener" data-i18n="map_open">Ouvrir dans Google Maps ↗</a>
+      <p class="map-note" data-i18n="map_note">La carte est fournie par Google, qui peut déposer des cookies.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FINAL CALL TO ACTION ═══════════ -->
+<section class="cta-band">
+  <h2 class="h2" data-i18n="cta_h2">Prête pour votre <em>moment</em> ?</h2>
+  <p data-i18n="cta_sub">Réservez en ligne en moins d’une minute.</p>
+  <a href="#booking" class="btn btn-dark" data-action="open-booking"><span data-i18n="nav_book">Réserver</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+</section>
+
+</main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="site-footer">
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <div class="ft-name">Atelier Achi<span>Nail Studio · Paris</span></div>
+      <p data-i18n="footer_sub">Votre sanctuaire de beauté au cœur de Paris 11ème. Nous créons plus que des ongles — nous créons de la confiance.</p>
+      <div class="ft-social">
+        <a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ic"><use href="#i-insta"/></svg></a>
+        <a href="https://wa.me/33668202050" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ic"><use href="#i-chat"/></svg></a>
+        <a href="tel:+33187076059" aria-label="Téléphone" data-i18n-aria="c_phone_lbl"><svg class="ic"><use href="#i-phone"/></svg></a>
+      </div>
+    </div>
+    <div class="ft-col">
+      <p class="ft-h" data-i18n="f_nav">Navigation</p>
+      <a href="#about" data-i18n="nav_atelier">L’atelier</a>
+      <a href="#services" data-i18n="nav_services">Soins</a>
+      <a href="#gallery" data-i18n="nav_gallery">Galerie</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </div>
+    <div class="ft-col">
+      <p class="ft-h" data-i18n="f_services">Prestations</p>
+      <a href="#services" data-i18n="f_svc1">Manucure classique</a>
+      <a href="#services" data-i18n="f_svc2">Manucure spa</a>
+      <a href="#services" data-i18n="f_svc3">Pose de gel</a>
+      <a href="#services" data-i18n="f_svc4">Soin des pieds</a>
+    </div>
+    <div class="ft-col">
+      <p class="ft-h" data-i18n="f_contact">Contact</p>
+      <span>9 rue Trousseau, 75011 Paris</span>
+      <a href="tel:+33187076059">01 87 07 60 59</a>
+      <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© <span id="footer-year">2026</span> Atelier Achi. <span data-i18n="footer_rights">Tous droits réservés.</span></span>
+    <a href="mentions-legales.html" data-i18n="footer_legal">Mentions légales &amp; confidentialité</a>
+  </div>
+</footer>
+
+<!-- Mobile: always-visible booking bar -->
+<div class="mobile-bar" id="mobile-bar">
+  <a class="btn btn-line" href="tel:+33187076059"><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="btn_call">Appeler</span></a>
+  <a class="btn btn-dark" href="#booking" data-action="open-booking"><svg class="ic"><use href="#i-calendar"/></svg><span data-i18n="nav_book">Réserver</span></a>
 </div>
 
-<!-- ═══════════ CONTACT & MAP ═══════════ -->
-<section id="contact">
-  <div class="contact-layout">
-    <div class="contact-info fade-up">
-      <p class="sec-eyebrow" data-i18n="contact_eyebrow">Nous trouver</p>
-      <h2 data-i18n="contact_h2">Venez nous <em>rendre visite</em></h2>
-      <div class="contact-items">
-        <div class="c-item"><div class="c-icon">📍</div><div class="c-item-text"><strong data-i18n="c_address_lbl">Adresse</strong><span>9 rue Trousseau, Paris 75011</span></div></div>
-        <div class="c-item"><div class="c-icon">📞</div><div class="c-item-text"><strong data-i18n="c_phone_lbl">Téléphone</strong><a href="tel:+33187076059">01 87 07 60 59</a></div></div>
-        <div class="c-item"><div class="c-icon">✉️</div><div class="c-item-text"><strong data-i18n="c_email_lbl">Email</strong><a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a></div></div>
-        <div class="c-item"><div class="c-icon">📸</div><div class="c-item-text"><strong>Instagram</strong><a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener">@atelier_achi</a></div></div>
-      </div>
-      <a href="#booking" class="btn-fill" data-i18n="contact_book_btn">Réserver un soin</a>
-    </div>
-    <div class="fade-up">
-      <!-- Google Maps loads only on click (no Google cookies before consent — see ui.js) -->
-      <div class="map-wrap map-facade" id="map-box">
-        <div class="map-pin">📍</div>
-        <p class="map-addr">9 rue Trousseau<br>75011 Paris</p>
-        <button class="btn-fill" data-action="show-map" data-i18n="map_show">Afficher la carte</button>
-        <a class="map-ext" href="https://www.google.com/maps/search/?api=1&amp;query=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener" data-i18n="map_open">Ouvrir dans Google Maps ↗</a>
-        <p class="map-note" data-i18n="map_note">La carte est fournie par Google, qui peut déposer des cookies.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══════════ GALLERY LIGHTBOX ═══════════ -->
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Galerie">
+  <button class="lb-close" data-action="close-photo" aria-label="Fermer" data-i18n-aria="aria_close"><svg class="ic"><use href="#i-close"/></svg></button>
+  <button class="lb-nav lb-prev" data-action="prev-photo" aria-label="Précédente" data-i18n-aria="aria_prev"><svg class="ic"><use href="#i-left"/></svg></button>
+  <figure class="lb-figure"><img id="lb-img" alt=""><figcaption id="lb-caption"></figcaption></figure>
+  <button class="lb-nav lb-next" data-action="next-photo" aria-label="Suivante" data-i18n-aria="aria_next"><svg class="ic"><use href="#i-right"/></svg></button>
+</div>
 
-<!-- ═══════════ BOOKING ═══════════ -->
-<section id="booking">
-  <div class="sec-hdr fade-up">
-    <span class="tag" data-i18n="bk_tag">Réservation</span>
-    <h2 data-i18n="bk_h2">Réservez votre <em>moment</em></h2>
-  </div>
-  <div class="bk-wrap fade-up">
-    <div class="bk-tabs">
-      <button class="bk-tab active" id="bkt-client" data-action="booking-tab" data-tab="client">📅 <span data-i18n="bkt_client">Prendre rendez-vous</span></button>
-      <button class="bk-tab" id="bkt-admin" data-action="booking-tab" data-tab="admin">🔐 <span data-i18n="bkt_admin">Espace Admin</span></button>
+<!-- ═══════════ BOOKING PANEL (logic: assets/js/booking.js) ═══════════ -->
+<div class="bk-overlay" id="booking" hidden>
+  <aside class="bk-sheet" role="dialog" aria-modal="true" aria-labelledby="bk-title">
+    <div class="bk-head">
+      <div>
+        <p class="eyebrow" data-i18n="bk_tag">Réservation</p>
+        <h2 class="bk-title" id="bk-title" data-i18n="bk_h2">Réservez votre <em>moment</em></h2>
+      </div>
+      <button class="bk-close" data-action="close-booking" aria-label="Fermer" data-i18n-aria="aria_close"><svg class="ic"><use href="#i-close"/></svg></button>
     </div>
 
-    <!-- ── Client booking (logic: assets/js/booking.js) ── -->
-    <div class="bk-panel active" id="bp-client">
-      <div class="steps">
-        <div class="stp active" data-step="1"><div class="stp-n">1</div><span data-i18n="step1">Prestation</span></div>
-        <div class="stp-line" data-step="1"></div>
-        <div class="stp" data-step="2"><div class="stp-n">2</div><span data-i18n="step2">Date &amp; heure</span></div>
-        <div class="stp-line" data-step="2"></div>
-        <div class="stp" data-step="3"><div class="stp-n">3</div><span data-i18n="step3">Vos infos</span></div>
-        <div class="stp-line" data-step="3"></div>
-        <div class="stp" data-step="4"><div class="stp-n">4</div><span data-i18n="step4">Confirmer</span></div>
-      </div>
+    <div class="steps" aria-label="Étapes">
+      <div class="stp active" data-step="1"><span class="stp-n">1</span><span class="stp-l" data-i18n="step1">Prestation</span></div>
+      <div class="stp-line" data-step="1"></div>
+      <div class="stp" data-step="2"><span class="stp-n">2</span><span class="stp-l" data-i18n="step2">Date &amp; heure</span></div>
+      <div class="stp-line" data-step="2"></div>
+      <div class="stp" data-step="3"><span class="stp-n">3</span><span class="stp-l" data-i18n="step3">Vos infos</span></div>
+      <div class="stp-line" data-step="3"></div>
+      <div class="stp" data-step="4"><span class="stp-n">4</span><span class="stp-l" data-i18n="step4">Confirmer</span></div>
+    </div>
 
+    <div class="bk-body" id="bp-client">
       <div id="bk-loading" class="bk-loading">
-        <div class="bk-loading-icon">⏳</div>
+        <span class="bk-spinner" aria-hidden="true"></span>
         <span data-i18n="loading_slots">Chargement des disponibilités…</span>
       </div>
 
@@ -270,11 +358,11 @@
 
       <!-- Step 2: date & time -->
       <div data-step-panel="2" style="display:none">
-        <div class="sum-bar"><div class="sc">✂️ <strong id="sum-svc-2">—</strong></div></div>
+        <div class="sum-bar"><div class="sc"><svg class="ic"><use href="#i-spark"/></svg><strong id="sum-svc-2">—</strong></div></div>
         <div class="cal-nav-row">
-          <button class="cnav" id="btn-prev-week" data-action="prev-week" aria-label="Semaine précédente">‹</button>
+          <button class="cnav" id="btn-prev-week" data-action="prev-week" aria-label="Semaine précédente" data-i18n-aria="aria_prev_week"><svg class="ic"><use href="#i-left"/></svg></button>
           <span class="week-label" id="week-label"></span>
-          <button class="cnav" data-action="next-week" aria-label="Semaine suivante">›</button>
+          <button class="cnav" data-action="next-week" aria-label="Semaine suivante" data-i18n-aria="aria_next_week"><svg class="ic"><use href="#i-right"/></svg></button>
         </div>
         <div class="closed-msg" id="closed-today-msg" style="display:none"></div>
         <div class="week-row" id="week-row"></div>
@@ -291,9 +379,9 @@
       <!-- Step 3: contact details -->
       <div data-step-panel="3" style="display:none">
         <div class="sum-bar">
-          <div class="sc">✂️ <strong id="sum-svc-3">—</strong></div>
-          <div class="sc">📅 <strong id="sum-date-3">—</strong></div>
-          <div class="sc">🕐 <strong id="sum-time-3">—</strong></div>
+          <div class="sc"><svg class="ic"><use href="#i-spark"/></svg><strong id="sum-svc-3">—</strong></div>
+          <div class="sc"><svg class="ic"><use href="#i-calendar"/></svg><strong id="sum-date-3">—</strong></div>
+          <div class="sc"><svg class="ic"><use href="#i-clock"/></svg><strong id="sum-time-3">—</strong></div>
         </div>
         <div class="fgr">
           <div class="fg">
@@ -335,178 +423,7 @@
       <!-- Step 4: summary / result (filled by booking.js) -->
       <div data-step-panel="4" style="display:none"><div id="confirm-box"></div></div>
     </div>
-
-    <!-- ── Admin (logic: assets/js/admin.js) ── -->
-    <div class="bk-panel" id="bp-admin">
-      <p class="na" id="admin-loading" hidden>Chargement…</p>
-      <div class="admin-login" id="admin-login">
-        <h3 data-i18n="admin_login_title">Espace Administrateur</h3>
-        <p data-i18n="admin_login_sub">Entrez votre mot de passe pour accéder au tableau de bord.</p>
-        <div class="fg">
-          <input type="email" id="admin-email-input" placeholder="Email" autocomplete="username" aria-label="Email">
-        </div>
-        <div class="fg">
-          <input type="password" id="admin-pw-input" placeholder="••••••••" autocomplete="current-password" aria-label="Mot de passe">
-        </div>
-        <button class="btn-p btn-block" id="btn-admin-login" data-action="admin-login" data-i18n="admin_login_btn">Connexion</button>
-        <p class="err-msg" id="admin-err"></p>
-      </div>
-
-      <div class="admin-dash" id="admin-dash">
-        <div class="admin-bar">
-          <button class="btn-logout btn-block-today" id="btn-block-today" data-action="admin-block-today">🔓 Résas du jour : ouvertes</button>
-          <button class="btn-logout" data-action="admin-logout" data-i18n="admin_logout">Déconnexion</button>
-        </div>
-
-        <!-- First GDPR clean-up: shown once, so the owner can download a backup first -->
-        <div class="retention-banner" id="retention-banner" hidden>
-          <strong>🔒 Protection des données (RGPD)</strong>
-          <p>Désormais, les détails des réservations sont supprimés <strong>30 jours après le rendez-vous</strong>.
-            Le nombre de visites, les dates et les prestations restent dans les <strong>fiches clientes</strong>
-            (conservées 3 ans après la dernière visite) et dans les statistiques anonymes.</p>
-          <p><span id="retention-count"></span> de plus de 30 jours vont être archivées.
-            Vous pouvez d’abord télécharger une sauvegarde complète (à conserver en lieu sûr, puis à supprimer).</p>
-          <div class="retention-actions">
-            <button class="btn-b btn-sm" data-action="retention-backup">⬇ Télécharger une sauvegarde</button>
-            <button class="btn-p btn-sm" id="btn-retention-run" data-action="retention-run">Lancer le nettoyage</button>
-          </div>
-        </div>
-
-        <div class="admin-tabs">
-          <button class="admin-tab active" data-action="admin-view" data-view="agenda">📅 Agenda</button>
-          <button class="admin-tab" data-action="admin-view" data-view="clients">👥 Clientes</button>
-          <button class="admin-tab" data-action="admin-view" data-view="stats">📊 Statistiques</button>
-        </div>
-
-        <!-- Agenda (assets/js/admin/agenda.js) -->
-        <div class="admin-view" data-view="agenda">
-        <div class="am-metrics" id="am-metrics"></div>
-        <div class="admin-layout">
-          <div>
-            <div class="a-cal-hdr">
-              <button class="cnav" data-action="admin-prev-month" aria-label="Mois précédent">‹</button>
-              <span class="a-month-title" id="a-month-lbl"></span>
-              <button class="cnav" data-action="admin-next-month" aria-label="Mois suivant">›</button>
-              <button class="btn-p btn-sm btn-push-right" data-action="open-modal" data-i18n="admin_add">+ Ajouter</button>
-            </div>
-            <div class="mgh" id="mgh"></div>
-            <div class="mg" id="mg"></div>
-            <div id="dp"></div>
-          </div>
-          <div>
-            <div class="up-box">
-              <div class="up-hdr"><span data-i18n="admin_upcoming">À venir</span><span class="up-count" id="up-count"></span></div>
-              <div id="up-list"></div>
-            </div>
-          </div>
-        </div>
-        </div>
-
-        <!-- Customer cards (assets/js/admin/clients.js) -->
-        <div class="admin-view" data-view="clients" hidden>
-          <div class="clients-hdr">
-            <input type="search" class="clients-search" id="clients-search" placeholder="Rechercher : nom, email ou téléphone…" aria-label="Rechercher une cliente">
-            <span class="clients-count" id="clients-count"></span>
-          </div>
-          <div class="clients-list" id="clients-list"></div>
-        </div>
-
-        <!-- Anonymous statistics (assets/js/admin/stats.js) -->
-        <div class="admin-view" data-view="stats" hidden>
-          <div id="stats-body"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ FOOTER ═══════════ -->
-<footer>
-  <div class="footer-grid">
-    <div>
-      <div class="footer-brand">
-        <div class="fb-text">Atelier Achi<span>Nail Studio</span></div>
-      </div>
-      <p class="f-sub" data-i18n="footer_sub">Votre sanctuaire de beauté au cœur de Paris 11ème. Nous créons plus que des ongles — nous créons de la confiance.</p>
-      <div class="f-social">
-        <a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener" class="f-soc-btn" aria-label="Instagram">📸</a>
-        <a href="https://wa.me/33668202050" target="_blank" rel="noopener" class="f-soc-btn" aria-label="WhatsApp">💬</a>
-      </div>
-    </div>
-    <div class="fc">
-      <h4 data-i18n="f_nav">Navigation</h4>
-      <ul>
-        <li><a href="#about" data-i18n="nav_about">À propos</a></li>
-        <li><a href="#services" data-i18n="nav_services">Soins</a></li>
-        <li><a href="#gallery" data-i18n="nav_gallery">Galerie</a></li>
-        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
-        <li><a href="#booking" data-i18n="nav_book">Réserver</a></li>
-      </ul>
-    </div>
-    <div class="fc">
-      <h4 data-i18n="f_services">Prestations</h4>
-      <ul>
-        <li><a href="#services" data-i18n="f_svc1">Manucure classique</a></li>
-        <li><a href="#services" data-i18n="f_svc2">Manucure spa</a></li>
-        <li><a href="#services" data-i18n="f_svc3">Pose de gel</a></li>
-        <li><a href="#services" data-i18n="f_svc4">Soin des pieds</a></li>
-      </ul>
-    </div>
-    <div class="fc fcc">
-      <h4 data-i18n="f_contact">Contact</h4>
-      <p>📍 9 rue Trousseau, Paris 75011</p>
-      <p>📞 <a href="tel:+33187076059">01 87 07 60 59</a></p>
-      <p>✉️ <a href="mailto:atelierachi@gmail.com">atelierachi@gmail.com</a></p>
-      <p>📸 <a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener">@atelier_achi</a></p>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© <span id="footer-year">2026</span> Atelier Achi. <span data-i18n="footer_rights">Tous droits réservés.</span></span>
-    <a href="mentions-legales.html" data-i18n="footer_legal">Mentions légales &amp; confidentialité</a>
-    <span data-i18n="footer_made">Fait avec 💗 à Paris</span>
-  </div>
-</footer>
-
-<!-- Floating WhatsApp button -->
-<a href="https://wa.me/33668202050" class="wa-btn" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
-
-<!-- ═══════════ ADMIN: CUSTOMER CARD ═══════════ -->
-<div class="modal-overlay" id="client-modal">
-  <div class="modal-box modal-box--wide" role="dialog" aria-modal="true" aria-label="Fiche cliente">
-    <div class="modal-title">
-      <span>Fiche cliente</span>
-      <button class="modal-close" data-action="client-close" aria-label="Fermer">✕</button>
-    </div>
-    <div id="client-modal-body"></div>
-  </div>
-</div>
-
-<!-- ═══════════ ADMIN: ADD BOOKING MODAL ═══════════ -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal-box" role="dialog" aria-modal="true">
-    <div class="modal-title">
-      <span data-i18n="modal_title">Ajouter un rendez-vous</span>
-      <button class="modal-close" data-action="close-modal" aria-label="Fermer">✕</button>
-    </div>
-    <div class="fg"><label for="m-svc" data-i18n="modal_svc">Prestation *</label><select id="m-svc"></select></div>
-    <div class="fgr">
-      <div class="fg"><label for="m-dt" data-i18n="modal_date">Date *</label><input type="date" id="m-dt"></div>
-      <div class="fg"><label for="m-tm" data-i18n="modal_time">Heure *</label><input type="time" id="m-tm" step="1800"></div>
-    </div>
-    <div class="fgr">
-      <div class="fg"><label for="m-fn" data-i18n="modal_fn">Prénom *</label><input type="text" id="m-fn" placeholder="Sophie"></div>
-      <div class="fg"><label for="m-ln" data-i18n="modal_ln">Nom *</label><input type="text" id="m-ln" placeholder="Martin"></div>
-    </div>
-    <div class="fgr">
-      <div class="fg"><label for="m-em">Email</label><input type="email" id="m-em" placeholder="sophie@email.com"></div>
-      <div class="fg"><label for="m-ph" data-i18n="lbl_ph">Téléphone</label><input type="tel" id="m-ph" placeholder="01 87 07 60 59"></div>
-    </div>
-    <div class="fg"><label for="m-note" data-i18n="modal_note">Note (optionnel)</label><input type="text" id="m-note" placeholder="Informations particulières…"></div>
-    <div class="btn-row">
-      <button class="btn-b" data-action="close-modal" data-i18n="btn_cancel">Annuler</button>
-      <button class="btn-p" data-action="save-modal" data-i18n="modal_save">Enregistrer</button>
-    </div>
-  </div>
+  </aside>
 </div>
 
 </body>

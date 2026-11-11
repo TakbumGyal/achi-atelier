@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace salon — Atelier Achi</title>
+  <!-- Private page: keep it out of search engines -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Raleway:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/booking.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <script type="module" src="assets/js/admin/main.js"></script>
+</head>
+<body class="admin-page">
+
+<header class="admin-header">
+  <a href="./" class="admin-brand">Atelier Achi<span>Espace salon</span></a>
+  <a href="./" class="admin-site-link">Voir le site ↗</a>
+</header>
+
+<main class="admin-main" id="bp-admin">
+  <p class="na" id="admin-loading">Chargement…</p>
+
+  <div class="admin-login" id="admin-login" style="display:none">
+    <h1 class="admin-login-title" data-i18n="admin_login_title">Espace Administrateur</h1>
+    <p data-i18n="admin_login_sub">Connectez-vous avec votre compte administrateur.</p>
+    <div class="fg">
+      <input type="email" id="admin-email-input" placeholder="Email" autocomplete="username" aria-label="Email">
+    </div>
+    <div class="fg">
+      <input type="password" id="admin-pw-input" placeholder="••••••••" autocomplete="current-password" aria-label="Mot de passe">
+    </div>
+    <button class="btn-p btn-block" id="btn-admin-login" data-action="admin-login" data-i18n="admin_login_btn">Connexion</button>
+    <p class="err-msg" id="admin-err"></p>
+  </div>
+
+  <div class="admin-dash" id="admin-dash">
+    <div class="admin-bar">
+      <button class="btn-logout btn-block-today" id="btn-block-today" data-action="admin-block-today">🔓 Résas du jour : ouvertes</button>
+      <button class="btn-logout" data-action="admin-logout" data-i18n="admin_logout">Déconnexion</button>
+    </div>
+
+    <!-- First GDPR clean-up: shown once, so the owner can download a backup first -->
+    <div class="retention-banner" id="retention-banner" hidden>
+      <strong>🔒 Protection des données (RGPD)</strong>
+      <p>Désormais, les détails des réservations sont supprimés <strong>30 jours après le rendez-vous</strong>.
+        Le nombre de visites, les dates et les prestations restent dans les <strong>fiches clientes</strong>
+        (conservées 3 ans après la dernière visite) et dans les statistiques anonymes.</p>
+      <p><span id="retention-count"></span> de plus de 30 jours vont être archivées.
+        Vous pouvez d’abord télécharger une sauvegarde complète (à conserver en lieu sûr, puis à supprimer).</p>
+      <div class="retention-actions">
+        <button class="btn-b btn-sm" data-action="retention-backup">⬇ Télécharger une sauvegarde</button>
+        <button class="btn-p btn-sm" id="btn-retention-run" data-action="retention-run">Lancer le nettoyage</button>
+      </div>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-action="admin-view" data-view="agenda">📅 Agenda</button>
+      <button class="admin-tab" data-action="admin-view" data-view="clients">👥 Clientes</button>
+      <button class="admin-tab" data-action="admin-view" data-view="stats">📊 Statistiques</button>
+    </div>
+
+    <!-- Agenda (assets/js/admin/agenda.js) -->
+    <div class="admin-view" data-view="agenda">
+      <div class="am-metrics" id="am-metrics"></div>
+      <div class="admin-layout">
+        <div>
+          <div class="a-cal-hdr">
+            <button class="cnav" data-action="admin-prev-month" aria-label="Mois précédent">‹</button>
+            <span class="a-month-title" id="a-month-lbl"></span>
+            <button class="cnav" data-action="admin-next-month" aria-label="Mois suivant">›</button>
+            <button class="btn-p btn-sm btn-push-right" data-action="open-modal" data-i18n="admin_add">+ Ajouter</button>
+          </div>
+          <div class="mgh" id="mgh"></div>
+          <div class="mg" id="mg"></div>
+          <div id="dp"></div>
+        </div>
+        <div>
+          <div class="up-box">
+            <div class="up-hdr"><span data-i18n="admin_upcoming">À venir</span><span class="up-count" id="up-count"></span></div>
+            <div id="up-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer cards (assets/js/admin/clients.js) -->
+    <div class="admin-view" data-view="clients" hidden>
+      <div class="clients-hdr">
+        <input type="search" class="clients-search" id="clients-search" placeholder="Rechercher : nom, email ou téléphone…" aria-label="Rechercher une cliente">
+        <span class="clients-count" id="clients-count"></span>
+      </div>
+      <div class="clients-list" id="clients-list"></div>
+    </div>
+
+    <!-- Anonymous statistics (assets/js/admin/stats.js) -->
+    <div class="admin-view" data-view="stats" hidden>
+      <div id="stats-body"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════ CUSTOMER CARD ═══════════ -->
+<div class="modal-overlay" id="client-modal">
+  <div class="modal-box modal-box--wide" role="dialog" aria-modal="true" aria-label="Fiche cliente">
+    <div class="modal-title">
+      <span>Fiche cliente</span>
+      <button class="modal-close" data-action="client-close" aria-label="Fermer">✕</button>
+    </div>
+    <div id="client-modal-body"></div>
+  </div>
+</div>
+
+<!-- ═══════════ ADD BOOKING ═══════════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <div class="modal-title">
+      <span data-i18n="modal_title">Ajouter un rendez-vous</span>
+      <button class="modal-close" data-action="close-modal" aria-label="Fermer">✕</button>
+    </div>
+    <div class="fg"><label for="m-svc" data-i18n="modal_svc">Prestation *</label><select id="m-svc"></select></div>
+    <div class="fgr">
+      <div class="fg"><label for="m-dt" data-i18n="modal_date">Date *</label><input type="date" id="m-dt"></div>
+      <div class="fg"><label for="m-tm" data-i18n="modal_time">Heure *</label><input type="time" id="m-tm" step="1800"></div>
+    </div>
+    <div class="fgr">
+      <div class="fg"><label for="m-fn" data-i18n="modal_fn">Prénom *</label><input type="text" id="m-fn" placeholder="Sophie"></div>
+      <div class="fg"><label for="m-ln" data-i18n="modal_ln">Nom *</label><input type="text" id="m-ln" placeholder="Martin"></div>
+    </div>
+    <div class="fgr">
+      <div class="fg"><label for="m-em">Email</label><input type="email" id="m-em" placeholder="sophie@email.com"></div>
+      <div class="fg"><label for="m-ph" data-i18n="lbl_ph">Téléphone</label><input type="tel" id="m-ph" placeholder="01 87 07 60 59"></div>
+    </div>
+    <div class="fg"><label for="m-note" data-i18n="modal_note">Note (optionnel)</label><input type="text" id="m-note" placeholder="Informations particulières…"></div>
+    <div class="btn-row">
+      <button class="btn-b" data-action="close-modal" data-i18n="btn_cancel">Annuler</button>
+      <button class="btn-p" data-action="save-modal" data-i18n="modal_save">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

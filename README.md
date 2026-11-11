@@ -9,18 +9,20 @@ Bookings are stored in **Firebase Firestore**; confirmation emails go through **
 ## Project structure
 
 ```
-index.html                  Page markup (all sections)
+index.html                  Public homepage (booking opens as a panel)
+admin.html                  Private salon admin page (not linked, not indexed)
+mentions-legales.html       Legal notice & privacy policy (FR/EN/ES/RU)
 CNAME                       Custom domain for GitHub Pages
 firestore.rules             Firestore security rules (publish in Firebase console)
 firebase.json, package.json Local testing only (emulator, rule tests) — not used by the live site
 tests/                      Security-rules tests
 assets/
   css/
-    base.css                Colours, fonts, buttons, form fields, animations
-    sections.css            Navbar, hero, about, services, gallery, contact, footer
-    booking.css             Client booking flow
-    admin.css               Admin dashboard + "add booking" modal
-    responsive.css          Mobile / tablet breakpoints
+    base.css                Colours, fonts, buttons, icons, form fields
+    site.css                Homepage sections (header, hero, services, gallery, visit, footer)
+    booking.css             Booking panel + 4-step flow
+    admin.css               Admin page, dashboard + modals
+    legal.css               Legal page
   js/
     main.js                 Entry point — starts everything
     config.js               Opening hours, capacity, Firebase / EmailJS keys
@@ -35,7 +37,7 @@ assets/
                             stats, customers (card logic), retention (GDPR clean-up)
     db.js                   Firestore connection (live bookings + settings)
     email.js                Confirmation email via EmailJS
-    ui.js                   Loader, cursor, navbar, mobile menu, marquee, animations
+    ui.js                   Header, mobile menu, mobile booking bar, map, gallery viewer, animations
     utils/                  Small date + DOM helpers
   img/                      Logo, hero, about/ and gallery/ photos
   icons/                    Favicons
@@ -51,6 +53,11 @@ assets/
 | Change opening hours / closed day  | `assets/js/config.js` **and** the hours text in `translations.js` |
 | Replace a photo                    | Put the new photo in `images-src/` (same name), run `npm run images` |
 | Change colours / fonts             | Variables at the top of `assets/css/base.css`             |
+
+## Admin access
+
+The salon's admin panel is at **https://www.atelierachi.com/admin.html** (bookmark it).
+It is not linked from the public site and is hidden from search engines.
 
 ## Security model
 

@@ -17,12 +17,6 @@ export const show = (el, visible = true, display = 'block') => {
 
 export const isShown = el => !!el && el.style.display !== 'none';
 
-/** If `el`'s top is hidden under the fixed navbar, scroll it back into view. */
-export function keepBelowNavbar(el) {
-  const navH = document.getElementById('navbar').offsetHeight;
-  const top = el.getBoundingClientRect().top;
-  if (top < navH) window.scrollTo({ top: window.scrollY + top - navH - 16, behavior: 'smooth' });
-}
 
 /* ── Click actions ──
    Elements declare  data-action="name"  in the HTML; modules register a

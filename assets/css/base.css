@@ -1,10 +1,12 @@
 /* ==========================================================================
-   BASE — design tokens, reset, typography helpers, buttons, shared bits
+   BASE — design tokens, reset, typography, buttons, icons, form fields
+   Shared by the public site, the admin page and the legal page.
    ========================================================================== */
 
 :root {
-  /* Colours */
+  /* The salon's colours */
   --cream: #FAF7F0;
+  --cream-2: #F5EFE6;
   --beige: #F2EAE0;
   --beige-2: #E8DDD2;
   --taupe: #C4B5A5;
@@ -13,81 +15,91 @@
   --brown-m: #A68272;
   --brown-l: #D4C0B0;
   --ink: #2C1810;
-  --muted: #8A7868;
+  --ink-2: #3A2418;
+  --muted: #7D6A5B;
   --white: #fff;
-  --border: #E0D4C8;
-  --error: #C0392B;
-  --success: #5C8A3E;
+  --border: #E5DACE;
+  --error: #B03A2E;
+  --success: #4F7A37;
 
   /* Fonts */
-  --font-serif: 'Cormorant Garamond', serif;
-  --font-sans: 'Raleway', sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
 
-  /* Radii */
-  --r: 8px;
-  --r-lg: 16px;
-  --r-xl: 24px;
+  /* Radii, shadows, motion */
+  --r: 10px;
+  --r-lg: 18px;
+  --r-xl: 28px;
+  --shadow-sm: 0 2px 10px rgba(44, 24, 16, .05);
+  --shadow: 0 18px 50px rgba(44, 24, 16, .10);
+  --ease: cubic-bezier(.22, .61, .36, 1);
+
+  /* Layout */
+  --page: 1240px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --hdr-h: 76px;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body { font-family: var(--font-sans); background: var(--cream); color: var(--ink); overflow-x: hidden; cursor: none; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--hdr-h) + 12px); -webkit-text-size-adjust: 100%; }
+body { font-family: var(--font-sans); font-size: 16px; line-height: 1.6; background: var(--cream); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+picture { display: contents; }
 
-/* ── Custom cursor ── */
-#cur{position:fixed;width:7px;height:7px;background:var(--brown);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s}
-#cur-ring{position:fixed;width:28px;height:28px;border:1px solid var(--brown-m);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s ease-out,opacity .3s}
+/* Keyboard focus — visible but discreet */
+:focus-visible { outline: 2px solid var(--brown); outline-offset: 3px; border-radius: 4px; }
 
-/* ── Page loader ── */
-#loader{position:fixed;inset:0;z-index:9000;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;transition:opacity .5s,visibility .5s}
-#loader.hide{opacity:0;visibility:hidden}
-.ld-name{font-family:var(--font-serif);font-size:2rem;color:var(--cream);letter-spacing:.18em;font-weight:300}
-.ld-sub{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--taupe)}
-.ld-bar-wrap{width:120px;height:1px;background:rgba(255,255,255,.12);overflow:hidden}
-.ld-bar{height:100%;background:var(--brown-m);width:0;animation:ldb .35s ease forwards}
-@keyframes ldb{to{width:100%}}
+.skip-link { position: absolute; left: 1rem; top: -100px; z-index: 1000; background: var(--ink); color: var(--cream); padding: .6rem 1rem; border-radius: var(--r); text-decoration: none; }
+.skip-link:focus { top: 1rem; }
 
-/* ── Buttons ── */
-.btn-fill{background:var(--brown);color:#fff;padding:.78rem 1.9rem;border-radius:100px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-decoration:none;transition:all .3s;font-family:var(--font-sans);border:none;cursor:none;display:inline-block}
-.btn-fill:hover{background:var(--brown-d);transform:translateY(-1px);box-shadow:0 10px 28px rgba(92,61,46,.22)}
-.btn-ol{border:1.5px solid var(--brown);color:var(--brown);padding:.78rem 1.9rem;border-radius:100px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-decoration:none;transition:all .3s;display:inline-block}
-.btn-ol:hover{background:var(--brown);color:#fff;border-color:var(--brown)}
-.btn-p{background:var(--brown);color:#fff;border:none;padding:.75rem 1.9rem;border-radius:100px;font-family:var(--font-sans);font-size:.78rem;font-weight:600;cursor:none;transition:all .25s;letter-spacing:.06em}
-.btn-p:hover{background:var(--brown-d);transform:translateY(-1px)}
-.btn-p:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.btn-b{background:none;border:1.5px solid var(--border);padding:.75rem 1.5rem;border-radius:100px;font-family:var(--font-sans);font-size:.78rem;cursor:none;color:var(--muted);transition:all .2s;font-weight:500}
-.btn-b:hover{background:var(--beige);border-color:var(--brown-l)}
-.btn-sm{font-size:.72rem;padding:.5rem 1.1rem}
-.btn-block{width:100%;margin-top:.4rem}
-.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:1.1rem}
-.btn-row--end{justify-content:flex-end}
+/* ── Icons (inline SVG sprite) ── */
+.ic { width: 1.15em; height: 1.15em; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.2em; }
 
-/* ── Section headings ── */
-.sec-eyebrow{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--brown-m);margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;font-weight:600}
-.sec-eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--brown-m)}
-.sec-hdr{text-align:center;margin-bottom:3rem}
-.sec-hdr .tag{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--brown);margin-bottom:.7rem;display:block;font-weight:600}
-.sec-hdr h2{font-family:var(--font-serif);font-size:clamp(2rem,3.5vw,3rem);font-weight:300;line-height:1.2}
-.sec-hdr h2 em{font-style:italic;font-weight:400;color:var(--brown-m)}
-.sec-hdr p{font-size:.9rem;color:var(--muted);max-width:460px;margin:.8rem auto 0;line-height:1.8}
+/* ── Typography ── */
+.eyebrow { display: inline-flex; align-items: center; gap: .7rem; font-size: .7rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--brown-d); margin-bottom: 1rem; }
+.eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; }
+.eyebrow--center::after { content: ''; width: 28px; height: 1px; background: currentColor; }
+.h2 { font-family: var(--font-serif); font-weight: 300; font-size: clamp(2.1rem, 4.4vw, 3.4rem); line-height: 1.08; letter-spacing: -.01em; color: var(--ink); }
+.h2 em { font-style: italic; font-weight: 400; color: var(--brown); }
+
+/* ── Buttons (public site) ── */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .8rem 1.6rem; border-radius: 100px; border: 1.5px solid transparent; font-family: var(--font-sans); font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease); white-space: nowrap; }
+.btn .ic { width: 1.1em; height: 1.1em; transition: transform .25s var(--ease); }
+.btn-dark { background: var(--ink); color: var(--cream); }
+.btn-dark:hover { background: var(--brown-d); transform: translateY(-1px); box-shadow: 0 10px 26px rgba(44, 24, 16, .2); }
+.btn-dark:hover .ic { transform: translateX(2px); }
+.btn-line { border-color: var(--ink); color: var(--ink); background: transparent; }
+.btn-line:hover { background: var(--ink); color: var(--cream); }
+.btn-line-light { border-color: rgba(250, 247, 240, .5); color: var(--cream); background: transparent; }
+.btn-line-light:hover { background: var(--cream); color: var(--ink); }
+.btn-sm { min-height: 40px; padding: .55rem 1.2rem; font-size: .72rem; }
+
+/* ── Buttons (booking flow & admin) ── */
+.btn-p { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-height: 46px; background: var(--ink); color: var(--cream); border: none; padding: .75rem 1.7rem; border-radius: 100px; font-family: var(--font-sans); font-size: .8rem; font-weight: 600; letter-spacing: .05em; cursor: pointer; transition: background .2s, transform .2s; }
+.btn-p:hover { background: var(--brown-d); }
+.btn-p:disabled { opacity: .35; cursor: not-allowed; }
+.btn-b { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; background: none; border: 1.5px solid var(--border); padding: .75rem 1.4rem; border-radius: 100px; font-family: var(--font-sans); font-size: .8rem; font-weight: 500; color: var(--muted); cursor: pointer; transition: all .2s; }
+.btn-b:hover { background: var(--beige); border-color: var(--brown-l); color: var(--ink); }
+.btn-block { width: 100%; margin-top: .4rem; }
+.btn-row { display: flex; justify-content: space-between; align-items: center; gap: .8rem; margin-top: 1.4rem; }
+.btn-row--end { justify-content: flex-end; }
 
 /* ── Form fields ── */
-.fg{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.85rem}
-.fg label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.fg input,.fg select,.fg textarea{padding:.72rem .92rem;border:1.5px solid var(--border);border-radius:var(--r);font-family:var(--font-sans);font-size:.88rem;color:var(--ink);background:var(--cream);outline:none;transition:border-color .2s;width:100%}
-.fg input:focus,.fg select:focus{border-color:var(--brown)}
-.fg input.err{border-color:var(--error)!important}
-.fg input.ok{border-color:var(--success)!important}
-.eh{font-size:.68rem;color:var(--error);display:none;margin-top:.15rem;font-weight:500}
-.eh.show{display:block}
-.fgr{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.fg { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+.fg label { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.fg input, .fg select, .fg textarea { width: 100%; min-height: 48px; padding: .75rem .95rem; border: 1.5px solid var(--border); border-radius: var(--r); font-family: var(--font-sans); font-size: 1rem; color: var(--ink); background: var(--white); outline: none; transition: border-color .2s, box-shadow .2s; }
+.fg input:focus, .fg select:focus { border-color: var(--brown); box-shadow: 0 0 0 3px rgba(139, 111, 94, .12); }
+.fg input.err { border-color: var(--error) !important; }
+.fg input.ok { border-color: var(--success) !important; }
+.eh { font-size: .72rem; color: var(--error); display: none; font-weight: 500; }
+.eh.show { display: block; }
+.fgr { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+@media (max-width: 560px) { .fgr { grid-template-columns: 1fr; } }
 
-/* ── Scroll-in animation ── */
-.fade-up{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
-.fade-up.vis{opacity:1;transform:translateY(0)}
-.fade-up:nth-child(2){transition-delay:.1s}
-.fade-up:nth-child(3){transition-delay:.2s}
-.fade-up:nth-child(4){transition-delay:.3s}
-.fade-up:nth-child(5){transition-delay:.4s}
-
-/* <picture> wrappers shouldn't affect layout — the <img> inside is styled directly */
-picture{display:contents}
+/* ── Respect "reduce motion" settings ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
