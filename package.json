@@ -6,11 +6,13 @@
   "scripts": {
     "preview": "firebase emulators:exec --only firestore,auth --project achirestaurant-dd2b5 \"node scripts/preview.mjs\"",
     "test:rules": "firebase emulators:exec --only firestore --project achirestaurant-dd2b5 \"node --test tests/firestore-rules.test.js\"",
-    "emulators": "firebase emulators:start --only firestore,auth --project achirestaurant-dd2b5"
+    "emulators": "firebase emulators:start --only firestore,auth --project achirestaurant-dd2b5",
+    "images": "node scripts/optimize-images.mjs"
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^4.0.1",
     "firebase": "^11.10.0",
-    "firebase-tools": "^14.11.0"
+    "firebase-tools": "^14.11.0",
+    "sharp": "^0.34.3"
   }
 }

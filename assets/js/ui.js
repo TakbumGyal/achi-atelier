@@ -3,13 +3,12 @@
 import { $, registerActions } from './utils/dom.js';
 import { MARQUEE_ITEMS } from './data/services.js';
 
-const LOADER_MIN_MS = 2000;
+const LOADER_MS = 350;      // brief brand flash — no longer waits for every image
 const MARQUEE_REPEAT = 4;
 
+/* Hide the intro screen as soon as the page is ready to use. */
 function initLoader() {
-  const hide = () => setTimeout(() => $('loader').classList.add('hide'), LOADER_MIN_MS);
-  if (document.readyState === 'complete') hide();
-  else window.addEventListener('load', hide);
+  setTimeout(() => $('loader').classList.add('hide'), LOADER_MS);
 }
 
 /* Dot + trailing ring that follow the mouse (desktop only). */

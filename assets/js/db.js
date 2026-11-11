@@ -33,30 +33,33 @@ export const subscribe = fn => listeners.add(fn);
 const emit = type => listeners.forEach(fn => fn(type));
 
 let fs = null, authMod = null;   // SDK modules
-let db = null, auth = null;      // instances
+let app = null, db = null, auth = null;   // instances
 let stopAdmin = [];
+let connecting = null, authStarting = null;
 
-export async function connect() {
+/** Start Firestore (availability + settings). Safe to call more than once. */
+export function connect() {
+  connecting ||= doConnect();
+  return connecting;
+}
+
+async function doConnect() {
   try {
-    const [{ initializeApp }, firestore, authModule] = await Promise.all([
+    const [{ initializeApp }, firestore] = await Promise.all([
       import(FIREBASE_SDK_URL + 'firebase-app.js'),
       import(FIREBASE_SDK_URL + 'firebase-firestore.js'),
-      import(FIREBASE_SDK_URL + 'firebase-auth.js'),
     ]);
     fs = firestore;
-    authMod = authModule;
-    const app = initializeApp(FIREBASE_CONFIG);
+    app = initializeApp(FIREBASE_CONFIG);
     db = fs.getFirestore(app);
-    auth = authMod.getAuth(app);
     if (USE_EMULATOR) {
       fs.connectFirestoreEmulator(db, '127.0.0.1', 8080);
-      authMod.connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
       console.info('Using Firebase emulators');
     }
   } catch (err) {
     console.error('Firebase failed to load:', err);
     emit('error');
-    return;
+    throw err;
   }
 
   /* Public availability, in real time. */
@@ -77,11 +80,32 @@ export async function connect() {
     state.retentionEnabled = !!data.retentionEnabled;
     emit('settings');
   }, err => console.warn('Settings listener error:', err));
-
-  authMod.onAuthStateChanged(auth, handleAuthChange);
 }
 
 /* ─── Admin auth ─── */
+
+/**
+ * Load Firebase Auth — only when someone opens the admin area, so normal
+ * visitors never download it. Resolves once the saved login (if any) is known.
+ */
+export function initAuth() {
+  authStarting ||= (async () => {
+    await connect();
+    authMod = await import(FIREBASE_SDK_URL + 'firebase-auth.js');
+    auth = authMod.getAuth(app);
+    if (USE_EMULATOR) authMod.connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+    const firstCheck = new Promise(resolve => {
+      let first = true;
+      authMod.onAuthStateChanged(auth, async user => {
+        await handleAuthChange(user);
+        if (first) { first = false; resolve(); }
+      });
+    });
+    await firstCheck;
+  })();
+  authStarting.catch(() => { authStarting = null; });
+  return authStarting;
+}
 
 async function handleAuthChange(user) {
   stopAdmin.forEach(stop => stop());
@@ -140,7 +164,7 @@ function listenToAdminData() {
  * or 'not-admin' (valid account without an admins/{uid} document).
  */
 export async function signIn(email, password) {
-  if (!auth) throw new Error('Not connected');
+  await initAuth();
   try {
     const { user } = await authMod.signInWithEmailAndPassword(auth, email, password);
     const adminDoc = await fs.getDoc(fs.doc(db, COLLECTIONS.admins, user.uid));
@@ -152,6 +176,8 @@ export async function signIn(email, password) {
 }
 
 export const signOut = () => auth && authMod.signOut(auth);
+
+/* Writes need Firestore loaded; it normally is already (started on page load). */
 
 /* ─── Writes ─── */
 

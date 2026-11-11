@@ -48,7 +48,7 @@ nav.scrolled{background:rgba(250,247,240,.95);backdrop-filter:blur(14px);-webkit
 .hero-r{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:2rem 0}
 .hero-img-wrap{position:relative;width:420px;max-width:90%}
 .hero-img-container{position:relative;z-index:1;border-radius:42% 58% 55% 45%/45% 48% 52% 55%;overflow:hidden;background:linear-gradient(145deg,#F0E8DC,#D4C0B0)}
-.hero-main-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 20%;display:block}
+.hero-main-img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:center 20%;display:block}
 
 /* ── Marquee ── */
 .mq-wrap{background:var(--ink);padding:.7rem 0;overflow:hidden}

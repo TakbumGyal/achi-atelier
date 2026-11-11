@@ -49,7 +49,7 @@ assets/
 | Add / remove a service             | `assets/js/data/services.js`                              |
 | Change any text or a translation   | `assets/js/data/translations.js`                          |
 | Change opening hours / closed day  | `assets/js/config.js` **and** the hours text in `translations.js` |
-| Replace a photo                    | Overwrite the file in `assets/img/` with the same name    |
+| Replace a photo                    | Put the new photo in `images-src/` (same name), run `npm run images` |
 | Change colours / fonts             | Variables at the top of `assets/css/base.css`             |
 
 ## Security model

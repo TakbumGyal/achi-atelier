@@ -6,9 +6,9 @@
  * Access is enforced by the Firestore rules, not by this code: only users
  * with an admins/{uid} document can read bookings, customers and stats.
  */
-import { $, registerActions, keepBelowNavbar } from '../utils/dom.js';
+import { $, registerActions } from '../utils/dom.js';
 import { t } from '../i18n.js';
-import { state, subscribe, signIn, signOut, setBlockToday, setSettings } from '../db.js';
+import { state, subscribe, signIn, signOut, setBlockToday, setSettings, initAuth } from '../db.js';
 import { buildProfiles } from './customers.js';
 import { initAgenda, renderAgenda } from './agenda.js';
 import { initClients, renderClients } from './clients.js';
@@ -21,21 +21,11 @@ let pendingPlan = null;
 
 const plural = (n, word) => `${n} ${word}${n > 1 ? 's' : ''}`;
 
-/* ─── Tabs (client / admin) ─── */
-
-function switchTab(tab) {
-  ['client', 'admin'].forEach(x => {
-    $('bkt-' + x).classList.toggle('active', x === tab);
-    $('bp-' + x).classList.toggle('active', x === tab);
-  });
-  if (tab === 'admin') showAdminView();
-  keepBelowNavbar($('bkt-client').parentElement);
-}
-
 /* ─── Auth ─── */
 
 function showAdminView() {
   const loggedIn = !!state.admin;
+  $('admin-loading').hidden = true;
   $('admin-login').style.display = loggedIn ? 'none' : 'block';
   $('admin-dash').classList.toggle('visible', loggedIn);
   if (loggedIn) render();
@@ -165,14 +155,36 @@ async function backup(el) {
   el.disabled = false;
 }
 
-/* ─── Init ─── */
+/* ─── Init (on first opening of "Espace Admin") ─── */
 
-export function initAdmin() {
+let initialized = false;
+
+/** Called each time the "Espace Admin" tab is opened. */
+export async function openAdmin() {
+  if (!initialized) {
+    initialized = true;
+    initAdmin();
+  }
+  if (!state.admin) {
+    // Until Firebase Auth has loaded and checked for a saved login, show "Chargement…"
+    $('admin-login').style.display = 'none';
+    $('admin-loading').hidden = false;
+  }
+  try {
+    await initAuth();
+  } catch (err) {
+    console.error('Auth failed to load:', err);
+    $('admin-loading').textContent = t('load_error');
+    return;
+  }
+  showAdminView();
+}
+
+function initAdmin() {
   initAgenda();
   initClients();
 
   registerActions({
-    'booking-tab': el => switchTab(el.dataset.tab),
     'admin-login': login,
     'admin-logout': () => signOut(),
     'admin-view': el => switchView(el.dataset.view),

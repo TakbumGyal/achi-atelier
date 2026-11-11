@@ -10,10 +10,11 @@ import { SERVICE_CATEGORIES, BOOKABLE_SERVICES } from './data/services.js';
 import { toDateStr, todayStr, nowMins, addDaysStr, formatDuration } from './utils/dates.js';
 import { availableSlots, isTaken, isPastSlot, isClosedDay } from './availability.js';
 import { state, subscribe, createBooking } from './db.js';
-import { sendConfirmationEmail } from './email.js';
+import { sendConfirmationEmail, loadEmailJs } from './email.js';
 
-/* If the database is slow, show the booking form anyway after this delay. */
-const LOAD_TIMEOUT_MS = 6000;
+/* If availability hasn't loaded after this long, say so. (Never show the
+   calendar without real availability — it could allow double bookings.) */
+const LOAD_TIMEOUT_MS = 20000;
 const DEFAULT_DURATION = 30;
 
 const NAME_RE = /^[a-zA-ZÀ-ÿЀ-ӿ\s'\-]+$/;
@@ -49,6 +50,7 @@ function goStep(n) {
     renderWeek();
   }
   if (n === 3) {
+    loadEmailJs().catch(() => {});   // get the email library ready before "Confirm"
     $('sum-svc-3').textContent = sel.svc?.name || '—';
     $('sum-date-3').textContent = sel.date ? formatDate(sel.date) : '—';
     $('sum-time-3').textContent = sel.time || '—';
@@ -332,5 +334,7 @@ export function initBooking() {
 
   onLangChange(() => { if (ready && currentStep === 2) renderWeek(); });
 
-  setTimeout(showForm, LOAD_TIMEOUT_MS);
+  setTimeout(() => {
+    if (!ready && !failed) $('bk-loading').textContent = t('load_error');
+  }, LOAD_TIMEOUT_MS);
 }

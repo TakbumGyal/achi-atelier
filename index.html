@@ -46,15 +46,16 @@
   <!-- Fonts & styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap">
+  <!-- Fonts load in the background (media="print" trick) so they don't delay the first paint -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap"></noscript>
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/sections.css">
   <link rel="stylesheet" href="assets/css/booking.css">
-  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/admin.css" media="print" onload="this.media='all'"><!-- admin only: non-blocking -->
   <link rel="stylesheet" href="assets/css/responsive.css">
 
   <!-- Scripts (deferred / module — run after the page is parsed) -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
   <script type="module" src="assets/js/main.js"></script>
 </head>
 <body>
@@ -73,7 +74,7 @@
 <!-- ═══════════ NAVBAR ═══════════ -->
 <nav id="navbar">
   <a href="#" class="nav-logo">
-    <img src="assets/img/logo.png" alt="Atelier Achi Nail Studio">
+    <picture><source srcset="assets/img/logo-nav.webp" type="image/webp"><img src="assets/img/logo-nav.png" alt="Atelier Achi Nail Studio" width="280" height="280"></picture>
   </a>
   <ul class="nav-center">
     <li><a href="#about" data-i18n="nav_about">À propos</a></li>
@@ -133,7 +134,11 @@
   <div class="hero-r">
     <div class="hero-img-wrap">
       <div class="hero-img-container">
-        <img class="hero-main-img" src="assets/img/hero.jpg" alt="Atelier Achi — Nail Art Paris">
+        <picture>
+          <source media="(max-width: 1100px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <source srcset="assets/img/hero.webp" type="image/webp">
+          <img class="hero-main-img" src="assets/img/hero.jpg" alt="Atelier Achi — Nail Art Paris" width="840" height="1260" fetchpriority="high">
+        </picture>
       </div>
     </div>
   </div>
@@ -145,9 +150,9 @@
 <!-- ═══════════ ABOUT ═══════════ -->
 <section id="about">
   <div class="about-grid fade-up">
-    <div class="about-img"><img src="assets/img/about/about-1.jpg" alt="Artisanat" loading="lazy"></div>
-    <div class="about-img"><img src="assets/img/about/about-2.jpg" alt="Notre Atelier" loading="lazy"></div>
-    <div class="about-img"><img src="assets/img/about/about-3.jpg" alt="L'Expérience" loading="lazy" style="--pos: center 32%"></div>
+    <div class="about-img"><picture><source srcset="assets/img/about/about-1.webp" type="image/webp"><img src="assets/img/about/about-1.jpg" alt="Artisanat" loading="lazy" decoding="async"></picture></div>
+    <div class="about-img"><picture><source srcset="assets/img/about/about-2.webp" type="image/webp"><img src="assets/img/about/about-2.jpg" alt="Notre Atelier" loading="lazy" decoding="async"></picture></div>
+    <div class="about-img"><picture><source srcset="assets/img/about/about-3.webp" type="image/webp"><img src="assets/img/about/about-3.jpg" alt="L'Expérience" loading="lazy" decoding="async" style="--pos: center 32%"></picture></div>
   </div>
   <div class="about-text fade-up">
     <p class="sec-eyebrow" data-i18n="about_eyebrow">Notre histoire</p>
@@ -182,11 +187,11 @@
     <p data-i18n="gal_sub">Chaque soin est unique. Découvrez quelques-unes de nos créations favorites.</p>
   </div>
   <div class="gal-grid">
-    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-1.png" alt="Nail Art Signature" loading="lazy" style="--pos: center 35%"></div></div>
-    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-2.jpg" alt="Manucure Classique" loading="lazy"></div></div>
-    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-3.jpg" alt="Semi-permanent" loading="lazy"></div></div>
-    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-4.jpg" alt="Réalisation Atelier Achi" loading="lazy"></div></div>
-    <div class="g-item fade-up"><div class="g-inner"><img src="assets/img/gallery/gallery-5.jpg" alt="Réalisation Atelier Achi" loading="lazy"></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-1.webp" type="image/webp"><img src="assets/img/gallery/gallery-1.jpg" alt="Nail Art Signature" loading="lazy" decoding="async" style="--pos: center 35%"></picture></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-2.webp" type="image/webp"><img src="assets/img/gallery/gallery-2.jpg" alt="Manucure Classique" loading="lazy" decoding="async"></picture></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-3.webp" type="image/webp"><img src="assets/img/gallery/gallery-3.jpg" alt="Semi-permanent" loading="lazy" decoding="async"></picture></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-4.webp" type="image/webp"><img src="assets/img/gallery/gallery-4.jpg" alt="Réalisation Atelier Achi" loading="lazy" decoding="async"></picture></div></div>
+    <div class="g-item fade-up"><div class="g-inner"><picture><source srcset="assets/img/gallery/gallery-5.webp" type="image/webp"><img src="assets/img/gallery/gallery-5.jpg" alt="Réalisation Atelier Achi" loading="lazy" decoding="async"></picture></div></div>
   </div>
 </section>
 
@@ -324,6 +329,7 @@
 
     <!-- ── Admin (logic: assets/js/admin.js) ── -->
     <div class="bk-panel" id="bp-admin">
+      <p class="na" id="admin-loading" hidden>Chargement…</p>
       <div class="admin-login" id="admin-login">
         <h3 data-i18n="admin_login_title">Espace Administrateur</h3>
         <p data-i18n="admin_login_sub">Entrez votre mot de passe pour accéder au tableau de bord.</p>
