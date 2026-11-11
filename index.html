@@ -322,19 +322,34 @@
 
     <div class="visit-btns">
       <a class="btn btn-dark" href="#booking" data-action="open-booking"><svg class="ic"><use href="#i-calendar"/></svg><span data-i18n="contact_book_btn">Réserver un soin</span></a>
-      <a class="btn btn-line" href="https://www.google.com/maps/dir/?api=1&amp;destination=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener"><svg class="ic"><use href="#i-route"/></svg><span data-i18n="btn_directions">Itinéraire</span></a>
       <a class="btn btn-line" href="https://wa.me/33668202050" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
     </div>
   </div>
 
-  <!-- Google Maps loads only on click (no Google cookies before the visitor's choice) -->
+  <!-- Map: static image in the salon's colours (OpenStreetMap, no cookies).
+       The interactive Google map loads only if the visitor asks for it. -->
   <div class="visit-map reveal">
-    <div class="map-wrap map-facade" id="map-box">
-      <svg class="ic map-pin-ic"><use href="#i-pin"/></svg>
-      <p class="map-addr">9 rue Trousseau<br>75011 Paris</p>
-      <button class="btn btn-dark btn-sm" data-action="show-map" data-i18n="map_show">Afficher la carte</button>
-      <a class="map-ext" href="https://www.google.com/maps/search/?api=1&amp;query=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener" data-i18n="map_open">Ouvrir dans Google Maps ↗</a>
-      <p class="map-note" data-i18n="map_note">La carte est fournie par Google, qui peut déposer des cookies.</p>
+    <div class="map-wrap" id="map-box">
+      <a class="map-static" href="https://www.google.com/maps/dir/?api=1&amp;destination=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener" aria-label="Itinéraire vers 9 rue Trousseau (Google Maps)" data-i18n-aria="map_dir_aria">
+        <picture><source srcset="assets/img/map.webp" type="image/webp"><img src="assets/img/map.jpg" alt="Plan du quartier : 9 rue Trousseau, Paris 11" data-i18n-alt="map_alt" loading="lazy" decoding="async" width="1200" height="960"></picture>
+        <span class="map-card"><strong>Atelier Achi</strong><span>9 rue Trousseau · 75011 Paris</span></span>
+      </a>
+    </div>
+
+    <div class="map-info">
+      <p class="visit-sub" data-i18n="metro_title">Accès métro</p>
+      <ul class="metro">
+        <li><span class="metro-name"><span class="mbadge">M</span>Ledru-Rollin</span><span class="mlines"><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~4 <span data-i18n="min_walk">min à pied</span></span></li>
+        <li><span class="metro-name"><span class="mbadge">M</span>Faidherbe–Chaligny</span><span class="mlines"><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~8 <span data-i18n="min_walk">min à pied</span></span></li>
+        <li><span class="metro-name"><span class="mbadge">M</span>Bastille</span><span class="mlines"><span class="mline" style="--c:#FFCD00">1</span><span class="mline" style="--c:#FF7E2E">5</span><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~12 <span data-i18n="min_walk">min à pied</span></span></li>
+      </ul>
+      <div class="map-links">
+        <span class="map-links-lbl"><svg class="ic"><use href="#i-route"/></svg><span data-i18n="btn_directions">Itinéraire</span></span>
+        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener">Google Maps</a>
+        <a href="https://maps.apple.com/?daddr=9+rue+Trousseau,+75011+Paris&amp;dirflg=w" target="_blank" rel="noopener" data-i18n="apple_maps">Plans (iPhone)</a>
+        <a href="https://waze.com/ul?ll=48.851436,2.37865&amp;navigate=yes" target="_blank" rel="noopener">Waze</a>
+      </div>
+      <p class="map-credit">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · <button class="map-interactive" data-action="show-map" data-i18n="map_show">Afficher la carte interactive</button></p>
     </div>
   </div>
 </section>

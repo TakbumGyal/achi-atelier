@@ -34,6 +34,7 @@ const IMAGES = [
   { src: 'salon/salon-1.jpg', out: 'salon/salon-1', width: 1200 },     // salon photos (from the salon's Planity page)
   { src: 'salon/salon-2.jpg', out: 'salon/salon-2', width: 1200 },
   { src: 'salon/salon-3.jpg', out: 'salon/salon-3', width: 1200 },
+  { src: 'map.png', out: 'map', width: 1200 },                        // static map (scripts/make-map.mjs)
 ];
 
 const kb = bytes => `${Math.round(bytes / 1024)} KB`;
