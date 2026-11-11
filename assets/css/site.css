@@ -46,9 +46,12 @@ section { position: relative; }
 /* ═══════════ HERO ═══════════ */
 .hero { max-width: var(--page); margin: 0 auto; padding: calc(var(--hdr-h) + 1rem) var(--gutter) 2.5rem; display: grid; gap: 2rem; }
 .hero-visual { position: relative; order: -1; }
-.hero-arch { position: relative; aspect-ratio: 4 / 4.4; max-height: 62vh; width: 100%; overflow: hidden; border-radius: 50% 50% var(--r-xl) var(--r-xl) / 45% 45% var(--r-xl) var(--r-xl); background: linear-gradient(160deg, var(--beige), var(--brown-l)); }
-.hero-arch img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; animation: heroIn 1.4s var(--ease) both; }
-@keyframes heroIn { from { transform: scale(1.06); opacity: .4; } to { transform: none; opacity: 1; } }
+.hero-frame { position: relative; aspect-ratio: 4 / 4.4; max-height: 62vh; width: 100%; overflow: hidden; border-radius: var(--r-xl); background: linear-gradient(160deg, var(--beige), var(--brown-l)); }
+.hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s var(--ease); }
+.hero-slide.on { opacity: 1; }
+.hero-slide img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center 25%); }
+.hero-slide.on img { animation: kenBurns 6.5s ease-out both; }
+@keyframes kenBurns { from { transform: scale(1.08); } to { transform: scale(1); } }
 .hero-title { font-family: var(--font-serif); font-weight: 300; font-size: clamp(2.6rem, 9vw, 4.4rem); line-height: 1.02; letter-spacing: -.015em; margin-bottom: 1.2rem; }
 .hero-title em { font-style: italic; font-weight: 400; color: var(--brown); }
 .hero-sub { font-size: 1rem; line-height: 1.8; color: var(--muted); max-width: 32rem; margin-bottom: 1.8rem; }
@@ -64,7 +67,7 @@ section { position: relative; }
   .hero-title { font-size: clamp(3rem, 4.6vw, 4.6rem); }
   .hero { grid-template-columns: 1.1fr .9fr; align-items: center; gap: 4rem; min-height: 100svh; padding-top: calc(var(--hdr-h) + 2rem); padding-bottom: 3rem; }
   .hero-visual { order: 0; }
-  .hero-arch { aspect-ratio: 3 / 4; max-height: 78vh; border-radius: 50% 50% var(--r-xl) var(--r-xl) / 37.5% 37.5% var(--r-xl) var(--r-xl); }
+  .hero-frame { aspect-ratio: 3 / 4; max-height: 78vh; }
 }
 
 /* Key figures */

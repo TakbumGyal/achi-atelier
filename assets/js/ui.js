@@ -106,6 +106,23 @@ function initLightbox() {
   });
 }
 
+/* Hero slideshow: the 3 photos fade into each other every 5 s, with a slow zoom.
+   Paused when the tab is hidden; still image for visitors who reduce motion. */
+function initHeroSlides() {
+  const slides = [...document.querySelectorAll('#hero-slides .hero-slide')];
+  if (slides.length < 2 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let i = 0, timer = null;
+  const next = () => {
+    slides[i].classList.remove('on');
+    i = (i + 1) % slides.length;
+    slides[i].classList.add('on');
+  };
+  const start = () => { if (!timer) timer = setInterval(next, 5000); };
+  const stop = () => { clearInterval(timer); timer = null; };
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+  start();
+}
+
 /* Gift card tilts gently towards the mouse (computers only, and not for
    visitors who asked their device to reduce motion). */
 function initGiftCard() {
@@ -175,6 +192,7 @@ export function initUI() {
   initMobileBar();
   initMap();
   initLightbox();
+  initHeroSlides();
   initGiftCard();
   initReviews();
   initReveal();

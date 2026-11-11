@@ -144,13 +144,22 @@
       <li><svg class="ic"><use href="#i-pin"/></svg><span>9 rue Trousseau, Paris 11</span></li>
     </ul>
   </div>
+  <!-- Slideshow: 3 photos fade into each other (assets/js/ui.js) -->
   <div class="hero-visual">
-    <div class="hero-arch">
-      <picture>
-        <source media="(max-width: 900px)" srcset="assets/img/hero-sm.webp" type="image/webp">
-        <source srcset="assets/img/hero.webp" type="image/webp">
-        <img src="assets/img/hero.jpg" alt="Atelier Achi — Nail Art Paris" width="840" height="1260" fetchpriority="high">
-      </picture>
+    <div class="hero-frame" id="hero-slides">
+      <div class="hero-slide on">
+        <picture>
+          <source media="(max-width: 900px)" srcset="assets/img/hero-sm.webp" type="image/webp">
+          <source srcset="assets/img/hero.webp" type="image/webp">
+          <img src="assets/img/hero.jpg" alt="Atelier Achi — Nail Art Paris" width="840" height="1260" fetchpriority="high">
+        </picture>
+      </div>
+      <div class="hero-slide">
+        <picture><source srcset="assets/img/gallery/gallery-1.webp" type="image/webp"><img src="assets/img/gallery/gallery-1.jpg" alt="Nail Art Signature" data-i18n-alt="alt_gal1" loading="lazy" decoding="async" width="900" height="1125" style="--pos: center 35%"></picture>
+      </div>
+      <div class="hero-slide">
+        <picture><source srcset="assets/img/salon/salon-3.webp" type="image/webp"><img src="assets/img/salon/salon-3.jpg" alt="Vue de l’atelier" data-i18n-alt="alt_salon3" loading="lazy" decoding="async" width="1200" height="900"></picture>
+      </div>
     </div>
   </div>
 </section>
