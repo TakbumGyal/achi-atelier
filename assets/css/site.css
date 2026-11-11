@@ -193,7 +193,7 @@ section { position: relative; }
 .rv-card blockquote { flex: 1; font-family: var(--font-serif); font-size: 1.22rem; line-height: 1.5; color: var(--ink); }
 .rv-card figcaption { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-top: .9rem; border-top: 1px solid var(--border); }
 .rv-foot { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2rem; padding: 0 var(--gutter); text-align: center; }
-.rv-note { font-size: .72rem; color: var(--muted); max-width: 30rem; line-height: 1.6; }
+.rv-note { font-size: .72rem; color: var(--brown-d); max-width: 30rem; line-height: 1.6; }
 .rv-row { position: relative; }
 .rv-arrow { display: none; }
 @media (min-width: 901px) {
