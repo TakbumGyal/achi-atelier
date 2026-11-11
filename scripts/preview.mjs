@@ -5,7 +5,7 @@
  *
  * Seeds sample customers and bookings (old, recent, upcoming), serves the
  * site on http://localhost:8101/?emulator and opens it in the browser.
- * Test admin: test@atelierachi.fr / test1234.  Stop with Ctrl+C.
+ * Test admin: test@atelierachi.fr / test1234.  No emails are sent.  Stop with Ctrl+C.
  * Nothing here touches the live site or the real database.
  */
 import http from 'node:http';

@@ -99,7 +99,8 @@ npm run preview
 
 Starts the site at http://localhost:8101/?emulator with a **fake database** full of sample
 customers and bookings (old, recent, upcoming), and opens it in the browser.
-Admin login: `test@atelierachi.fr` / `test1234`. Nothing touches the live site. Stop with Ctrl+C.
+Admin login: `test@atelierachi.fr` / `test1234`. Nothing touches the live site and **no emails are
+sent** (they are only logged in the browser console). Stop with Ctrl+C.
 Every change should be checked here before it is pushed to `main`.
 
 ## Run locally
