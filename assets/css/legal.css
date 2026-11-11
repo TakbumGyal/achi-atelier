@@ -32,8 +32,6 @@ body.legal-page{cursor:auto;background:var(--cream)}
 .legal-table tr:last-child td{border-bottom:none}
 .legal-table td:first-child{width:58%}
 
-/* Placeholder that must be filled before going live */
-.todo{background:#ffe08a;color:#7a4b00;padding:0 .3rem;border-radius:3px;font-weight:700}
 
 .legal-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem;padding:1.5rem 2rem;background:var(--ink);color:rgba(255,255,255,.55);font-size:.75rem}
 .legal-footer a{color:var(--brown-l);text-decoration:none}
