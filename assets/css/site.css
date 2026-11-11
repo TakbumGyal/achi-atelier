@@ -250,7 +250,9 @@ section { position: relative; }
 .ft-bottom { max-width: var(--page); margin: 3rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(250, 247, 240, .1); display: flex; flex-wrap: wrap; justify-content: space-between; gap: .8rem; font-size: .74rem; color: rgba(250, 247, 240, .6); }
 .ft-bottom a { color: rgba(250, 247, 240, .6); text-decoration: none; }
 .ft-legal { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; }
-.ft-admin { opacity: .75; }
+.ft-legal { align-items: center; }
+.ft-bottom .ft-admin { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .95rem; border: 1px solid rgba(250, 247, 240, .3); border-radius: 100px; color: var(--cream); font-weight: 600; letter-spacing: .04em; transition: background .2s, border-color .2s; }
+.ft-bottom .ft-admin:hover { background: var(--brown); border-color: var(--brown); color: var(--cream); }
 .ft-bottom a:hover { color: var(--cream); }
 @media (min-width: 901px) {
   .site-footer { padding-bottom: 2rem; }
