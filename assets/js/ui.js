@@ -106,6 +106,25 @@ function initLightbox() {
   });
 }
 
+/* Gift card tilts gently towards the mouse (computers only, and not for
+   visitors who asked their device to reduce motion). */
+function initGiftCard() {
+  const card = $('gcard');
+  if (!card || matchMedia('(hover: none), (prefers-reduced-motion: reduce)').matches) return;
+  const area = card.closest('.gift-visual');
+  area.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;    // -0.5 … 0.5
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.setProperty('--ry', `${(x * 14).toFixed(2)}deg`);
+    card.style.setProperty('--rx', `${(-y * 14).toFixed(2)}deg`);
+  });
+  area.addEventListener('pointerleave', () => {
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+  });
+}
+
 /* Sections fade in gently as they come into view. */
 function initReveal() {
   const els = document.querySelectorAll('.reveal');
@@ -122,6 +141,7 @@ export function initUI() {
   initMobileBar();
   initMap();
   initLightbox();
+  initGiftCard();
   initReveal();
   $('footer-year').textContent = new Date().getFullYear();
 }

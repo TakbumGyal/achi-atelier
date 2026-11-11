@@ -34,6 +34,9 @@ const IMAGES = [
   { src: 'gallery/gallery-3.jpg', out: 'gallery/gallery-3', width: 900 },
   { src: 'gallery/gallery-4.jpg', out: 'gallery/gallery-4', width: 900 },
   { src: 'gallery/gallery-5.jpg', out: 'gallery/gallery-5', width: 900 },
+  { src: 'salon/salon-1.jpg', out: 'salon/salon-1', width: 1200 },     // salon photos (from the salon's Planity page)
+  { src: 'salon/salon-2.jpg', out: 'salon/salon-2', width: 1200 },
+  { src: 'salon/salon-3.jpg', out: 'salon/salon-3', width: 1200 },
 ];
 
 const kb = bytes => `${Math.round(bytes / 1024)} KB`;

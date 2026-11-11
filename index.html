@@ -164,9 +164,9 @@
 <!-- ═══════════ L'ATELIER ═══════════ -->
 <section class="about" id="about">
   <div class="about-photos reveal">
-    <div class="ph ph-a"><picture><source srcset="assets/img/about/about-1.webp" type="image/webp"><img src="assets/img/about/about-1.jpg" alt="Artisanat" data-i18n-alt="alt_about1" loading="lazy" decoding="async" width="700" height="872"></picture></div>
-    <div class="ph ph-b"><picture><source srcset="assets/img/about/about-2.webp" type="image/webp"><img src="assets/img/about/about-2.jpg" alt="Notre Atelier" data-i18n-alt="alt_about2" loading="lazy" decoding="async" width="700" height="475"></picture></div>
-    <div class="ph ph-c"><picture><source srcset="assets/img/about/about-3.webp" type="image/webp"><img src="assets/img/about/about-3.jpg" alt="L'Expérience" data-i18n-alt="alt_about3" loading="lazy" decoding="async" width="1100" height="1467" style="--pos: center 32%"></picture></div>
+    <div class="ph ph-a"><picture><source srcset="assets/img/salon/salon-2.webp" type="image/webp"><img src="assets/img/salon/salon-2.jpg" alt="Le bar à ongles et son mur de vernis" data-i18n-alt="alt_salon2" loading="lazy" decoding="async" width="1200" height="900" style="--pos: 30% center"></picture></div>
+    <div class="ph ph-b"><picture><source srcset="assets/img/salon/salon-1.webp" type="image/webp"><img src="assets/img/salon/salon-1.jpg" alt="L’espace pédicure spa" data-i18n-alt="alt_salon1" loading="lazy" decoding="async" width="1200" height="900"></picture></div>
+    <div class="ph ph-c"><picture><source srcset="assets/img/salon/salon-3.webp" type="image/webp"><img src="assets/img/salon/salon-3.jpg" alt="Vue de l’atelier" data-i18n-alt="alt_salon3" loading="lazy" decoding="async" width="1200" height="900"></picture></div>
   </div>
   <div class="about-text reveal">
     <p class="eyebrow" data-i18n="about_eyebrow">Notre histoire</p>
@@ -211,12 +211,13 @@
     </div>
   </div>
   <div class="gift-visual reveal" aria-hidden="true">
-    <div class="gcard">
+    <div class="gcard-float"><div class="gcard" id="gcard">
+      <span class="gcard-shine"></span>
       <div class="gcard-top"><span class="gcard-brand">Atelier Achi</span><span class="gcard-sub">Nail Studio · Paris</span></div>
       <div class="gcard-title" data-i18n="gift_card_title">Carte cadeau</div>
       <div class="gcard-lines"><span></span><span></span></div>
       <svg class="ic gcard-spark"><use href="#i-spark"/></svg>
-    </div>
+    </div></div>
   </div>
 </section>
 
@@ -233,6 +234,9 @@
     <button class="gal-item" data-action="open-photo" data-index="2"><picture><source srcset="assets/img/gallery/gallery-3.webp" type="image/webp"><img src="assets/img/gallery/gallery-3.jpg" alt="Semi-permanent" data-i18n-alt="alt_gal3" loading="lazy" decoding="async" width="900" height="753"></picture></button>
     <button class="gal-item" data-action="open-photo" data-index="3"><picture><source srcset="assets/img/gallery/gallery-4.webp" type="image/webp"><img src="assets/img/gallery/gallery-4.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async" width="900" height="1200"></picture></button>
     <button class="gal-item" data-action="open-photo" data-index="4"><picture><source srcset="assets/img/gallery/gallery-5.webp" type="image/webp"><img src="assets/img/gallery/gallery-5.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async" width="900" height="1200"></picture></button>
+    <button class="gal-item" data-action="open-photo" data-index="5"><picture><source srcset="assets/img/about/about-1.webp" type="image/webp"><img src="assets/img/about/about-1.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async" width="700" height="872"></picture></button>
+    <button class="gal-item" data-action="open-photo" data-index="6"><picture><source srcset="assets/img/about/about-2.webp" type="image/webp"><img src="assets/img/about/about-2.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async" width="700" height="475"></picture></button>
+    <button class="gal-item" data-action="open-photo" data-index="7"><picture><source srcset="assets/img/about/about-3.webp" type="image/webp"><img src="assets/img/about/about-3.jpg" alt="Réalisation Atelier Achi" data-i18n-alt="alt_gal4" loading="lazy" decoding="async" width="1100" height="1467" style="--pos: center 32%"></picture></button>
   </div>
   <div class="gal-foot">
     <a class="btn btn-line-light" href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener">
@@ -326,7 +330,10 @@
   </div>
   <div class="ft-bottom">
     <span>© <span id="footer-year">2026</span> Atelier Achi. <span data-i18n="footer_rights">Tous droits réservés.</span></span>
-    <a href="mentions-legales.html" data-i18n="footer_legal">Mentions légales &amp; confidentialité</a>
+    <span class="ft-legal">
+      <a href="mentions-legales.html" data-i18n="footer_legal">Mentions légales &amp; confidentialité</a>
+      <a href="admin.html" class="ft-admin" rel="nofollow">Espace salon</a>
+    </span>
   </div>
 </footer>
 
