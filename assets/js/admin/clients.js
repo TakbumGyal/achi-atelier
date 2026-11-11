@@ -9,9 +9,12 @@ import { normPhone } from './customers.js';
 import { deleteCustomerData, downloadJson } from './retention.js';
 import { todayStr } from '../utils/dates.js';
 
+const PAGE_SIZE = 50;
+
 let ctx = null;
 let query = '';
 let openKey = null;
+let shown = PAGE_SIZE;   // rows displayed; "Afficher plus" adds PAGE_SIZE
 
 const plural = (n, word) => `${n} ${word}${n > 1 ? 's' : ''}`;
 const OUTCOME_LABEL = { visit: 'venue', cancelled: 'annulé', noshow: 'absente', upcoming: 'à venir' };
@@ -36,8 +39,9 @@ export function renderClients(profiles) {
     .sort((a, b) => (b.summary.lastActivity || b.live[0]?.date || '').localeCompare(a.summary.lastActivity || a.live[0]?.date || ''));
 
   $('clients-count').textContent = `${plural(all.length, 'cliente')}${query ? ` · ${list.length} trouvée${list.length > 1 ? 's' : ''}` : ''}`;
+  const more = list.length - shown;
   $('clients-list').innerHTML = list.length
-    ? list.map(p => {
+    ? list.slice(0, shown).map(p => {
       const s = p.summary;
       return `<div class="client-row" data-action="client-open" data-key="${esc(p.key)}" role="button" tabindex="0">
         <div>
@@ -51,10 +55,17 @@ export function renderClients(profiles) {
           <div class="client-last">${s.lastVisit ? 'Dernière visite : ' + formatDate(s.lastVisit) : 'Pas encore venue'}</div>
         </div>
       </div>`;
-    }).join('')
+    }).join('') + (more > 0 ? `<button class="clients-more" data-action="clients-more">Afficher plus (${more} restante${more > 1 ? 's' : ''})</button>` : '')
     : `<div class="na">${query ? 'Aucune cliente trouvée.' : 'Aucune cliente pour le moment.'}</div>`;
 
   if (openKey) renderDetail(openKey);
+}
+
+/* The card keeps the last RETENTION.historyMax entries; counts stay exact. */
+function historyNote(s) {
+  const total = s.visits + s.cancellations + s.noShows + s.upcoming;
+  if (s.history.length >= total) return `(${s.history.length})`;
+  return `(les ${s.history.length} plus récents — les compteurs ci-dessus incluent tout)`;
 }
 
 function keptUntil(s) {
@@ -84,7 +95,7 @@ function renderDetail(key) {
     <p class="cd-line">${s.firstVisit ? `Cliente depuis le <strong>${formatDate(s.firstVisit)}</strong> · dernière visite le <strong>${formatDate(s.lastVisit)}</strong>` : 'Pas encore venue au salon.'}</p>
     ${services.length ? `<div class="cd-sub">Prestations</div>
       <div class="cd-services">${services.map(([name, n]) => `<span class="cbadge">${esc(name)} × ${n}</span>`).join('')}</div>` : ''}
-    <div class="cd-sub">Historique</div>
+    <div class="cd-sub">Historique <span class="cd-sub-note">${historyNote(s)}</span></div>
     <div class="cd-history">${s.history.length
       ? s.history.map(h => `<div class="cd-h"><span>${formatDate(h.date)}</span><span>${esc(h.service)}</span><span class="cd-h-${h.outcome}">${OUTCOME_LABEL[h.outcome] || ''}</span></div>`).join('')
       : '<div class="na">Aucun historique.</div>'}</div>
@@ -144,9 +155,11 @@ export function initClients() {
     'client-close': closeDetail,
     'client-export': exportCustomer,
     'client-delete': deleteCustomer,
+    'clients-more': () => { shown += PAGE_SIZE; if (ctx) renderClients(ctx); },
   });
   $('clients-search').addEventListener('input', e => {
     query = e.target.value.trim().toLowerCase();
+    shown = PAGE_SIZE;
     if (ctx) renderClients(ctx);
   });
   $('client-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeDetail(); });

@@ -165,3 +165,6 @@
 .st-table td{padding:.45rem .5rem;border-bottom:1px solid var(--border)}
 .st-table tr:last-child td{border-bottom:none}
 .st-table td:not(:first-child),.st-table th:not(:first-child){text-align:right}
+.cd-sub-note{font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
+.clients-more{display:block;width:100%;padding:.75rem;border:none;border-top:1px solid var(--border);background:var(--cream);font-family:var(--font-sans);font-size:.76rem;font-weight:600;color:var(--brown);cursor:none}
+.clients-more:hover{background:var(--beige)}
