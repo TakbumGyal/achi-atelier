@@ -76,6 +76,7 @@
     <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7z"/></symbol>
     <symbol id="i-route" viewBox="0 0 24 24"><path d="M3.5 11 20.5 3.5 13 20.5l-2-7.5-7.5-2z"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-bus" viewBox="0 0 24 24"><rect x="4.5" y="3.5" width="15" height="14" rx="3"/><path d="M4.5 11h15M8 17.5V20M16 17.5V20"/><circle cx="8.5" cy="14.2" r=".9" fill="currentColor"/><circle cx="15.5" cy="14.2" r=".9" fill="currentColor"/></symbol>
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
   </defs>
 </svg>
@@ -339,10 +340,11 @@
     <div class="map-info">
       <p class="visit-sub" data-i18n="metro_title">Accès métro</p>
       <ul class="metro">
-        <li><span class="metro-name"><span class="mbadge">M</span>Ledru-Rollin</span><span class="mlines"><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~4 <span data-i18n="min_walk">min à pied</span></span></li>
-        <li><span class="metro-name"><span class="mbadge">M</span>Faidherbe–Chaligny</span><span class="mlines"><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~8 <span data-i18n="min_walk">min à pied</span></span></li>
-        <li><span class="metro-name"><span class="mbadge">M</span>Bastille</span><span class="mlines"><span class="mline" style="--c:#FFCD00">1</span><span class="mline" style="--c:#FF7E2E">5</span><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~12 <span data-i18n="min_walk">min à pied</span></span></li>
+        <li><span class="metro-name"><span class="mbadge">M</span>Ledru-Rollin</span><span class="mlines"><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~4 <span data-i18n="min_walk">min à pied</span></span><span class="metro-how" data-i18n="metro_how1">Sortie 2 « Rue du Faubourg Saint-Antoine », puis tout droit : la rue Trousseau est sur votre gauche.</span></li>
+        <li><span class="metro-name"><span class="mbadge">M</span>Faidherbe–Chaligny</span><span class="mlines"><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~8 <span data-i18n="min_walk">min à pied</span></span><span class="metro-how" data-i18n="metro_how2">Sortie 1 « Rue Faidherbe », puis la rue du Faubourg Saint-Antoine vers Bastille : la rue Trousseau est sur votre droite.</span></li>
+        <li><span class="metro-name"><span class="mbadge">M</span>Bastille</span><span class="mlines"><span class="mline" style="--c:#FFCD00">1</span><span class="mline" style="--c:#FF7E2E">5</span><span class="mline" style="--c:#E19BDF">8</span></span><span class="metro-walk">~12 <span data-i18n="min_walk">min à pied</span></span><span class="metro-how" data-i18n="metro_how3">Remontez la rue du Faubourg Saint-Antoine : la rue Trousseau est sur votre gauche.</span></li>
       </ul>
+      <p class="bus-line"><svg class="ic"><use href="#i-bus"/></svg><span data-i18n="bus_line">Bus <strong>61</strong>, <strong>76</strong> et <strong>86</strong> à 2 min (arrêts « Ledru-Rollin – Faubourg Saint-Antoine » et « Crozatier ») · bus de nuit N16, N34</span></p>
       <div class="map-links">
         <span class="map-links-lbl"><svg class="ic"><use href="#i-route"/></svg><span data-i18n="btn_directions">Itinéraire</span></span>
         <a href="https://www.google.com/maps/dir/?api=1&amp;destination=9+rue+Trousseau+75011+Paris" target="_blank" rel="noopener">Google Maps</a>
