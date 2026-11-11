@@ -120,6 +120,29 @@ section { position: relative; }
   .svc-side { justify-content: space-between; }
 }
 
+/* ═══════════ GIFT CARD ═══════════ */
+.gift { max-width: var(--page); margin: 0 auto; padding: 5rem var(--gutter); display: grid; gap: 3rem; align-items: center; }
+.gift-text p:not(.eyebrow) { color: var(--muted); line-height: 1.85; margin-top: 1rem; max-width: 34rem; }
+.gift-points { list-style: none; display: grid; gap: .7rem; margin: 1.6rem 0 2rem; }
+.gift-points li { display: flex; align-items: center; gap: .6rem; font-size: .9rem; font-weight: 500; }
+.gift-points .ic { color: var(--brown); }
+.gift-btns { display: flex; flex-wrap: wrap; gap: .7rem; }
+.gift-visual { display: flex; justify-content: center; perspective: 1200px; }
+.gcard { position: relative; width: min(100%, 420px); aspect-ratio: 1.6; border-radius: 22px; padding: 1.8rem 2rem; color: var(--cream); overflow: hidden;
+  background: radial-gradient(circle at 85% 15%, rgba(212,192,176,.35), transparent 45%), linear-gradient(135deg, var(--brown-d) 0%, var(--ink) 70%);
+  box-shadow: 0 30px 60px rgba(44,24,16,.28), inset 0 0 0 1px rgba(250,247,240,.12); transform: rotate(-3deg); transition: transform .6s var(--ease); }
+.gift-visual:hover .gcard { transform: rotate(0) translateY(-4px); }
+.gcard::after { content: ''; position: absolute; inset: 12px; border: 1px solid rgba(212,192,176,.35); border-radius: 14px; pointer-events: none; }
+.gcard-top { display: flex; flex-direction: column; }
+.gcard-brand { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.1; }
+.gcard-sub { font-size: .58rem; letter-spacing: .26em; text-transform: uppercase; color: var(--taupe); margin-top: .3rem; }
+.gcard-title { position: absolute; left: 2rem; bottom: 1.6rem; font-family: var(--font-serif); font-style: italic; font-size: clamp(1.8rem, 6vw, 2.4rem); color: var(--brown-l); }
+.gcard-lines { position: absolute; right: 2rem; bottom: 2rem; display: grid; gap: .55rem; width: 38%; }
+.gcard-lines span { height: 1px; background: rgba(250,247,240,.3); }
+.gcard-spark { position: absolute; top: 1.6rem; right: 1.8rem; width: 26px; height: 26px; color: var(--brown-l); }
+@media (max-width: 560px) { .gift-btns .btn { flex: 1 1 100%; } }
+@media (min-width: 901px) { .gift { grid-template-columns: 1.1fr .9fr; gap: 5rem; padding: 6rem var(--gutter); } }
+
 /* ═══════════ GALLERY ═══════════ */
 .gallery { background: var(--ink); color: var(--cream); padding: 5rem 0; }
 .gallery .sec-head { padding: 0 var(--gutter); }
