@@ -90,6 +90,18 @@ customer (right of access) and delete it all (right to erasure).
 
 To remove an admin, delete their `admins` document and the user in Authentication.
 
+## Preview before going live (recommended)
+
+```bash
+npm install          # first time only
+npm run preview
+```
+
+Starts the site at http://localhost:8101/?emulator with a **fake database** full of sample
+customers and bookings (old, recent, upcoming), and opens it in the browser.
+Admin login: `test@atelierachi.fr` / `test1234`. Nothing touches the live site. Stop with Ctrl+C.
+Every change should be checked here before it is pushed to `main`.
+
 ## Run locally
 
 The site uses ES modules, so it must be served over HTTP (opening the file directly won't work):
