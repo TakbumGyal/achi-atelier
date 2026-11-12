@@ -50,7 +50,6 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@400;500;600;700&display=swap"></noscript>
 
   <link rel="preload" as="image" href="assets/img/hero.webp" media="(min-width: 901px)" type="image/webp">
-  <link rel="preload" as="image" href="assets/img/hero-sm.webp" media="(max-width: 900px)" type="image/webp">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/site.css">
   <link rel="stylesheet" href="assets/css/booking.css">
@@ -158,7 +157,8 @@
     <div class="hero-frame" id="hero-slides">
       <div class="hero-slide on">
         <picture>
-          <source media="(max-width: 900px)" srcset="assets/img/hero-sm.webp" type="image/webp">
+          <!-- Phones/tablets: the hero photo block is hidden (owner's choice); a 1px blank stops the photo downloading -->
+          <source media="(max-width: 900px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
           <source srcset="assets/img/hero.webp" type="image/webp">
           <img src="assets/img/hero.jpg" alt="Atelier Achi — Nail Art Paris" width="840" height="1260" fetchpriority="high">
         </picture>
@@ -331,7 +331,6 @@
 
     <div class="visit-btns">
       <a class="btn btn-dark hide-phone" href="#booking" data-action="open-booking"><svg class="ic"><use href="#i-calendar"/></svg><span data-i18n="contact_book_btn">Réserver un soin</span></a>
-      <a class="btn btn-line" href="https://wa.me/33668202050" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
     </div>
   </div>
 

@@ -5,6 +5,10 @@
 
 section { position: relative; }
 
+/* Safety net: nothing may make the page wider than the screen (on iPhones,
+   body overflow-x alone doesn't stop the page from shifting sideways). */
+html { overflow-x: clip; }
+
 /* ── Scroll-in reveal (subtle) ── */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
 .reveal.vis { opacity: 1; transform: none; }
@@ -161,13 +165,15 @@ body.menu-open .site-header { background: var(--cream); box-shadow: 0 1px 0 var(
 .gift-points { list-style: none; display: grid; gap: .7rem; margin-top: 1.6rem; }
 .gift-points li { display: flex; align-items: center; gap: .6rem; font-size: .9rem; font-weight: 500; }
 .gift-points .ic { color: var(--brown); }
-.gift-visual { display: flex; justify-content: center; perspective: 1000px; padding: 1rem 0; }
+.gift-visual { display: flex; justify-content: center; perspective: 1000px; padding: 1rem 0; overflow-x: clip; }
 .gcard-float { width: min(100%, 420px); animation: gcardFloat 6s ease-in-out infinite; }
 @keyframes gcardFloat { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-12px) rotate(-1.5deg); } }
 .gcard { position: relative; width: 100%; aspect-ratio: 1.6; border-radius: 22px; padding: 1.8rem 2rem; color: var(--ink); overflow: hidden;
   background: radial-gradient(circle at 85% 12%, rgba(255,255,255,.9), transparent 42%), linear-gradient(135deg, #FFFDF9 0%, var(--beige) 55%, var(--beige-2) 100%);
   box-shadow: 0 30px 60px rgba(92,61,46,.18), 0 2px 6px rgba(92,61,46,.08), inset 0 0 0 1px rgba(139,111,94,.18);
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .25s ease-out; transform-style: preserve-3d; }
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .25s ease-out; }
+/* No `transform-style: preserve-3d` here: in Safari it stops the card from clipping its
+   shine, which then stuck out past the screen and pushed the whole phone page sideways. */
 .gcard::after { content: ''; position: absolute; inset: 12px; border: 1px solid var(--brown-l); border-radius: 14px; pointer-events: none; }
 .gcard-shine { position: absolute; inset: -40%; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.75) 50%, transparent 60%); transform: translateX(-60%); animation: gcardShine 5s ease-in-out infinite 1s; pointer-events: none; }
 @keyframes gcardShine { 0%, 60% { transform: translateX(-60%); } 85%, 100% { transform: translateX(60%); } }
@@ -278,7 +284,7 @@ body.menu-open .site-header { background: var(--cream); box-shadow: 0 1px 0 var(
 }
 
 /* ═══════════ FOOTER ═══════════ */
-.site-footer { background: var(--ink); color: rgba(250, 247, 240, .65); padding: 4rem var(--gutter) calc(2rem + 76px); font-size: .86rem; }
+.site-footer { background: var(--ink); color: rgba(250, 247, 240, .65); padding: 4rem var(--gutter) calc(2rem + env(safe-area-inset-bottom)); font-size: .86rem; }
 .ft-grid { max-width: var(--page); margin: 0 auto; display: grid; gap: 2.5rem; }
 .ft-name { font-family: var(--font-serif); font-size: 1.8rem; color: var(--cream); line-height: 1.1; margin-bottom: .8rem; }
 .ft-name span { display: block; font-family: var(--font-sans); font-size: .62rem; letter-spacing: .26em; text-transform: uppercase; color: var(--taupe); margin-top: .3rem; }
@@ -305,7 +311,11 @@ body.menu-open .site-header { background: var(--cream); box-shadow: 0 1px 0 var(
 /* ═══════════ MOBILE BOOKING BAR ═══════════ */
 .mobile-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 150; display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: .6rem; padding: .7rem var(--gutter) calc(.7rem + env(safe-area-inset-bottom)); background: rgba(250, 247, 240, .95); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 -1px 0 var(--border); transform: translateY(110%); transition: transform .35s var(--ease); }
 .mobile-bar.show { transform: none; }
-.mobile-bar .btn { min-height: 48px; padding: .6rem .5rem; gap: .4rem; font-size: .68rem; letter-spacing: .05em; }
+.mobile-bar { gap: .5rem; padding: .5rem var(--gutter) calc(.5rem + env(safe-area-inset-bottom)); }
+.mobile-bar .btn { min-height: 40px; padding: .45rem .5rem; gap: .35rem; font-size: .64rem; letter-spacing: .05em; }
+.mobile-bar .btn .ic { width: 15px; height: 15px; }
+/* Hidden while the dark footer is on screen, so it never covers it with a light band */
+.mobile-bar.over-footer { transform: translateY(110%); }
 body.menu-open .mobile-bar { transform: translateY(110%); }
 @media (min-width: 960px) { .mobile-bar { display: none; } }
 
@@ -353,7 +363,13 @@ body.menu-open .mobile-bar { transform: translateY(110%); }
   .gcard-brand { font-size: 1.35rem; }
   .gcard-title { left: 1.5rem; bottom: 1.2rem; font-size: 1.7rem; }
   .gcard-lines { right: 1.5rem; bottom: 1.5rem; }
-  .gcard-spark { top: 1.2rem; right: 1.3rem; }
+  .gcard-spark { top: 1.2rem; right: 1.3rem; animation: none; opacity: .85; }
+  /* Phones: the card stays still (the float/wobble felt jittery); only a slow, soft shine remains. */
+  .gcard-float { animation: none; transform: rotate(-2deg); }
+  .gcard-shine { animation-duration: 9s; }
+
+  /* Phones/tablets: no photo slideshow at the top of the page (owner's choice) */
+  .hero-visual { display: none; }
 
   .gallery { padding: 3.5rem 0; }
   .gal-item { flex-basis: 68%; }

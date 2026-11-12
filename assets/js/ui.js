@@ -65,6 +65,9 @@ function initMobileBar() {
   document.addEventListener('booking:open', () => { bookingOpen = true; update(); });
   document.addEventListener('booking:close', () => { bookingOpen = false; update(); });
   update();
+  // Slide the bar away while the dark footer is visible (it would cover it with a light band).
+  const footer = document.querySelector('.site-footer');
+  if (footer) new IntersectionObserver(([e]) => bar.classList.toggle('over-footer', e.isIntersecting)).observe(footer);
 }
 
 /* Google Maps is only loaded when the visitor asks for it, so Google can't
@@ -136,6 +139,8 @@ function initLightbox() {
 /* Hero slideshow: the 3 photos fade into each other every 5 s, with a slow zoom.
    Paused when the tab is hidden; still image for visitors who reduce motion. */
 function initHeroSlides() {
+  // Phones/tablets don't show the photo block at all (see site.css), so no slideshow there.
+  if (matchMedia('(max-width: 900px)').matches) return;
   const slides = [...document.querySelectorAll('#hero-slides .hero-slide')];
   if (slides.length < 2 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   let i = 0, timer = null;
