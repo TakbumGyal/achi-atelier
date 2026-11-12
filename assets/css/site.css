@@ -382,6 +382,12 @@ body.menu-open .mobile-bar { transform: translateY(110%); }
   .rv-card { padding: 1.4rem 1.3rem 1.2rem; gap: .8rem; }
   .rv-card blockquote { font-size: 1.1rem; }
   .rv-foot { margin-top: 1.2rem; }
+  /* Small screens (320px wide: small iPhones, or Display Zoom / larger Safari text):
+     these items could not shrink, made the page wider than the screen, and iPhones then
+     showed the whole site shifted left. They now wrap/shrink only when they don't fit. */
+  .rv-foot .btn, .map-facade .btn { max-width: 100%; white-space: normal; text-align: center; }
+  .visit > * { min-width: 0; }
+  .metro li { grid-template-columns: minmax(0, 1fr) auto auto; }
 
   .visit { gap: 2rem; padding: 3.5rem var(--gutter); }
   .visit-sub { margin-top: 1.4rem; }
@@ -395,4 +401,8 @@ body.menu-open .mobile-bar { transform: translateY(110%); }
 @media (max-width: 900px) {
   .hours > div { padding: .6rem 0; }
   .visit-sub { margin-bottom: .4rem; }
+}
+@media (max-width: 359px) {
+  /* The map button wraps to 2 lines here: let the (not yet loaded) map box grow so its note isn't cut */
+  .map-wrap.map-facade { aspect-ratio: auto; }
 }
