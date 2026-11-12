@@ -1,15 +1,17 @@
 /**
- * Client booking flow — 4 steps:
+ * Client booking flow, shown in a panel (#booking) opened by any
+ * [data-action="open-booking"] button — optionally with data-svc to
+ * pre-select a service. 4 steps:
  *   1. choose a service   2. choose a day + time
  *   3. enter contact info 4. review and confirm
  */
-import { $, esc, show, registerActions, keepBelowNavbar } from './utils/dom.js';
+import { $, esc, show, registerActions } from './utils/dom.js';
 import { t, formatDate, onLangChange } from './i18n.js';
 import { SALON } from './config.js';
 import { SERVICE_CATEGORIES, BOOKABLE_SERVICES, serviceLabel } from './data/services.js';
 import { toDateStr, todayStr, nowMins, addDaysStr, formatDuration } from './utils/dates.js';
 import { availableSlots, isTaken, isPastSlot, isClosedDay } from './availability.js';
-import { state, subscribe, createBooking } from './db.js';
+import { state, subscribe, createBooking, connect } from './db.js';
 import { sendConfirmationEmail, loadEmailJs } from './email.js';
 
 /* If availability hasn't loaded after this long, say so. (Never show the
@@ -32,6 +34,8 @@ let weekOffset = 0;
 let currentStep = 1;
 let ready = false;
 let failed = false;
+let pendingSvc = null;     // service chosen before availability finished loading
+let opener = null;         // element that opened the panel (focus returns to it)
 
 /* ─── Step navigation ─── */
 
@@ -56,14 +60,50 @@ function goStep(n) {
     $('sum-time-3').textContent = sel.time || '—';
   }
   if (n === 4) renderConfirm();
-  keepBelowNavbar($('bp-client'));   // a shorter step can leave the form under the navbar
+  $('bp-client').scrollTop = 0;
 }
 
 function showForm() {
   if (ready || failed) return;
   ready = true;
   show($('bk-loading'), false);
-  goStep(1);
+  if (pendingSvc) { preselect(pendingSvc); pendingSvc = null; }
+  else goStep(1);
+}
+
+/* ─── Panel ─── */
+
+function preselect(svc) {
+  sel = { svc, date: null, time: null };
+  weekOffset = 0;
+  renderServiceCards();
+  $('btn-step1-next').disabled = false;
+  goStep(2);
+}
+
+/** Open the booking panel, optionally with a service (French name) pre-selected. */
+export function openBooking(svcName, from = document.activeElement) {
+  opener = from;
+  connect().catch(() => {});                 // make sure availability is loading
+  if ($('confirm-box').querySelector('.bk-result')) resetBooking();   // start fresh after a finished booking
+  const svc = svcName && BOOKABLE_SERVICES.find(x => x.name === svcName);
+  if (svc) {
+    if (ready) preselect(svc);
+    else pendingSvc = svc;
+  }
+  $('booking').hidden = false;
+  document.body.classList.add('no-scroll');
+  document.dispatchEvent(new CustomEvent('booking:open'));
+  requestAnimationFrame(() => document.querySelector('.bk-close').focus({ preventScroll: true }));
+}
+
+export function closeBooking() {
+  if ($('booking').hidden) return;
+  $('booking').hidden = true;
+  document.body.classList.remove('no-scroll');
+  document.dispatchEvent(new CustomEvent('booking:close'));
+  if (location.hash === '#booking') history.replaceState(null, '', location.pathname + location.search);
+  opener?.focus?.({ preventScroll: true });
 }
 
 /* ─── Step 1: services ─── */
@@ -308,6 +348,8 @@ export function initBooking() {
   renderServiceCards();
 
   registerActions({
+    'open-booking': (el, e) => { e.preventDefault(); openBooking(el.dataset.svc, el); },
+    'close-booking': closeBooking,
     'pick-service': pickService,
     'goto-step': el => goStep(+el.dataset.step),
     'prev-week': () => { if (weekOffset > 0) { weekOffset--; renderWeek(); } },
@@ -317,6 +359,17 @@ export function initBooking() {
     'review-booking': reviewBooking,
     'confirm-booking': confirmBooking,
     'new-booking': resetBooking,
+  });
+
+  $('booking').addEventListener('click', e => { if (e.target === e.currentTarget) closeBooking(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('booking').hidden) closeBooking(); });
+  /* Keep keyboard focus inside the open panel. */
+  $('booking').addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const items = [...$('booking').querySelectorAll('button:not([disabled]), [href], input, [tabindex="0"]')].filter(el => el.offsetParent);
+    const first = items[0], last = items.at(-1);
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   $('bp-client').addEventListener('input', e => {

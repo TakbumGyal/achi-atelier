@@ -1,95 +1,116 @@
 /* ==========================================================================
-   BOOKING — section shell, tabs, 4-step client flow
+   BOOKING — the booking panel (side panel on desktop, full screen on phones)
+   and the 4-step flow. `.cnav` is also used by the admin page.
    ========================================================================== */
 
-#booking{padding:5rem 5rem 7rem;background:var(--cream)}
-.bk-wrap{background:var(--white);border-radius:var(--r-xl);border:1px solid var(--border);overflow:hidden;box-shadow:0 20px 60px rgba(92,61,46,.06)}
+/* ── Panel ── */
+.bk-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(28, 15, 9, .5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 2rem; animation: bkFade .3s var(--ease); }
+@keyframes bkFade { from { opacity: 0; } }
+.bk-sheet { width: 100%; max-width: 680px; height: min(860px, 100%); background: var(--cream); display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-xl); box-shadow: 0 30px 80px rgba(28, 15, 9, .3); animation: bkPop .4s var(--ease); }
+@keyframes bkPop { from { transform: translateY(16px) scale(.98); opacity: 0; } }
+@keyframes bkUp { from { transform: translateY(40px); opacity: .4; } }
+@media (max-width: 640px) {
+  .bk-overlay { padding: 0; }
+  .bk-sheet { max-width: none; height: 100%; border-radius: 0; animation-name: bkUp; }
+}
+body.no-scroll { overflow: hidden; }
 
-/* Tabs: client / admin */
-.bk-tabs{display:flex;border-bottom:1px solid var(--border)}
-.bk-tab{flex:1;padding:1rem;font-family:var(--font-sans);font-size:.76rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:none;background:none;cursor:none;color:var(--muted);transition:all .25s;border-bottom:2px solid transparent}
-.bk-tab.active{color:var(--brown);border-bottom-color:var(--brown);background:rgba(139,111,94,.04)}
-.bk-tab:hover:not(.active){background:var(--cream)}
-.bk-panel{display:none;padding:2rem}
-.bk-panel.active{display:block}
+.bk-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.4rem clamp(1.2rem, 4vw, 2rem) .6rem; }
+.bk-head .eyebrow { margin-bottom: .4rem; }
+.bk-title { font-family: var(--font-serif); font-weight: 300; font-size: 2rem; line-height: 1.1; }
+.bk-title em { font-style: italic; color: var(--brown); }
+.bk-close { flex-shrink: 0; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 50%; background: var(--white); cursor: pointer; transition: background .2s; }
+.bk-close:hover { background: var(--beige); }
+.bk-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: .5rem clamp(1.2rem, 4vw, 2rem) calc(2rem + env(safe-area-inset-bottom)); }
 
-/* Step indicator */
-.steps{display:flex;align-items:center;margin-bottom:2rem}
-.stp{display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:var(--muted);font-weight:500}
-.stp-n{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;transition:all .3s}
-.stp.active .stp-n,.stp.done .stp-n{background:var(--brown);border-color:var(--brown);color:#fff}
-.stp.active{color:var(--ink);font-weight:700}
-.stp.done{color:var(--brown)}
-.stp-line{flex:1;height:1px;background:var(--border);margin:0 .45rem;transition:background .3s}
-.stp-line.done{background:var(--brown)}
+/* ── Step indicator ── */
+.steps { display: flex; align-items: center; gap: .4rem; padding: .8rem clamp(1.2rem, 4vw, 2rem) 1rem; border-bottom: 1px solid var(--border); }
+.stp { display: flex; align-items: center; gap: .45rem; font-size: .72rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.stp-n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--border); font-size: .72rem; background: var(--white); transition: all .3s var(--ease); }
+.stp.active { color: var(--ink); }
+.stp.active .stp-n { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+.stp.done .stp-n { background: var(--brown); border-color: var(--brown); color: var(--white); }
+.stp-line { flex: 1; height: 1.5px; background: var(--border); border-radius: 2px; transition: background .3s; }
+.stp-line.done { background: var(--brown); }
+@media (max-width: 480px) { .stp:not(.active) .stp-l { display: none; } }
 
-.bk-loading{text-align:center;padding:2rem 0;font-size:.85rem;color:var(--muted)}
-.bk-loading-icon{font-size:1.4rem;margin-bottom:.5rem}
-.bk-intro{font-size:.84rem;color:var(--muted);margin-bottom:1rem}
+.bk-loading { display: flex; flex-direction: column; align-items: center; gap: .9rem; padding: 3rem 0; color: var(--muted); font-size: .9rem; text-align: center; }
+.bk-spinner { width: 28px; height: 28px; border: 2px solid var(--border); border-top-color: var(--brown); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.bk-intro { font-size: .88rem; color: var(--muted); margin: .8rem 0 1rem; }
 
-/* Step 1 — service cards */
-#svc-cards{display:flex;flex-direction:column;gap:1.2rem;margin-bottom:1.4rem;max-height:440px;overflow-y:auto;padding-right:.3rem}
-#svc-cards::-webkit-scrollbar{width:4px}
-#svc-cards::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.csvc-group-title{font-family:var(--font-serif);font-size:1rem;font-weight:500;color:var(--brown-d);padding-bottom:.45rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
-.csvc-group-title::before{content:'';display:block;width:14px;height:1px;background:var(--brown-m)}
-.csvc-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.55rem}
-.csvc{border:1.5px solid var(--border);border-radius:var(--r);padding:.85rem .95rem;cursor:none;transition:all .2s;position:relative;background:var(--cream)}
-.csvc:hover{border-color:var(--brown-l);background:var(--beige)}
-.csvc.sel{border-color:var(--brown);background:rgba(139,111,94,.06)}
-.csvc-check{position:absolute;top:.5rem;right:.5rem;width:16px;height:16px;border-radius:50%;background:var(--brown);color:#fff;font-size:.6rem;display:none;align-items:center;justify-content:center;font-weight:700}
-.csvc.sel .csvc-check{display:flex}
-.csvc-name{font-weight:600;font-size:.84rem;margin-bottom:.18rem;color:var(--ink)}
-.csvc-dur{font-size:.72rem;color:var(--muted)}
-.csvc-price{font-family:var(--font-serif);font-size:.95rem;font-weight:500;color:var(--brown);margin-top:.3rem}
+/* ── Step 1: service cards ── */
+#svc-cards { display: flex; flex-direction: column; gap: 1.4rem; }
+.csvc-group-title { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 500; color: var(--brown-d); margin-bottom: .6rem; }
+.csvc-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .55rem; }
+.csvc { position: relative; padding: .95rem 1rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--white); cursor: pointer; transition: border-color .2s, background .2s, box-shadow .2s; }
+.csvc:hover { border-color: var(--brown-l); box-shadow: var(--shadow-sm); }
+.csvc.sel { border-color: var(--ink); background: var(--cream-2); }
+.csvc-check { position: absolute; top: .6rem; right: .6rem; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--cream); font-size: .65rem; display: none; align-items: center; justify-content: center; font-weight: 700; }
+.csvc.sel .csvc-check { display: flex; }
+.csvc-name { font-weight: 600; font-size: .88rem; line-height: 1.35; padding-right: 1.4rem; margin-bottom: .3rem; }
+.csvc-dur { font-size: .74rem; color: var(--muted); }
+.csvc-price { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 500; color: var(--brown-d); margin-top: .2rem; }
 
-/* Summary bar (steps 2 & 3) */
-.sum-bar{background:rgba(139,111,94,.06);border:1px solid var(--border);border-radius:var(--r);padding:.65rem 1rem;display:flex;gap:1.3rem;flex-wrap:wrap;margin-bottom:1rem;font-size:.78rem}
-.sc{display:flex;align-items:center;gap:.4rem;color:var(--muted)}
-.sc strong{color:var(--ink)}
+/* ── Summary bar (steps 2 & 3) ── */
+.sum-bar { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; padding: .8rem 1rem; margin: 1rem 0; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); font-size: .82rem; }
+.sc { display: flex; align-items: center; gap: .45rem; color: var(--muted); }
+.sc .ic { color: var(--brown); }
+.sc strong { color: var(--ink); font-weight: 600; }
 
-/* Step 2 — week calendar + time slots */
-.cal-nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
-.week-label{font-size:.88rem;font-weight:700;letter-spacing:.02em}
-.cnav{background:none;border:1px solid var(--border);border-radius:var(--r);width:30px;height:30px;cursor:none;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--ink);transition:all .2s;flex-shrink:0}
-.cnav:hover{background:var(--beige);border-color:var(--brown-l)}
-.cnav:disabled{opacity:.3;cursor:not-allowed}
-.closed-msg{background:rgba(139,111,94,.08);border:1px solid var(--brown-l);border-radius:var(--r);padding:.7rem 1rem;font-size:.82rem;color:var(--brown-d);margin-bottom:.8rem;font-weight:500}
-.week-row{display:grid;grid-template-columns:repeat(7,1fr);gap:.35rem;margin-bottom:1.1rem}
-.wday-col{display:flex;flex-direction:column;align-items:center;gap:.25rem}
-.wday-lbl{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.wday-btn{width:100%;padding:.5rem .15rem;border-radius:var(--r);border:1px solid var(--border);background:var(--white);font-family:var(--font-sans);cursor:none;text-align:center;transition:all .2s;line-height:1.4}
-.wday-btn .dn{font-size:.84rem;font-weight:700;color:var(--ink)}
-.wday-btn .df{font-size:.62rem;color:var(--success);font-weight:500}
-.wday-btn:hover:not(:disabled){border-color:var(--brown-l);background:var(--beige)}
-.wday-btn.sel{background:var(--brown);border-color:var(--brown)!important;color:#fff}
-.wday-btn.sel .dn,.wday-btn.sel .df{color:#fff}
-.wday-btn:disabled{opacity:.3;cursor:not-allowed}
-.wday-btn.today-btn{border-color:var(--brown-l)!important}
-.wday-btn.today-btn .dn{color:var(--brown)}
-.slots-lbl{font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem}
-.slots-row{display:grid;grid-template-columns:repeat(6,1fr);gap:.4rem}
-.slots-empty{font-size:.82rem;color:var(--muted);grid-column:1/-1;padding:.5rem 0}
-.slot{padding:.5rem .15rem;border-radius:var(--r);border:1px solid var(--border);background:var(--white);font-family:var(--font-sans);font-size:.76rem;cursor:none;text-align:center;transition:all .2s;color:var(--ink)}
-.slot:hover{border-color:var(--brown-l);background:var(--beige)}
-.slot.sel{background:var(--brown);border-color:var(--brown);color:#fff;font-weight:700}
+/* ── Step 2: week + time slots ── */
+.cal-nav-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: .9rem; }
+.week-label { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 500; }
+.cnav { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 50%; background: var(--white); color: var(--ink); cursor: pointer; transition: all .2s; flex-shrink: 0; }
+.cnav:hover:not(:disabled) { background: var(--beige); border-color: var(--brown-l); }
+.cnav:disabled { opacity: .3; cursor: not-allowed; }
+.closed-msg { background: var(--beige); border-radius: var(--r); padding: .8rem 1rem; font-size: .84rem; color: var(--brown-d); margin-bottom: .9rem; }
+.week-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: .35rem; margin-bottom: 1.4rem; }
+.wday-col { display: flex; flex-direction: column; align-items: center; gap: .3rem; }
+.wday-lbl { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.wday-btn { width: 100%; min-height: 58px; padding: .45rem .1rem; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--white); cursor: pointer; line-height: 1.3; transition: all .2s; }
+.wday-btn .dn { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; color: var(--ink); }
+.wday-btn .df { font-size: .58rem; font-weight: 600; color: var(--success); }
+.wday-btn:hover:not(:disabled) { border-color: var(--brown-l); background: var(--cream-2); }
+.wday-btn.today-btn { border-color: var(--brown-l); }
+.wday-btn.sel { background: var(--ink); border-color: var(--ink); }
+.wday-btn.sel .dn, .wday-btn.sel .df { color: var(--cream); }
+.wday-btn:disabled { opacity: .3; cursor: not-allowed; background: transparent; }
+.slots-lbl { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .7rem; }
+.slots-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: .45rem; }
+.slots-empty { grid-column: 1 / -1; font-size: .86rem; color: var(--muted); padding: .5rem 0; }
+.slot { min-height: 44px; border: 1.5px solid var(--border); border-radius: var(--r); background: var(--white); font-size: .86rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+.slot:hover { border-color: var(--brown-l); background: var(--cream-2); }
+.slot.sel { background: var(--ink); border-color: var(--ink); color: var(--cream); font-weight: 700; }
+@media (max-width: 400px) { .wday-btn .df { display: none; } .wday-btn { min-height: 48px; } }
 
-/* Step 3 — contact form extras */
-.msg-photo-hint{font-size:.75rem;color:var(--muted);line-height:1.5;margin-top:.4rem;padding:.5rem .7rem;background:var(--beige);border-radius:var(--r);border-left:2px solid var(--brown-l)}
+/* Phones: service cards become compact rows (name + duration | price) */
+@media (max-width: 560px) {
+  .csvc-cards { grid-template-columns: 1fr; gap: .4rem; }
+  .csvc { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: .8rem; padding: .8rem 2.4rem .8rem .95rem; }
+  .csvc-name { grid-column: 1; margin-bottom: .1rem; padding-right: 0; }
+  .csvc-dur { grid-column: 1; }
+  .csvc-price { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+  .csvc-check { top: 50%; transform: translateY(-50%); }
+}
 
-/* Step 4 — summary + result */
-.confirm-title{font-family:var(--font-serif);font-size:1.2rem;margin-bottom:.8rem}
-.confirm-sub{font-size:.82rem;color:var(--muted);margin-bottom:.9rem}
-.confirm-tbl{width:100%;border-collapse:collapse;margin:.9rem 0;font-size:.86rem}
-.confirm-tbl td{padding:.5rem .7rem;border-bottom:1px solid var(--border)}
-.confirm-tbl td:first-child{color:var(--muted);width:36%;font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
-.confirm-tbl tr:last-child td{border-bottom:none}
-.confirm-tbl .price{color:var(--brown)}
-.bk-result{text-align:center;padding:2.5rem 1rem}
-.bk-result-icon{font-size:2.8rem;margin-bottom:.7rem}
-.bk-result-title{font-family:var(--font-serif);font-size:1.5rem;margin-bottom:.5rem}
-.bk-result-text{font-size:.88rem;color:var(--muted);line-height:1.9;max-width:380px;margin:0 auto 1.4rem}
+/* ── Step 3: form extras ── */
+.msg-photo-hint { font-size: .78rem; color: var(--muted); line-height: 1.55; margin-top: .4rem; padding: .6rem .8rem; background: var(--beige); border-radius: var(--r); }
+.privacy-note { font-size: .76rem; color: var(--muted); line-height: 1.55; }
+.privacy-note a { color: var(--brown-d); font-weight: 600; }
 
-/* Privacy reassurance under the contact form */
-.privacy-note{font-size:.72rem;color:var(--muted);line-height:1.5;margin-top:.2rem}
-.privacy-note a{color:var(--brown);font-weight:600}
+/* ── Step 4: summary + result ── */
+.confirm-title { font-family: var(--font-serif); font-size: 1.5rem; margin: 1rem 0 .3rem; }
+.confirm-sub { font-size: .86rem; color: var(--muted); margin-bottom: 1rem; }
+.confirm-tbl { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--r); overflow: hidden; font-size: .9rem; box-shadow: var(--shadow-sm); }
+.confirm-tbl td { padding: .75rem 1rem; border-bottom: 1px solid var(--border); }
+.confirm-tbl tr:last-child td { border-bottom: none; }
+.confirm-tbl td:first-child { width: 38%; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.confirm-tbl .price { color: var(--brown-d); font-family: var(--font-serif); font-size: 1.15rem; }
+.bk-result { text-align: center; padding: 2.5rem .5rem; }
+.bk-result-icon { font-size: 3rem; margin-bottom: .8rem; }
+.bk-result-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin-bottom: .6rem; }
+.bk-result-text { font-size: .92rem; color: var(--muted); line-height: 1.85; max-width: 26rem; margin: 0 auto 1.6rem; }
+
+/* Softer focus ring on the round close buttons (focus moves there when a panel opens) */
+.bk-close:focus-visible, .lb-close:focus-visible, .mm-close:focus-visible { outline: 1.5px solid var(--brown-l); outline-offset: 2px; }

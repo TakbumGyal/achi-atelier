@@ -26,6 +26,7 @@ export const onLangChange = fn => listeners.add(fn);
  *   data-i18n="key"             → element content (may contain simple HTML)
  *   data-i18n-alt="key"         → image description (alt)
  *   data-i18n-placeholder="key" → input placeholder
+ *   data-i18n-aria="key"        → screen-reader label (aria-label)
  */
 export function applyTranslations(root = document) {
   const T = TRANSLATIONS[lang] || {};
@@ -34,6 +35,9 @@ export function applyTranslations(root = document) {
   });
   root.querySelectorAll('[data-i18n-alt]').forEach(el => {
     if (T[el.dataset.i18nAlt] !== undefined) el.alt = T[el.dataset.i18nAlt];
+  });
+  root.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    if (T[el.dataset.i18nAria] !== undefined) el.setAttribute('aria-label', T[el.dataset.i18nAria]);
   });
   root.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     if (T[el.dataset.i18nPlaceholder] !== undefined) el.placeholder = T[el.dataset.i18nPlaceholder];

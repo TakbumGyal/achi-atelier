@@ -122,11 +122,3 @@ export function serviceLabel(name, lang = getLang()) {
   return (lang !== 'fr' && BY_NAME.get(name)?.t?.[lang]) || name;
 }
 
-/* Words scrolling in the dark banner under the hero. */
-const MARQUEE = {
-  fr: ['Manucure Classique', 'Manucure Spa', 'Pose de Gel', 'Gel X', 'Semi-permanent', 'Soin des Pieds', 'Nail Art', 'Remplissage', 'Renforcement'],
-  en: ['Classic Manicure', 'Spa Manicure', 'Gel Nails', 'Gel X', 'Gel Polish', 'Pedicure', 'Nail Art', 'Infills', 'Strengthening'],
-  es: ['Manicura Clásica', 'Manicura Spa', 'Uñas de Gel', 'Gel X', 'Semipermanente', 'Pedicura', 'Nail Art', 'Relleno', 'Refuerzo'],
-  ru: ['Классический маникюр', 'Спа-маникюр', 'Гелевые ногти', 'Gel X', 'Гель-лак', 'Педикюр', 'Дизайн ногтей', 'Коррекция', 'Укрепление'],
-};
-export const marqueeItems = (lang = getLang()) => MARQUEE[lang] || MARQUEE.fr;

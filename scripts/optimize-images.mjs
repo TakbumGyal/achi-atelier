@@ -24,15 +24,16 @@ const OUT = path.join(ROOT, 'assets', 'img');
 const IMAGES = [
   { src: 'logo.png', out: 'logo-nav', width: 280, keepPng: true },    // navbar logo (shown ≤ 140px tall)
   { src: 'logo.png', out: 'logo', width: 600, keepPng: true, noWebp: true }, // social-sharing image
-  { src: 'hero.jpg', out: 'hero', width: 840 },                       // shown 420px wide (desktop only)
-  { src: 'about/about-1.jpg', out: 'about/about-1', width: 700 },
-  { src: 'about/about-2.jpg', out: 'about/about-2', width: 700 },
-  { src: 'about/about-3.jpg', out: 'about/about-3', width: 1100 },
+  { src: 'hero.jpg', out: 'hero', width: 840 },                       // desktop hero
+  { src: 'hero.jpg', out: 'hero-sm', width: 640, noFallback: true },  // phones / tablets (WebP only)
   { src: 'gallery/gallery-1.png', out: 'gallery/gallery-1', width: 900 },
   { src: 'gallery/gallery-2.jpg', out: 'gallery/gallery-2', width: 900 },
   { src: 'gallery/gallery-3.jpg', out: 'gallery/gallery-3', width: 900 },
   { src: 'gallery/gallery-4.jpg', out: 'gallery/gallery-4', width: 900 },
   { src: 'gallery/gallery-5.jpg', out: 'gallery/gallery-5', width: 900 },
+  { src: 'salon/salon-1.jpg', out: 'salon/salon-1', width: 1200 },     // salon photos (from the salon's Planity page)
+  { src: 'salon/salon-2.jpg', out: 'salon/salon-2', width: 1200 },
+  { src: 'salon/salon-3.jpg', out: 'salon/salon-3', width: 1200 },
 ];
 
 const kb = bytes => `${Math.round(bytes / 1024)} KB`;
@@ -49,7 +50,9 @@ for (const img of IMAGES) {
     await pipeline().webp({ quality: 78, effort: 6 }).toFile(base + '.webp');
     outputs.push(base + '.webp');
   }
-  if (img.keepPng) {
+  if (img.noFallback) {
+    // WebP only
+  } else if (img.keepPng) {
     await pipeline().png({ compressionLevel: 9, palette: true, quality: 90 }).toFile(base + '.png');
     outputs.push(base + '.png');
   } else {

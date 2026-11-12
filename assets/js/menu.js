@@ -1,38 +1,74 @@
-/* Renders the price list in the "Soins" section from data/services.js,
-   in the visitor's language (re-rendered when the language changes). */
-import { $, esc } from './utils/dom.js';
+/* The "Soins" price list: category tabs + one panel per category, generated
+   from data/services.js in the visitor's language. Each bookable service has
+   a "Réserver" button that opens the booking panel with it pre-selected. */
+import { $, esc, registerActions } from './utils/dom.js';
 import { t, onLangChange } from './i18n.js';
 import { SERVICE_CATEGORIES, SUPPLEMENTS, serviceLabel } from './data/services.js';
 import { formatDuration } from './utils/dates.js';
 
-function row(name, meta, price, priceKey) {
-  const priceAttr = priceKey ? ` data-i18n="${priceKey}"` : '';
-  return `<div class="svc-row">
-    <span class="svc-name">${esc(serviceLabel(name))}${meta ? `<span class="svc-meta">${esc(meta)}</span>` : ''}</span>
-    <span class="svc-price"${priceAttr}>${priceKey ? t(priceKey) : esc(price)}</span>
+const TABS = [
+  ...SERVICE_CATEGORIES.map(c => ({ id: c.id, label: 'tab_' + c.id })),
+  { id: 'suppl', label: 'tab_suppl' },
+];
+let active = TABS[0].id;
+
+const clock = '<svg class="ic"><use href="#i-clock"/></svg>';
+const arrow = '<svg class="ic"><use href="#i-arrow"/></svg>';
+
+function serviceItem(s) {
+  return `<div class="svc-item">
+    <div class="svc-main">
+      <div class="svc-name">${esc(serviceLabel(s.name))}</div>
+      <div class="svc-meta">${clock}${formatDuration(s.dur)}</div>
+    </div>
+    <div class="svc-side">
+      <span class="svc-price">${esc(s.price)}</span>
+      <button class="svc-book" data-action="open-booking" data-svc="${esc(s.name)}"><span class="svc-book-t">${t('svc_book')}</span>${arrow}</button>
+    </div>
   </div>`;
 }
 
-const categoryTitle = key => `<div class="svc-cat-title" data-i18n="${key}">${t(key)}</div>`;
+function supplementItem(s) {
+  return `<div class="svc-item">
+    <div class="svc-main">
+      <div class="svc-name">${esc(serviceLabel(s.name))}</div>
+      ${s.extra ? `<div class="svc-meta">${clock}${esc(s.extra)}</div>` : ''}
+    </div>
+    <div class="svc-side"><span class="svc-price">${s.priceKey ? t(s.priceKey) : esc(s.price)}</span></div>
+  </div>`;
+}
+
+function panel(id) {
+  if (id === 'suppl') {
+    return SUPPLEMENTS.items.map(supplementItem).join('') + `<p class="svc-note">${t(SUPPLEMENTS.noteKey)}</p>`;
+  }
+  return SERVICE_CATEGORIES.find(c => c.id === id).services.map(serviceItem).join('');
+}
 
 function render() {
-  const categories = SERVICE_CATEGORIES.map(cat => `
-    <div class="svc-cat">
-      ${categoryTitle(cat.titleKey)}
-      ${cat.services.map(s => row(s.name, formatDuration(s.dur), s.price)).join('')}
-    </div>`);
-
-  const supplements = `
-    <div class="svc-cat">
-      ${categoryTitle(SUPPLEMENTS.titleKey)}
-      ${SUPPLEMENTS.items.map(s => row(s.name, s.extra, s.price, s.priceKey)).join('')}
-      <p class="supplement-note" data-i18n="${SUPPLEMENTS.noteKey}">${t(SUPPLEMENTS.noteKey)}</p>
-    </div>`;
-
-  $('svc-menu').innerHTML = categories.join('') + supplements;
+  $('svc-menu').innerHTML = `
+    <div class="svc-tabs" role="tablist">
+      ${TABS.map(tab => `<button class="svc-tab" role="tab" id="tab-${tab.id}" aria-controls="svc-panel"
+        aria-selected="${tab.id === active}" data-action="svc-tab" data-tab="${tab.id}">${t(tab.label)}</button>`).join('')}
+    </div>
+    <div class="svc-panel" id="svc-panel" role="tabpanel" aria-labelledby="tab-${active}">${panel(active)}</div>`;
 }
 
 export function renderServiceMenu() {
   render();
   onLangChange(render);
+  registerActions({
+    'svc-tab': el => {
+      active = el.dataset.tab;
+      render();
+      $('tab-' + active).focus({ preventScroll: true });
+    },
+  });
+  /* Arrow keys move between tabs (standard tab behaviour). */
+  $('svc-menu').addEventListener('keydown', e => {
+    if (!e.target.matches('.svc-tab') || !['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+    const i = TABS.findIndex(tab => tab.id === active);
+    const next = TABS[(i + (e.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length];
+    $('tab-' + next.id).click();
+  });
 }
