@@ -167,13 +167,14 @@ body.menu-open .site-header { background: var(--cream); box-shadow: 0 1px 0 var(
 .gcard-float { width: min(100%, 420px); animation: gcardFloat 6s ease-in-out infinite; }
 @keyframes gcardFloat { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-12px) rotate(-1.5deg); } }
 .gcard { position: relative; width: 100%; aspect-ratio: 1.6; border-radius: 22px; padding: 1.8rem 2rem; color: var(--ink); overflow: hidden;
-  background: radial-gradient(circle at 85% 12%, rgba(255,255,255,.9), transparent 42%), linear-gradient(135deg, #FFFDF9 0%, var(--beige) 55%, var(--beige-2) 100%);
-  box-shadow: 0 30px 60px rgba(92,61,46,.18), 0 2px 6px rgba(92,61,46,.08), inset 0 0 0 1px rgba(139,111,94,.18);
+  background: radial-gradient(circle at 85% 12%, rgba(255,255,255,.9), rgba(255,255,255,0) 42%), linear-gradient(135deg, #FFFDF9 0%, var(--beige) 55%, var(--beige-2) 100%);
+  /* No shadow (owner's choice) */
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .25s ease-out; }
 /* No `transform-style: preserve-3d` here: in Safari it stops the card from clipping its
    shine, which then stuck out past the screen and pushed the whole phone page sideways. */
 .gcard::after { content: ''; position: absolute; inset: 12px; border: 1px solid var(--brown-l); border-radius: 14px; pointer-events: none; }
-.gcard-shine { position: absolute; inset: -40%; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.75) 50%, transparent 60%); transform: translateX(-60%); animation: gcardShine 5s ease-in-out infinite 1s; pointer-events: none; }
+/* Shine: fades to transparent *white* (plain `transparent` turns greyish in Safari) */
+.gcard-shine { position: absolute; inset: -40%; background: linear-gradient(115deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.75) 50%, rgba(255,255,255,0) 60%); transform: translateX(-60%); animation: gcardShine 5s ease-in-out infinite 1s; pointer-events: none; }
 @keyframes gcardShine { 0%, 60% { transform: translateX(-60%); } 85%, 100% { transform: translateX(60%); } }
 .gcard-top { position: relative; display: flex; flex-direction: column; }
 .gcard-brand { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.1; color: var(--ink); }
@@ -356,7 +357,7 @@ body.menu-open .mobile-bar { transform: translateY(110%); }
   .gift { gap: 1.5rem; padding: 3.5rem var(--gutter); }
   .gift-points { margin-top: 1.2rem; }
   .gift-visual { padding: 0; }
-  .gcard-float { width: min(100%, 320px); }
+  .gcard-float { width: min(100%, 290px); }
   .gcard { padding: 1.3rem 1.5rem; }
   .gcard-brand { font-size: 1.35rem; }
   .gcard-title { left: 1.5rem; bottom: 1.2rem; font-size: 1.7rem; }
