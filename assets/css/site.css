@@ -4,10 +4,8 @@
    ========================================================================== */
 
 section { position: relative; }
-
-/* Safety net: nothing may make the page wider than the screen (on iPhones,
-   body overflow-x alone doesn't stop the page from shifting sideways). */
-html { overflow-x: clip; }
+/* Note: no `overflow-x` on <html> — on iPhone Safari it disturbs the swipeable gallery/reviews rows.
+   The gift card (the part that stuck out) clips itself instead, see GIFT CARD. */
 
 /* ── Scroll-in reveal (subtle) ── */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
@@ -374,6 +372,9 @@ body.menu-open .mobile-bar { transform: translateY(110%); }
   .gallery { padding: 3.5rem 0; }
   .gal-item { flex-basis: 68%; }
   .gal-foot { margin-top: 1.5rem; }
+  /* Smaller Instagram link that may wrap: at full size it was wider than the phone screen,
+     so iPhones zoomed the page out and the photos looked small. */
+  .gal-foot .btn { max-width: 100%; min-height: 40px; padding: .55rem 1.1rem; font-size: .64rem; letter-spacing: .06em; white-space: normal; text-align: center; }
 
   .reviews { padding: 3.5rem 0; }
   .rv-head { margin-bottom: 1.4rem; }
