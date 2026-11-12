@@ -23,7 +23,7 @@ function serviceItem(s) {
     </div>
     <div class="svc-side">
       <span class="svc-price">${esc(s.price)}</span>
-      <button class="svc-book" data-action="open-booking" data-svc="${esc(s.name)}">${t('svc_book')}${arrow}</button>
+      <button class="svc-book" data-action="open-booking" data-svc="${esc(s.name)}"><span class="svc-book-t">${t('svc_book')}</span>${arrow}</button>
     </div>
   </div>`;
 }

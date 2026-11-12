@@ -72,6 +72,7 @@
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
     <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
     <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7z"/></symbol>
     <symbol id="i-route" viewBox="0 0 24 24"><path d="M3.5 11 20.5 3.5 13 20.5l-2-7.5-7.5-2z"/></symbol>
@@ -102,9 +103,18 @@
         <button class="lb" data-action="lang" data-lang="es">ES</button>
         <button class="lb" data-action="lang" data-lang="ru">RU</button>
       </div>
+      <div class="lang-mini">
+        <button class="lang-mini-btn" data-action="toggle-lang" aria-expanded="false" aria-controls="lang-pop" aria-label="Langue" data-i18n-aria="aria_lang"><svg class="ic"><use href="#i-globe"/></svg><span data-i18n="lang_code">FR</span></button>
+        <div class="lang-pop" id="lang-pop" hidden>
+          <button class="lb active" data-action="lang" data-lang="fr" lang="fr">Français</button>
+          <button class="lb" data-action="lang" data-lang="en" lang="en">English</button>
+          <button class="lb" data-action="lang" data-lang="es" lang="es">Español</button>
+          <button class="lb" data-action="lang" data-lang="ru" lang="ru">Русский</button>
+        </div>
+      </div>
       <a href="#booking" class="btn btn-dark btn-sm hdr-cta" data-action="open-booking" data-i18n="nav_book">Réserver</a>
-      <button class="hdr-burger" data-action="toggle-menu" aria-label="Menu" data-i18n-aria="aria_menu" aria-expanded="false">
-        <svg class="ic"><use href="#i-menu"/></svg>
+      <button class="hdr-burger" data-action="toggle-menu" aria-label="Menu" data-i18n-aria="aria_menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="hb-lbl" data-i18n="menu_lbl">Menu</span><span class="hb-lines" aria-hidden="true"><i></i><i></i></span>
       </button>
     </div>
   </div>
@@ -112,19 +122,28 @@
 
 <!-- Mobile menu -->
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-  <button class="mm-close" data-action="close-menu" aria-label="Fermer" data-i18n-aria="aria_close"><svg class="ic"><use href="#i-close"/></svg></button>
-  <nav class="mm-nav">
-    <a href="#about" data-i18n="nav_atelier">L’atelier</a>
-    <a href="#services" data-i18n="nav_services">Soins</a>
-    <a href="#gallery" data-i18n="nav_gallery">Galerie</a>
-    <a href="#contact" data-i18n="nav_contact">Contact</a>
-  </nav>
-  <a href="#booking" class="btn btn-dark" data-action="open-booking" data-i18n="nav_book">Réserver</a>
-  <div class="mm-lang">
-    <button class="lb active" data-action="lang" data-lang="fr">FR</button>
-    <button class="lb" data-action="lang" data-lang="en">EN</button>
-    <button class="lb" data-action="lang" data-lang="es">ES</button>
-    <button class="lb" data-action="lang" data-lang="ru">RU</button>
+  <div class="mm-inner">
+    <p class="mm-status" id="mm-status"><span class="mm-dot"></span><span id="mm-status-txt"></span></p>
+    <nav class="mm-nav" aria-label="Menu">
+      <a href="#about"><span class="mm-n">01</span><span data-i18n="nav_atelier">L’atelier</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      <a href="#services"><span class="mm-n">02</span><span data-i18n="nav_services">Soins</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      <a href="#gallery"><span class="mm-n">03</span><span data-i18n="nav_gallery">Galerie</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      <a href="#reviews"><span class="mm-n">04</span><span data-i18n="nav_reviews">Avis</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      <a href="#contact"><span class="mm-n">05</span><span data-i18n="nav_contact">Contact</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+    </nav>
+    <a href="#booking" class="btn mm-book" data-action="open-booking"><svg class="ic"><use href="#i-calendar"/></svg><span data-i18n="hero_cta1">Réserver maintenant</span></a>
+    <div class="mm-quick">
+      <a href="tel:+33187076059"><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="btn_call">Appeler</span></a>
+      <a href="https://wa.me/33668202050" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
+      <a href="https://www.instagram.com/atelier_achi/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-insta"/></svg><span>Instagram</span></a>
+    </div>
+    <div class="mm-lang" role="group" aria-label="Langue" data-i18n-aria="aria_lang">
+      <button class="lb active" data-action="lang" data-lang="fr" lang="fr">Français</button>
+      <button class="lb" data-action="lang" data-lang="en" lang="en">English</button>
+      <button class="lb" data-action="lang" data-lang="es" lang="es">Español</button>
+      <button class="lb" data-action="lang" data-lang="ru" lang="ru">Русский</button>
+    </div>
+    <p class="mm-addr"><svg class="ic"><use href="#i-pin"/></svg>9 rue Trousseau, 75011 Paris</p>
   </div>
 </div>
 
@@ -135,14 +154,14 @@
   <div class="hero-text">
     <p class="eyebrow" data-i18n="hero_eyebrow">Nail Studio · Paris 11ème</p>
     <h1 class="hero-title" data-i18n="hero_h1">Là où chaque main<br>raconte une <em>belle histoire</em></h1>
-    <p class="hero-sub" data-i18n="hero_sub">Entrez dans un univers d'artisanat délicat et de relaxation totale. Chez Atelier Achi, nous transformons vos ongles en petits chefs-d'œuvre — avec soin, passion et précision parisienne.</p>
+    <p class="hero-sub hide-phone" data-i18n="hero_sub">Entrez dans un univers d'artisanat délicat et de relaxation totale. Chez Atelier Achi, nous transformons vos ongles en petits chefs-d'œuvre — avec soin, passion et précision parisienne.</p>
     <div class="hero-btns">
       <a href="#booking" class="btn btn-dark" data-action="open-booking"><span data-i18n="hero_cta1">Réserver maintenant</span><svg class="ic"><use href="#i-arrow"/></svg></a>
-      <a href="#services" class="btn btn-line" data-i18n="hero_cta2">Voir nos soins</a>
+      <a href="#services" class="btn btn-line hide-phone" data-i18n="hero_cta2">Voir nos soins</a>
     </div>
     <ul class="hero-meta">
       <li><svg class="ic"><use href="#i-clock"/></svg><span data-i18n="hero_hours">Du mardi au dimanche · 10h – 20h</span></li>
-      <li><svg class="ic"><use href="#i-pin"/></svg><span>9 rue Trousseau, Paris 11</span></li>
+      <li class="hide-phone"><svg class="ic"><use href="#i-pin"/></svg><span>9 rue Trousseau, Paris 11</span></li>
     </ul>
   </div>
   <!-- Slideshow: 3 photos fade into each other (assets/js/ui.js) -->
@@ -183,7 +202,7 @@
     <p class="eyebrow" data-i18n="about_eyebrow">Notre histoire</p>
     <h2 class="h2" data-i18n="about_h2">Façonné avec <em>Passion</em>,<br>livré avec Soin</h2>
     <p data-i18n="about_p1">Atelier Achi est bien plus qu'un salon de beauté — c'est votre sanctuaire personnel. Niché au cœur du 11ème arrondissement de Paris, nous allions artisanat expert et chaleur humaine pour créer une expérience aussi belle que le résultat.</p>
-    <p data-i18n="about_p2">Qu'il s'agisse d'une finition minimaliste ou d'un nail art élaboré, chaque soin est pensé pour vous — avec les meilleurs produits et une attention méticuleuse aux moindres détails.</p>
+    <p class="hide-phone" data-i18n="about_p2">Qu'il s'agisse d'une finition minimaliste ou d'un nail art élaboré, chaque soin est pensé pour vous — avec les meilleurs produits et une attention méticuleuse aux moindres détails.</p>
     <ul class="values">
       <li><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="val1">Produits Premium</span></li>
       <li><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="val2">Hygiène irréprochable</span></li>
@@ -210,7 +229,7 @@
     <p class="eyebrow" data-i18n="gift_tag">Idée cadeau</p>
     <h2 class="h2" data-i18n="gift_h2">Offrez un moment <em>Atelier Achi</em></h2>
     <p data-i18n="gift_p1">Faites plaisir à une personne qui vous est chère : nos cartes cadeaux sont disponibles directement au salon.</p>
-    <p data-i18n="gift_p2">Choisissez le soin à offrir, nous préparons pour vous une jolie carte, prête à être offerte.</p>
+    <p class="hide-phone" data-i18n="gift_p2">Choisissez le soin à offrir, nous préparons pour vous une jolie carte, prête à être offerte.</p>
     <ul class="gift-points">
       <li><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="gift_pt1">Valable sur le soin de votre choix</span></li>
       <li><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="gift_pt2">À retirer et régler au salon</span></li>
@@ -322,7 +341,7 @@
     </ul>
 
     <div class="visit-btns">
-      <a class="btn btn-dark" href="#booking" data-action="open-booking"><svg class="ic"><use href="#i-calendar"/></svg><span data-i18n="contact_book_btn">Réserver un soin</span></a>
+      <a class="btn btn-dark hide-phone" href="#booking" data-action="open-booking"><svg class="ic"><use href="#i-calendar"/></svg><span data-i18n="contact_book_btn">Réserver un soin</span></a>
       <a class="btn btn-line" href="https://wa.me/33668202050" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
     </div>
   </div>
@@ -362,14 +381,14 @@
         <a href="tel:+33187076059" aria-label="Téléphone" data-i18n-aria="c_phone_lbl"><svg class="ic"><use href="#i-phone"/></svg></a>
       </div>
     </div>
-    <div class="ft-col">
+    <div class="ft-col hide-phone">
       <p class="ft-h" data-i18n="f_nav">Navigation</p>
       <a href="#about" data-i18n="nav_atelier">L’atelier</a>
       <a href="#services" data-i18n="nav_services">Soins</a>
       <a href="#gallery" data-i18n="nav_gallery">Galerie</a>
       <a href="#contact" data-i18n="nav_contact">Contact</a>
     </div>
-    <div class="ft-col">
+    <div class="ft-col hide-phone">
       <p class="ft-h" data-i18n="f_services">Prestations</p>
       <a href="#services" data-i18n="f_svc1">Manucure classique</a>
       <a href="#services" data-i18n="f_svc2">Manucure spa</a>
@@ -377,7 +396,7 @@
       <a href="#services" data-i18n="f_svc4">Soin des pieds</a>
       <a href="#gift" data-i18n="gift_card_title">Carte cadeau</a>
     </div>
-    <div class="ft-col">
+    <div class="ft-col hide-phone">
       <p class="ft-h" data-i18n="f_contact">Contact</p>
       <span>9 rue Trousseau, 75011 Paris</span>
       <a href="tel:+33187076059">01 87 07 60 59</a>
@@ -396,6 +415,7 @@
 <!-- Mobile: always-visible booking bar -->
 <div class="mobile-bar" id="mobile-bar">
   <a class="btn btn-line" href="tel:+33187076059"><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="btn_call">Appeler</span></a>
+  <a class="btn btn-line" href="https://wa.me/33668202050" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
   <a class="btn btn-dark" href="#booking" data-action="open-booking"><svg class="ic"><use href="#i-calendar"/></svg><span data-i18n="nav_book">Réserver</span></a>
 </div>
 

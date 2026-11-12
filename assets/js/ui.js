@@ -15,17 +15,44 @@ function initMobileMenu() {
   const menu = $('mobile-menu');
   const burger = document.querySelector('.hdr-burger');
   const setOpen = open => {
+    if (open) showSalonStatus();
     menu.classList.toggle('open', open);
     menu.setAttribute('aria-hidden', String(!open));
     burger.setAttribute('aria-expanded', String(open));
     document.body.classList.toggle('no-scroll', open);
+    document.body.classList.toggle('menu-open', open);
   };
   registerActions({
     'toggle-menu': () => setOpen(!menu.classList.contains('open')),
     'close-menu': () => setOpen(false),
   });
-  /* Close after following a link, picking a language or opening booking. */
-  menu.addEventListener('click', e => { if (e.target.closest('a, .lb')) setOpen(false); });
+  /* Close after following a link or opening booking (a language change keeps it open). */
+  menu.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+}
+
+/* "Open now / Opens at 10 / Closed" in the menu, from Paris time
+   (Tuesday – Sunday, 10:00 – 20:00, closed on Monday). */
+function showSalonStatus() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Paris', weekday: 'short', hour: 'numeric', hourCycle: 'h23' })
+    .formatToParts(new Date()).map(x => [x.type, x.value]));
+  const h = Number(p.hour), workday = p.weekday !== 'Mon';
+  const state = workday && h >= 10 && h < 20 ? 'open' : workday && h < 10 ? 'soon' : 'closed';
+  const txt = $('mm-status-txt');
+  txt.dataset.i18n = 'status_' + state;   // re-translated automatically on language change
+  txt.textContent = t('status_' + state);
+  $('mm-status').dataset.state = state;
+}
+
+/* Phones: small language picker in the header. */
+function initLangPicker() {
+  const btn = document.querySelector('.lang-mini-btn');
+  const pop = $('lang-pop');
+  const setOpen = open => { pop.hidden = !open; btn.setAttribute('aria-expanded', String(open)); };
+  registerActions({ 'toggle-lang': () => setOpen(pop.hidden) });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.lang-mini') || e.target.closest('.lb')) setOpen(false);
+  });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
 }
 
@@ -189,6 +216,7 @@ function initReveal() {
 export function initUI() {
   initHeader();
   initMobileMenu();
+  initLangPicker();
   initMobileBar();
   initMap();
   initLightbox();
