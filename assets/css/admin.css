@@ -36,10 +36,10 @@
 .admin-layout{display:grid;grid-template-columns:1fr 280px;gap:1.2rem;align-items:start}
 .a-cal-hdr{display:flex;align-items:center;gap:.8rem;margin-bottom:.9rem;flex-wrap:wrap}
 .a-month-title{font-family:var(--font-serif);font-size:1.05rem;font-weight:500}
-.mgh{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:3px}
+.mgh{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin-bottom:3px}
 .mghd{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:center;padding:.28rem 0}
-.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-.mc{min-height:60px;border:1px solid var(--border);border-radius:var(--r);padding:.35rem;cursor:pointer;background:var(--white);transition:background .15s}
+.mg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.mc{min-width:0;min-height:60px;border:1px solid var(--border);border-radius:var(--r);padding:.35rem;cursor:pointer;background:var(--white);transition:background .15s}
 .mc:hover{background:var(--beige)}
 .mc.oth{opacity:.28}
 .mc.tod{border-color:var(--brown)!important;border-width:1.5px}
@@ -198,4 +198,23 @@ body.admin-page{background:var(--cream-2);min-height:100vh}
   .client-row{flex-direction:column;align-items:flex-start}
   .client-stats{text-align:left}
   .admin-tab{padding:.55rem .6rem;font-size:.66rem}
+}
+
+/* Phones: the month grid must fit the screen — each booking becomes a small coloured bar
+   (tap a day to see the details below the calendar). Nothing may be wider than the screen. */
+@media (max-width:560px){
+  html,body{overflow-x:hidden}
+  .apdot{height:5px;padding:0;margin-bottom:2px;font-size:0;border-radius:3px}
+  .apdot-c{background:#8DB35A}
+  .apdot-x{background:var(--brown-l);opacity:1}
+  .mc{min-height:46px}
+  .mc-more{font-size:.55rem;line-height:1}
+  .a-cal-hdr .btn-push-right{margin-left:0;width:100%}
+  .admin-tabs{overflow-x:auto;scrollbar-width:none}
+  .admin-tab{flex-shrink:0}
+  .btn-row{flex-wrap:wrap}
+  .btn-row .btn-xcl,.btn-row .btn-b{white-space:normal;max-width:100%;text-align:center}
+  .st-table{font-size:.72rem}
+  .st-table th,.st-table td{padding:.4rem .3rem}
+  .st-table th{letter-spacing:.04em}
 }
