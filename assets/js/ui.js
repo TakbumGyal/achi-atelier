@@ -48,7 +48,7 @@ function initMap() {
   registerActions({
     'show-map': () => {
       const box = $('map-box');
-      document.querySelector('.map-interactive')?.remove();
+      box.classList.remove('map-facade');
       box.innerHTML = `<iframe src="${MAP_URL}" allowfullscreen title="Atelier Achi — 9 rue Trousseau Paris 11"></iframe>`;
     },
   });
