@@ -59,14 +59,14 @@ picture { display: contents; }
 .ic { width: 1.15em; height: 1.15em; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.2em; }
 
 /* ── Typography ── */
-.eyebrow { display: inline-flex; align-items: center; gap: .7rem; font-size: .7rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--brown-d); margin-bottom: 1rem; }
-.eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; }
-.eyebrow--center::after { content: ''; width: 28px; height: 1px; background: currentColor; }
+/* Small line above a title (hero location, booking panel): sentence case, no rules */
+.eyebrow { display: block; font-size: .9rem; font-weight: 500; letter-spacing: .01em; color: var(--brown-d); margin-bottom: 1rem; }
 .h2 { font-family: var(--font-serif); font-weight: 300; font-size: clamp(2.1rem, 4.4vw, 3.4rem); line-height: 1.08; letter-spacing: -.01em; color: var(--ink); }
-.h2 em { font-style: italic; font-weight: 400; color: var(--brown); }
+/* Titles read as one phrase: no single word picked out in italic/colour */
+.h2 em { font-style: inherit; font-weight: inherit; color: inherit; }
 
 /* ── Buttons (public site) ── */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .8rem 1.6rem; border-radius: 100px; border: 1.5px solid transparent; font-family: var(--font-sans); font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease); white-space: nowrap; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .8rem 1.6rem; border-radius: 100px; border: 1.5px solid transparent; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; letter-spacing: .01em; text-decoration: none; cursor: pointer; transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease); white-space: nowrap; }
 .btn .ic { width: 1.1em; height: 1.1em; transition: transform .25s var(--ease); }
 .btn-dark { background: var(--ink); color: var(--cream); }
 .btn-dark:hover { background: var(--brown-d); transform: translateY(-1px); box-shadow: 0 10px 26px rgba(44, 24, 16, .2); }
@@ -75,7 +75,7 @@ picture { display: contents; }
 .btn-line:hover { background: var(--ink); color: var(--cream); }
 .btn-line-light { border-color: rgba(250, 247, 240, .5); color: var(--cream); background: transparent; }
 .btn-line-light:hover { background: var(--cream); color: var(--ink); }
-.btn-sm { min-height: 40px; padding: .55rem 1.2rem; font-size: .72rem; }
+.btn-sm { min-height: 40px; padding: .55rem 1.2rem; font-size: .84rem; }
 
 /* ── Buttons (booking flow & admin) ── */
 .btn-p { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-height: 46px; background: var(--ink); color: var(--cream); border: none; padding: .75rem 1.7rem; border-radius: 100px; font-family: var(--font-sans); font-size: .8rem; font-weight: 600; letter-spacing: .05em; cursor: pointer; transition: background .2s, transform .2s; }
@@ -89,7 +89,7 @@ picture { display: contents; }
 
 /* ── Form fields ── */
 .fg { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
-.fg label { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.fg label { font-size: .86rem; font-weight: 600; color: var(--muted); }
 .fg input, .fg select, .fg textarea { width: 100%; min-height: 48px; padding: .75rem .95rem; border: 1.5px solid var(--border); border-radius: var(--r); font-family: var(--font-sans); font-size: 1rem; color: var(--ink); background: var(--white); outline: none; transition: border-color .2s, box-shadow .2s; }
 .fg input:focus, .fg select:focus { border-color: var(--brown); box-shadow: 0 0 0 3px rgba(139, 111, 94, .12); }
 .fg input.err { border-color: var(--error) !important; }
